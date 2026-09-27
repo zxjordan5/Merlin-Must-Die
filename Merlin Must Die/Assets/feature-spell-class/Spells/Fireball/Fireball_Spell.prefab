@@ -47,4 +47,4 @@ MonoBehaviour:
   cooldown: 2
   spellCode: {fileID: 8738095135133317371, guid: 80d5ab1f84d0ea94aa74a961de10a715, type: 3}
   spellObj: {fileID: 7440391782456400889, guid: 897eb93d9ad11364fbb4ae32a1db7ed6, type: 3}
-  initial_velocity: 1
+  castSound: {fileID: 8300000, guid: 4903e46cf72dc7f4cb7b91c3bf009a33, type: 3}

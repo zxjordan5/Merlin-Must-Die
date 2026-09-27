@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 3625397862861932229}
   - component: {fileID: 7912490327555629826}
   - component: {fileID: 2777308365291417773}
-  m_Layer: 0
+  - component: {fileID: 7942374459745988773}
+  - component: {fileID: 7715545402414227706}
+  m_Layer: 8
   m_Name: Fireball_Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7440391782456400889}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.001, y: -0.001, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -106,6 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c772746e69e3aee4bb4a9ce86e43b7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fireball_Object
+  damage: 1
+  hitSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
+  explosionParticles: {fileID: 8953315173316814783, guid: 215a9aeb6ce55df41b5d32a9eab99446, type: 3}
 --- !u!114 &2777308365291417773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,4 +123,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fc6bbd4362e3346b6fc484d9978267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  <Velocity>k__BackingField: {x: 0, y: 0}
+  initialVelocity: 3
+  lifetime: 4
+--- !u!58 &7942374459745988773
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440391782456400889}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.5
+--- !u!50 &7715545402414227706
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440391782456400889}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
