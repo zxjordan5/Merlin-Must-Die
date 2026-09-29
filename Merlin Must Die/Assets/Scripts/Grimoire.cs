@@ -6,6 +6,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Grimoire : MonoBehaviour
 {
@@ -30,26 +31,7 @@ public class Grimoire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Currently only reads for keyboard input; need to do a little more research
-        // on new input system
-
-        // Player can only cast using 1 key per frame
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            playerInput.Add(KeyCode.W);
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            playerInput.Add(KeyCode.A);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            playerInput.Add(KeyCode.S);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            playerInput.Add(KeyCode.D);
-        }
+      
     }
 
     // int is currently a placeholder type
@@ -88,4 +70,29 @@ public class Grimoire : MonoBehaviour
         }
         return 0;
     }
+
+
+    // ***** INPUT METHODS *****
+    #region Input Methods
+    public void OnPrepareSpellUp(InputAction.CallbackContext context)
+    {
+        Debug.Log("Preparing Spell Up");
+    }
+
+    public void OnPrepareSpellDown(InputAction.CallbackContext context)
+    {
+        Debug.Log("Preparing Spell Down");
+    }
+
+    public void OnPrepareSpellLeft(InputAction.CallbackContext context)
+    {
+        Debug.Log("Preparing Spell Left");
+    }
+
+    public void OnPrepareSpellRight(InputAction.CallbackContext context)
+    {
+        Debug.Log("Preparing Spell Right");
+    }
+    #endregion
+    // *************************
 }
