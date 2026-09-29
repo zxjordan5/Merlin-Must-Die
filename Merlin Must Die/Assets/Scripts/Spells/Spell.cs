@@ -20,7 +20,6 @@ public abstract class Spell : MonoBehaviour
         {
             return cooldownTimer <= cooldown;
         }
-        private set {}
     }
 
     //Individual timer for the spells cooldown
