@@ -23,12 +23,8 @@ public class Grimoire : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // get all spells from spell class
-        allSpells = GetSpells();
-
-        // learnedSpells = spells that are .learned
-
-        // activeSpells = spells that are .active (ones being used in this level)
+        // get all spells from spell class; sort into .learned and .active
+        GetSpells();
     }
 
     // Update is called once per frame
@@ -61,7 +57,7 @@ public class Grimoire : MonoBehaviour
     /// Gets all spells to store them; filters by learned and active
     /// </summary>
     /// <returns></returns>
-    List<int> GetSpells()
+    void GetSpells()
     {
         // allSpells = // get from list somewhere else in the code??
         
@@ -77,8 +73,6 @@ public class Grimoire : MonoBehaviour
             ///     activeSpells.Add(allSpells[i]);
             /// }
         }
-
-        return new List<int> { };
     }
 
     /// <summary>
