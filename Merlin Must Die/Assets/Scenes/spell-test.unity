@@ -353,6 +353,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 633070657}
     m_Modifications:
+    - target: {fileID: 1458009670012016224, guid: 436bde15dad5bb84c88adcae882a9caf, type: 3}
+      propertyPath: 'spellCode.Array.data[0]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458009670012016224, guid: 436bde15dad5bb84c88adcae882a9caf, type: 3}
+      propertyPath: 'spellCode.Array.data[1]'
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458009670012016224, guid: 436bde15dad5bb84c88adcae882a9caf, type: 3}
+      propertyPath: 'spellCode.Array.data[2]'
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1530825925704777183, guid: 436bde15dad5bb84c88adcae882a9caf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -734,6 +746,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 648103981386280524, guid: ae49c51f58821354aa0dfc83b2a0a35d, type: 3}
+      propertyPath: activeSpells.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 648103981386280524, guid: ae49c51f58821354aa0dfc83b2a0a35d, type: 3}
+      propertyPath: 'activeSpells.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1458009670012016224, guid: 436bde15dad5bb84c88adcae882a9caf, type: 3}
     - target: {fileID: 653596200112759756, guid: ae49c51f58821354aa0dfc83b2a0a35d, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

@@ -10,21 +10,46 @@ using UnityEngine.InputSystem;
 
 public class Grimoire : MonoBehaviour
 {
-    // While spells class is still being created, using 'int' as placeholder types
-    private List<int> allSpells;
-    private List<int> learnedSpells;
-    private List<int> activeSpells;
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
 
-    // The input from the player of the spell they're trying to cast
-    private List<KeyCode> playerInput;
 
-    // The spell codes actively being displayed
+
+    private List<Spell> allSpells;
+    private List<Spell> learnedSpells;
+
+    /// <summary>
+    /// List of spells that the player currently has available within the level
+    /// </summary>
+    [SerializeField]
+    private List<Spell> activeSpells;
+
+    /// <summary>
+    /// Current sequence of inputs the player has entered
+    /// </summary>
+    private List<Direction> playerInputSequence;
+
+
+    /// <summary>
+    /// The index of the current input in the playerInput list. Reset to zero when spell input sequence is restarted
+    /// </summary>
+    private int inputSequenceIndex;
+
+    /// <summary>
+    /// The spell codes actively being displayed
+    /// </summary>
     private List<string> grimoireText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         // get all spells from spell class; sort into .learned and .active
+        playerInputSequence = new List<Direction>();
         GetSpells();
     }
 
@@ -71,6 +96,58 @@ public class Grimoire : MonoBehaviour
         return 0;
     }
 
+    /// <summary>
+    /// Updates the player input sequence with the new input and checks for matches with active spell codes
+    /// </summary>
+    /// <param name="input">The direction of the new input</param>
+    public void ProcessInput(Direction input)
+    {
+        playerInputSequence.Add(input);
+        inputSequenceIndex++;
+        CheckForMatches();
+    }
+
+    public void CheckForMatches()
+    {
+        foreach(Spell spell in activeSpells)
+        {
+            if (IsMatch(spell))
+            { 
+                // TODO: Get a reference to the player and set it's currentSpell
+                // Block additional inputs until the spell is cast (do this through an event)
+                ResetInputSequence();
+                break; // Exit the loop after casting a spell
+            }
+        }
+    }
+
+    private bool IsMatch(Spell spell)
+    {
+        int codeLength = spell.spellCode.Count;
+        if (playerInputSequence.Count < codeLength)
+            return false;
+
+        for (int i = 0; i < codeLength; i++)
+        {
+            // Compare the last 'codeLength' inputs in playerInputSequence with the spell's spellCode
+            // Quit out early after any mismatches
+            //if (playerInputSequence[playerInputSequence.Count - codeLength + i] != spell.spellCode[i])
+            // return false;
+            if (playerInputSequence[i] != spell.spellCode[i])
+                return false;
+        }
+        return true;
+    }
+
+    public void ResetInputSequence()
+    {
+        playerInputSequence.Clear();
+        inputSequenceIndex = 0;
+    }
+
+
+
+
 
     // ***** INPUT METHODS *****
     #region Input Methods
@@ -79,6 +156,7 @@ public class Grimoire : MonoBehaviour
         if (context.performed)
         {
             Debug.Log("Preparing Spell Up");
+            ProcessInput(Direction.Up);
         }
     }
 
@@ -87,6 +165,7 @@ public class Grimoire : MonoBehaviour
         if(context.performed)
         {
             Debug.Log("Preparing Spell Down");
+            ProcessInput(Direction.Down);
         }
     }
 
@@ -94,7 +173,8 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("Preparing Spell Left");
+            //Debug.Log("Preparing Spell Left");
+            ProcessInput(Direction.Left);
         }
     }
 
@@ -102,7 +182,8 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("Preparing Spell Right");
+            //Debug.Log("Preparing Spell Right");
+            ProcessInput(Direction.Right);
         }
     }
     #endregion
