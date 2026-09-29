@@ -76,22 +76,34 @@ public class Grimoire : MonoBehaviour
     #region Input Methods
     public void OnPrepareSpellUp(InputAction.CallbackContext context)
     {
-        Debug.Log("Preparing Spell Up");
+        if (context.performed)
+        {
+            Debug.Log("Preparing Spell Up");
+        }
     }
 
     public void OnPrepareSpellDown(InputAction.CallbackContext context)
     {
-        Debug.Log("Preparing Spell Down");
+        if(context.performed)
+        {
+            Debug.Log("Preparing Spell Down");
+        }
     }
 
     public void OnPrepareSpellLeft(InputAction.CallbackContext context)
     {
-        Debug.Log("Preparing Spell Left");
+        if (context.performed)
+        {
+            Debug.Log("Preparing Spell Left");
+        }
     }
 
     public void OnPrepareSpellRight(InputAction.CallbackContext context)
     {
-        Debug.Log("Preparing Spell Right");
+        if (context.performed)
+        {
+            Debug.Log("Preparing Spell Right");
+        }
     }
     #endregion
     // *************************
