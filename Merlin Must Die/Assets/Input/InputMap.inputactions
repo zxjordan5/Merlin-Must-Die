@@ -18,9 +18,9 @@
                 },
                 {
                     "name": "KBM_Aim",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "6ae572d0-0502-4cbc-84d6-3b1a38a691c8",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true,
@@ -255,7 +255,7 @@
                 {
                     "name": "",
                     "id": "8cbb10d3-975c-4acc-b00a-8a7f4cf07bc3",
-                    "path": "<Mouse>/position",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "NormalizeVector2",
                     "groups": "",
