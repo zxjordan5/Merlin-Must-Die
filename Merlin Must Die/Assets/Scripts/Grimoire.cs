@@ -120,6 +120,7 @@ public class Grimoire : MonoBehaviour
                 break; // Exit the loop after casting a spell
             }
         }
+        // Create logic to reset input sequence on a wrong input
     }
 
     private bool IsMatch(Spell spell)
