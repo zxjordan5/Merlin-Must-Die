@@ -19,7 +19,7 @@ public class Grimoire : MonoBehaviour
     }
 
 
-
+    // TODO: MOVE THESE TO A SCRIPTABLE OBJECT
     private List<Spell> allSpells;
     private List<Spell> learnedSpells;
 
@@ -46,12 +46,13 @@ public class Grimoire : MonoBehaviour
     private List<string> grimoireText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         // get all spells from spell class; sort into .learned and .active
         playerInputSequence = new List<Direction>();
         GetSpells();
     }
+    
 
     // Update is called once per frame
     void Update()
@@ -69,8 +70,8 @@ public class Grimoire : MonoBehaviour
         // allSpells = // get from list somewhere else in the code??
         
         // add learned and active spells to their lists as needed
-        for (int i = 0; i < allSpells.Count; i++)
-        {
+        //for (int i = 0; i < allSpells.Count; i++)
+        //{
             /// if (allSpells[i].learned)
             /// {
             ///     learnedSpells.Add(allSpells[i]);
@@ -79,7 +80,7 @@ public class Grimoire : MonoBehaviour
             /// {
             ///     activeSpells.Add(allSpells[i]);
             /// }
-        }
+        //}
     }
 
     /// <summary>
@@ -123,8 +124,9 @@ public class Grimoire : MonoBehaviour
 
     private bool IsMatch(Spell spell)
     {
+        // TODO: Add debug stuff to check all this
         int codeLength = spell.spellCode.Count;
-        if (playerInputSequence.Count < codeLength)
+        if (playerInputSequence.Count < codeLength || spell.OnCooldown)
             return false;
 
         for (int i = 0; i < codeLength; i++)
