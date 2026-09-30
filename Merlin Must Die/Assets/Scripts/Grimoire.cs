@@ -5,7 +5,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine.InputSystem;
 
 public class Grimoire : MonoBehaviour
@@ -17,8 +17,6 @@ public class Grimoire : MonoBehaviour
         Left,
         Right
     }
-
-
 
     private List<Spell> allSpells;
     private List<Spell> learnedSpells;
@@ -40,17 +38,16 @@ public class Grimoire : MonoBehaviour
     /// </summary>
     private int inputSequenceIndex;
 
-    /// <summary>
-    /// The spell codes actively being displayed
-    /// </summary>
-    private List<string> grimoireText;
+    // Displayed text in the UI
+    [SerializeField]
+    private TextMeshProUGUI grimoireTextUI;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         // get all spells from spell class; sort into .learned and .active
         playerInputSequence = new List<Direction>();
-        GetSpells();
+        GetGrimoireText();
     }
 
     // Update is called once per frame
@@ -59,41 +56,61 @@ public class Grimoire : MonoBehaviour
       
     }
 
-    // int is currently a placeholder type
     /// <summary>
     /// Gets all spells to store them; filters by learned and active
+    /// MAY BE DEPRECATED
     /// </summary>
     /// <returns></returns>
-    void GetSpells()
-    {
-        // allSpells = // get from list somewhere else in the code??
-        
-        // add learned and active spells to their lists as needed
-        for (int i = 0; i < allSpells.Count; i++)
-        {
-            /// if (allSpells[i].learned)
-            /// {
-            ///     learnedSpells.Add(allSpells[i]);
-            /// }
-            /// if (allSpells[i].active)
-            /// {
-            ///     activeSpells.Add(allSpells[i]);
-            /// }
-        }
-    }
+    // void GetSpells()
+    // {   
+    //     // add learned and active spells to their lists as needed
+    //     for (int i = 0; i < allSpells.Count; i++)
+    //     {
+    //         if (allSpells[i])
+    //         {
+    //             activeSpells.Add(activeSpells[i]);
+    //         }
+    //     }
+    // }
 
     /// <summary>
-    /// Stores all grimoire text (spell names + spell codes) in a List to be presented on screen
+    /// Gets all grimoire text and displays it in the UI
     /// </summary>
     /// <returns></returns>
-    int GetGrimoireText()
+    void GetGrimoireText()
     {
-        List<string> text = new List<string>();
+        // The initial text as a string
+        string text = "";
+
         for (int i = 0; i < activeSpells.Count; i++)
         {
-            text.Add(/*activeSpells[i].spellCode*/ "spellCode " + " | " + " Spell"); // + activeSpells[i].name
+            text += activeSpells[i].name;
+            text += " | ";
+            List<Direction> activeSpellCode = activeSpells[i].spellCode;
+            for (int j = 0; j < activeSpellCode.Count; j++)
+            {
+                switch (activeSpellCode[j])
+                {
+                    case Direction.Up:
+                        text += "Up";
+                        break;
+                    case Direction.Down:
+                        text += "Down";
+                        break;
+                    case Direction.Left:
+                        text += "Left";
+                        break;
+                    case Direction.Right:
+                        text += "Right";
+                        break;
+                }
+                text += " ";
+            }
+            text += '\n';
         }
-        return 0;
+
+        // Setting the UI component
+        grimoireTextUI.text = text;
     }
 
     /// <summary>
