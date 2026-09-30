@@ -155,7 +155,7 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("Preparing Spell Up");
+            //Debug.Log("Preparing Spell Up");
             ProcessInput(Direction.Up);
         }
     }
@@ -164,7 +164,7 @@ public class Grimoire : MonoBehaviour
     {
         if(context.performed)
         {
-            Debug.Log("Preparing Spell Down");
+            //Debug.Log("Preparing Spell Down");
             ProcessInput(Direction.Down);
         }
     }
