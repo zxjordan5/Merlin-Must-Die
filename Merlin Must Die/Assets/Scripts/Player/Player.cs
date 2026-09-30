@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 //Another testing class for launching the projectile
-
 public class Player : MonoBehaviour
 {
     [SerializeField] Vector2 aimDirRaw;
@@ -17,4 +16,5 @@ public class Player : MonoBehaviour
     {
         testingSpell.Cast(this);
     }
+
 }
