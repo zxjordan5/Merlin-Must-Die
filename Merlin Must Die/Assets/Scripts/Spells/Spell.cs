@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public abstract class Spell : MonoBehaviour
     protected float cooldownTimer;
 
 
-    [SerializeField] public SpellCode spellCode;
+    [SerializeField] public List<Grimoire.Direction> spellCode;
     [SerializeField] public GameObject spellObj;
 
     [SerializeField] public AudioClip castSound;
