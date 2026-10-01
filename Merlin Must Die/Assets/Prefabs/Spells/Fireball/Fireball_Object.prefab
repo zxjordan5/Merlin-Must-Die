@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fc6bbd4362e3346b6fc484d9978267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  initialVelocity: 3
+  initialVelocity: 25
   lifetime: 4
 --- !u!58 &7942374459745988773
 CircleCollider2D:

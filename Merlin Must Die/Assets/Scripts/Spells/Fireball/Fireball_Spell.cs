@@ -24,7 +24,7 @@ public class Fireball_Spell : Spell
         AudioSource.PlayClipAtPoint(castSound, player.transform.position); //Play cast sound
 
         //Create the fireball and launch it using the projectile component
-        GameObject fb_Obj = Instantiate(spellObj, player.transform);
+        GameObject fb_Obj = Instantiate(spellObj, player.transform.position, player.transform.rotation);
         Projectile fb_Projectile = fb_Obj.GetComponent<Projectile>();
         fb_Projectile.LaunchProjectile(player.AimDirNorm);
     }

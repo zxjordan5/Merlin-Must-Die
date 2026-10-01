@@ -16,6 +16,12 @@ public abstract class Spell : MonoBehaviour
     [SerializeField] public AudioClip castSound;
 
 
+    public void Awake()
+    {
+        // Off cooldown on startup
+        cooldownTimer = cooldown;
+    }
+    
     //Returns false if spellTimer is above cooldown
     public bool OnCooldown{
         get

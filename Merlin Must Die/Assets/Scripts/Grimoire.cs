@@ -59,6 +59,7 @@ public class Grimoire : MonoBehaviour
     void Awake()
     {
         // get all spells from spell class; sort into .learned and .active
+        _allSpells = new List<Spell>();
         _playerInputSequence = new List<Direction>();
         _instantiatedActiveSpells = new List<Spell>();
         _preparedSpell = null;
@@ -133,7 +134,8 @@ public class Grimoire : MonoBehaviour
         }
 
         // Setting the UI component
-        grimoireTextUI.text = text;
+        // TODO: create an actual UI component
+        //grimoireTextUI.text = text;
     }
 
     /// <summary>
@@ -150,6 +152,7 @@ public class Grimoire : MonoBehaviour
     {
         //Debug.Log("ActiveSpells size:" + instantiatedActiveSpells.Count);
         //Debug.Log(instantiatedActiveSpells[0]);
+        
         foreach(Spell spell in _instantiatedActiveSpells)
         {
             if (IsMatch(spell))
@@ -159,6 +162,7 @@ public class Grimoire : MonoBehaviour
                 ResetInputSequence();
                 break; // Exit the loop after preparing a spell
             }
+            // if all spells on cooldown, reset input sequence
         }
     }
 
@@ -192,10 +196,18 @@ public class Grimoire : MonoBehaviour
 
     public void OnCast(InputAction.CallbackContext context)
     {
-        if (_preparedSpell != null)
+        if (context.performed)
         {
-            _preparedSpell.Cast(_player);
-            _preparedSpell = null;
+            if (_preparedSpell != null)
+            {
+                _preparedSpell.Cast(_player);
+                _preparedSpell = null;
+                ResetInputSequence();
+            }
+            else
+            {
+                Debug.Log("no spell prepared");
+            }
         }
     }
 
