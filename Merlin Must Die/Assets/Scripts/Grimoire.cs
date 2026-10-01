@@ -64,9 +64,7 @@ public class Grimoire : MonoBehaviour
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
        //GetSpells();
-        playerInputSequence = new List<Direction>();
         GetGrimoireText();
-    }
 
         foreach (Spell spell in activeSpells)
         {
