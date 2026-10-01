@@ -21,8 +21,9 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {        
         rb = GetComponent<Rigidbody2D>();
-
         crosshair = transform.Find("crosshair").gameObject;
+        crosshair.SetActive(true);
+        crosshair.transform.position = rb.transform.position + new Vector3(0, 2, 0);
         cam = Camera.main;
     }
 
@@ -43,8 +44,6 @@ public class PlayerMovement : MonoBehaviour
                 new Vector2(rb.transform.position.x + Gamepad.current.leftStick.x.value, rb.transform.position.y + Gamepad.current.leftStick.y.value),
                 maxSpeed * Time.deltaTime);
         }
-
-        // Keep crosshair on screen at all times
 
         // Kb/M aiming
         if (kbAiming) {
@@ -78,12 +77,12 @@ public class PlayerMovement : MonoBehaviour
     public void OnKBM_Aim(InputAction.CallbackContext context)
     {
         kbAiming = context.started || context.performed;
-        crosshair.SetActive(context.started || context.performed);
+        //change the color of the crosshair when actively aiming
     }
     public void OnGP_Aim(InputAction.CallbackContext context)
     {
         gpAiming = context.started || context.performed;
-        crosshair.SetActive(context.started || context.performed);
+        //change the color of the crosshair when actively aiming
     }
     #endregion
 }

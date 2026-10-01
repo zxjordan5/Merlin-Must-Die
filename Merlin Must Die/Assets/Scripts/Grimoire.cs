@@ -5,7 +5,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine.InputSystem;
 
 public class Grimoire : MonoBehaviour
@@ -51,6 +51,9 @@ public class Grimoire : MonoBehaviour
     /// The current player in the scene
     /// </summary>
     private Player _player;
+    // Displayed text in the UI
+    [SerializeField]
+    private TextMeshProUGUI grimoireTextUI;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -61,6 +64,9 @@ public class Grimoire : MonoBehaviour
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
        //GetSpells();
+        playerInputSequence = new List<Direction>();
+        GetGrimoireText();
+    }
 
         foreach (Spell spell in activeSpells)
         {
@@ -69,9 +75,9 @@ public class Grimoire : MonoBehaviour
         }
     }
 
-    // int is currently a placeholder type
     /// <summary>
     /// Gets all spells to store them; filters by learned and active
+    /// MAY BE DEPRECATED
     /// </summary>
     /// <returns></returns>
     void GetSpells()
@@ -93,17 +99,43 @@ public class Grimoire : MonoBehaviour
     }
 
     /// <summary>
-    /// Stores all grimoire text (spell names + spell codes) in a List to be presented on screen
+    /// Gets all grimoire text and displays it in the UI
     /// </summary>
     /// <returns></returns>
-    int GetGrimoireText()
+    void GetGrimoireText()
     {
-        List<string> text = new List<string>();
+        // The initial text as a string
+        string text = "";
+
         for (int i = 0; i < activeSpells.Count; i++)
         {
-            text.Add(/*activeSpells[i].spellCode*/ "spellCode " + " | " + " Spell"); // + activeSpells[i].name
+            text += activeSpells[i].name;
+            text += " | ";
+            List<Direction> activeSpellCode = activeSpells[i].spellCode;
+            for (int j = 0; j < activeSpellCode.Count; j++)
+            {
+                switch (activeSpellCode[j])
+                {
+                    case Direction.Up:
+                        text += "Up";
+                        break;
+                    case Direction.Down:
+                        text += "Down";
+                        break;
+                    case Direction.Left:
+                        text += "Left";
+                        break;
+                    case Direction.Right:
+                        text += "Right";
+                        break;
+                }
+                text += " ";
+            }
+            text += '\n';
         }
-        return 0;
+
+        // Setting the UI component
+        grimoireTextUI.text = text;
     }
 
     /// <summary>
