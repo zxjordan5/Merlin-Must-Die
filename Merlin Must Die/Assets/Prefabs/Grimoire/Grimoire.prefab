@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde8643250594cc4f98df9b73a13b87a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grimoire
-  activeSpells: []
+  activeSpells:
+  - {fileID: 0}
