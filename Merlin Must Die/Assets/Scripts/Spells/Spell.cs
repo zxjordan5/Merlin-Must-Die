@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[System.Serializable]
 public abstract class Spell : MonoBehaviour
 {
     //Cooldown field and timer

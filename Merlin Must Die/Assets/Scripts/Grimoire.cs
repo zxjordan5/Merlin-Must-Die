@@ -18,42 +18,61 @@ public class Grimoire : MonoBehaviour
         Right
     }
 
-    private List<Spell> allSpells;
-    private List<Spell> learnedSpells;
+
+    // TODO: MOVE THESE TO A SCRIPTABLE OBJECT
+    private List<Spell> _allSpells;
+    private List<Spell> _learnedSpells;
 
     /// <summary>
     /// List of spells that the player currently has available within the level
     /// </summary>
     [SerializeField]
-    private List<Spell> activeSpells;
+    public List<Spell> activeSpells;
+
+    private List<Spell> _instantiatedActiveSpells;
+
+    /// <summary>
+    /// The currently prepared spell of the player. If this is null, the player has no spell prepared
+    /// </summary>
+    private Spell _preparedSpell;
 
     /// <summary>
     /// Current sequence of inputs the player has entered
     /// </summary>
-    private List<Direction> playerInputSequence;
-
+    private List<Direction> _playerInputSequence;
+    
 
     /// <summary>
-    /// The index of the current input in the playerInput list. Reset to zero when spell input sequence is restarted
+    /// The spell codes actively being displayed
     /// </summary>
-    private int inputSequenceIndex;
+    private List<string> _grimoireText;
 
+    /// <summary>
+    /// The current player in the scene
+    /// </summary>
+    private Player _player;
     // Displayed text in the UI
     [SerializeField]
     private TextMeshProUGUI grimoireTextUI;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         // get all spells from spell class; sort into .learned and .active
+        _playerInputSequence = new List<Direction>();
+        _instantiatedActiveSpells = new List<Spell>();
+        _preparedSpell = null;
+        _player = FindAnyObjectByType<Player>();
+       //GetSpells();
         playerInputSequence = new List<Direction>();
         GetGrimoireText();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-      
+        foreach (Spell spell in activeSpells)
+        {
+            // Need to instantiate spells in order to track their timers
+            _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
+        }
     }
 
     /// <summary>
@@ -61,17 +80,23 @@ public class Grimoire : MonoBehaviour
     /// MAY BE DEPRECATED
     /// </summary>
     /// <returns></returns>
-    // void GetSpells()
-    // {   
-    //     // add learned and active spells to their lists as needed
-    //     for (int i = 0; i < allSpells.Count; i++)
-    //     {
-    //         if (allSpells[i])
-    //         {
-    //             activeSpells.Add(activeSpells[i]);
-    //         }
-    //     }
-    // }
+    void GetSpells()
+    {
+        // allSpells = // get from list somewhere else in the code??
+        
+        // add learned and active spells to their lists as needed
+        //for (int i = 0; i < allSpells.Count; i++)
+        //{
+            /// if (allSpells[i].learned)
+            /// {
+            ///     learnedSpells.Add(allSpells[i]);
+            /// }
+            /// if (allSpells[i].active)
+            /// {
+            ///     activeSpells.Add(allSpells[i]);
+            /// }
+        //}
+    }
 
     /// <summary>
     /// Gets all grimoire text and displays it in the UI
@@ -119,21 +144,22 @@ public class Grimoire : MonoBehaviour
     /// <param name="input">The direction of the new input</param>
     public void ProcessInput(Direction input)
     {
-        playerInputSequence.Add(input);
-        inputSequenceIndex++;
+        _playerInputSequence.Add(input);
         CheckForMatches();
     }
 
     public void CheckForMatches()
     {
-        foreach(Spell spell in activeSpells)
+        //Debug.Log("ActiveSpells size:" + instantiatedActiveSpells.Count);
+        //Debug.Log(instantiatedActiveSpells[0]);
+        foreach(Spell spell in _instantiatedActiveSpells)
         {
             if (IsMatch(spell))
             { 
-                // TODO: Get a reference to the player and set it's currentSpell
-                // Block additional inputs until the spell is cast (do this through an event)
+                // Do we want to block additional inputs until the spell is cast (do this through an event)
+                _preparedSpell = spell;
                 ResetInputSequence();
-                break; // Exit the loop after casting a spell
+                break; // Exit the loop after preparing a spell
             }
         }
     }
@@ -141,30 +167,39 @@ public class Grimoire : MonoBehaviour
     private bool IsMatch(Spell spell)
     {
         int codeLength = spell.spellCode.Count;
-        if (playerInputSequence.Count < codeLength)
+        if (_playerInputSequence.Count < codeLength || spell.OnCooldown)
+        {
             return false;
+        }
 
         for (int i = 0; i < codeLength; i++)
         {
             // Compare the last 'codeLength' inputs in playerInputSequence with the spell's spellCode
             // Quit out early after any mismatches
-            //if (playerInputSequence[playerInputSequence.Count - codeLength + i] != spell.spellCode[i])
-            // return false;
-            if (playerInputSequence[i] != spell.spellCode[i])
+            if (_playerInputSequence[i] != spell.spellCode[i])
+            {
+                ResetInputSequence();
                 return false;
+            }
         }
+
+        Debug.Log("INPUT CORRECT, SPELL PREPARED");
         return true;
     }
 
     public void ResetInputSequence()
     {
-        playerInputSequence.Clear();
-        inputSequenceIndex = 0;
+        _playerInputSequence.Clear();
     }
 
-
-
-
+    public void OnCast(InputAction.CallbackContext context)
+    {
+        if (_preparedSpell != null)
+        {
+            _preparedSpell.Cast(_player);
+            _preparedSpell = null;
+        }
+    }
 
     // ***** INPUT METHODS *****
     #region Input Methods
@@ -172,7 +207,6 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
-            //Debug.Log("Preparing Spell Up");
             ProcessInput(Direction.Up);
         }
     }
@@ -181,7 +215,6 @@ public class Grimoire : MonoBehaviour
     {
         if(context.performed)
         {
-            //Debug.Log("Preparing Spell Down");
             ProcessInput(Direction.Down);
         }
     }
@@ -190,7 +223,6 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
-            //Debug.Log("Preparing Spell Left");
             ProcessInput(Direction.Left);
         }
     }
@@ -199,7 +231,6 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
-            //Debug.Log("Preparing Spell Right");
             ProcessInput(Direction.Right);
         }
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Fireball spell for testing
 /// </summary>
+[Serializable]
 public class Fireball_Spell : Spell
 {
     //Create fireball and launch in the direction the player is facing
@@ -14,10 +15,10 @@ public class Fireball_Spell : Spell
         and call the base implementation. Currently don't know how to have the method cancel
         if calling the base cast function. Can also include cast sound in the base class.
         */
-        if (OnCooldown)
-        {
-            return;
-        }
+        // if (OnCooldown)
+        // {
+        //     return;
+        // }
         ResetCooldown();
 
         AudioSource.PlayClipAtPoint(castSound, player.transform.position); //Play cast sound
