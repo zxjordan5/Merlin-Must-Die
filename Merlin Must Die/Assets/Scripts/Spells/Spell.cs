@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,6 +16,13 @@ public abstract class Spell : MonoBehaviour
 
     [SerializeField] public AudioClip castSound;
 
+    [SerializeField]
+    protected String spellName = "";
+
+    public string SpellName
+    {
+        get => spellName;
+    }
 
     public void Awake()
     {

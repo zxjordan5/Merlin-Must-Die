@@ -2,6 +2,8 @@
 /// Contains the full grimoire and a list of active spells in the level
 /// Reads player input and finds the matching spell code
 /// Shows cooldowns for spells
+
+using System;
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
@@ -40,6 +42,8 @@ public class Grimoire : MonoBehaviour
     /// Current sequence of inputs the player has entered
     /// </summary>
     private List<Direction> _playerInputSequence;
+
+    private int _inputSequenceIndex = 0;
     
 
     /// <summary>
@@ -108,7 +112,7 @@ public class Grimoire : MonoBehaviour
 
         for (int i = 0; i < activeSpells.Count; i++)
         {
-            text += activeSpells[i].name;
+            text += activeSpells[i].SpellName;
             text += " | ";
             List<Direction> activeSpellCode = activeSpells[i].spellCode;
             for (int j = 0; j < activeSpellCode.Count; j++)
@@ -134,8 +138,7 @@ public class Grimoire : MonoBehaviour
         }
 
         // Setting the UI component
-        // TODO: create an actual UI component
-        //grimoireTextUI.text = text;
+        grimoireTextUI.text = text;
     }
 
     /// <summary>
@@ -145,6 +148,12 @@ public class Grimoire : MonoBehaviour
     public void ProcessInput(Direction input)
     {
         _playerInputSequence.Add(input);
+        String debug = "";
+        foreach (Direction dir in _playerInputSequence)
+        {
+            debug += dir.ToString() + ", ";
+        }
+        Debug.Log(debug);
         CheckForMatches();
     }
 
@@ -152,12 +161,28 @@ public class Grimoire : MonoBehaviour
     {
         //Debug.Log("ActiveSpells size:" + instantiatedActiveSpells.Count);
         //Debug.Log(instantiatedActiveSpells[0]);
+
+        bool spellWithMatchingFirstIndex = false;
+        foreach (Spell spell in _instantiatedActiveSpells)
+        {
+            if (_playerInputSequence[0] == spell.spellCode[0])
+            {
+                spellWithMatchingFirstIndex = true;
+            }
+        }
+
+        if (!spellWithMatchingFirstIndex)
+        {
+            // Reset and return early if there's no first match
+            // prevents input bugs
+            ResetInputSequence();
+            return;
+        }
         
         foreach(Spell spell in _instantiatedActiveSpells)
         {
             if (IsMatch(spell))
             { 
-                // Do we want to block additional inputs until the spell is cast (do this through an event)
                 _preparedSpell = spell;
                 ResetInputSequence();
                 break; // Exit the loop after preparing a spell
@@ -169,6 +194,12 @@ public class Grimoire : MonoBehaviour
     private bool IsMatch(Spell spell)
     {
         int codeLength = spell.spellCode.Count;
+
+        if ((_playerInputSequence[0] != spell.spellCode[0]))
+        {
+            ResetInputSequence();
+            return false;
+        }
         if (_playerInputSequence.Count < codeLength || spell.OnCooldown)
         {
             return false;
@@ -182,6 +213,7 @@ public class Grimoire : MonoBehaviour
             {
                 ResetInputSequence();
                 return false;
+                
             }
         }
 
@@ -192,6 +224,7 @@ public class Grimoire : MonoBehaviour
     public void ResetInputSequence()
     {
         _playerInputSequence.Clear();
+        _inputSequenceIndex = 0;
     }
 
     public void OnCast(InputAction.CallbackContext context)

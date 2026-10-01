@@ -48,3 +48,4 @@ MonoBehaviour:
   spellCode: 000000000300000003000000i
   spellObj: {fileID: 7440391782456400889, guid: 897eb93d9ad11364fbb4ae32a1db7ed6, type: 3}
   castSound: {fileID: 8300000, guid: 4903e46cf72dc7f4cb7b91c3bf009a33, type: 3}
+  spellName: Fireball
