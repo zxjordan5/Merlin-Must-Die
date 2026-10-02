@@ -200,7 +200,9 @@ public class Grimoire : MonoBehaviour
             ResetInputSequence();
             return false;
         }
-        if (_playerInputSequence.Count < codeLength || spell.OnCooldown)
+
+        // Need to recheck the player's input when a spell's cooldown ends
+        if (_playerInputSequence.Count < codeLength)// || spell.OnCooldown)
         {
             return false;
         }
@@ -239,6 +241,8 @@ public class Grimoire : MonoBehaviour
             }
             else
             {
+                // If the player tries to cast a spell when it isn't prepared, reset the code
+                ResetInputSequence(); 
                 Debug.Log("no spell prepared");
             }
         }

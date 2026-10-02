@@ -220,6 +220,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 633070657}
     m_Modifications:
     - target: {fileID: 1458009670012016224, guid: 436bde15dad5bb84c88adcae882a9caf, type: 3}
+      propertyPath: cooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458009670012016224, guid: 436bde15dad5bb84c88adcae882a9caf, type: 3}
       propertyPath: 'spellCode.Array.data[0]'
       value: 0
       objectReference: {fileID: 0}
@@ -724,7 +728,7 @@ Transform:
   m_GameObject: {fileID: 1068951704}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.53, y: 2.95, z: 0}
+  m_LocalPosition: {x: 3.53, y: 2.95, z: 8.861}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1837,6 +1841,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 90847825481555739, guid: e92e08e529acc2d42a7aa224e0fe4eaa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1093.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 90847825481555739, guid: e92e08e529acc2d42a7aa224e0fe4eaa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -359.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 509122618421905054, guid: e92e08e529acc2d42a7aa224e0fe4eaa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -967
+      objectReference: {fileID: 0}
+    - target: {fileID: 509122618421905054, guid: e92e08e529acc2d42a7aa224e0fe4eaa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -483
+      objectReference: {fileID: 0}
     - target: {fileID: 1556127660356982207, guid: e92e08e529acc2d42a7aa224e0fe4eaa, type: 3}
       propertyPath: m_Name
       value: UI
