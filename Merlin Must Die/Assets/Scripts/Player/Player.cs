@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     // We can remove "serialize" once we've settled on a speed
     [SerializeField] private float maxSpeed = 2f;
     private Vector3 _mousePos;
+    private Vector3 _prevMousePos;
     private Vector3 _gpPos;
     private bool _kbMoving;
     private bool _gpMoving;
@@ -41,6 +42,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Keeps the camera centered on the player
+        _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
+
         // Kb/M movement
         if (_kbMoving) {
             _rb.transform.position = Vector2.MoveTowards(
@@ -56,21 +60,24 @@ public class Player : MonoBehaviour
                 maxSpeed * Time.deltaTime);
         }
 
-        // Kb/M aiming
-        if (_kbAiming) {
-            _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width/2, Screen.height/2)).normalized * 2;
-            _crosshair.transform.position = _rb.transform.position + _mousePos;
-            aimDirRaw = _crosshair.transform.position - _rb.transform.position;
-        }
         // GP aiming
-        else if (_gpAiming) {
+        if (_gpAiming)
+        {
             _gpPos = new Vector3(Gamepad.current.rightStick.value.x, Gamepad.current.rightStick.value.y, 0).normalized * 2;
             _crosshair.transform.position = _rb.transform.position + _gpPos;
             aimDirRaw = _crosshair.transform.position - _rb.transform.position;
         }
-
-        // Keeps the camera centered on the player
-        _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
+        // Kb/M aiming
+        if (_kbAiming) {
+            _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width/2, Screen.height/2)).normalized * 2;
+            if (_mousePos == _prevMousePos)
+            {
+                return;
+            }
+            _crosshair.transform.position = _rb.transform.position + _mousePos;
+            aimDirRaw = _crosshair.transform.position - _rb.transform.position;
+            _prevMousePos = _mousePos;
+        }
     }
 
     // ***** MOVEMENT METHODS *****
