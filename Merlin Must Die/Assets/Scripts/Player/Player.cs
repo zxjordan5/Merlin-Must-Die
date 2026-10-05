@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using UnityEngine.Rendering;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using System.IO;
 
-//Another testing class for launching the projectile
 public class Player : MonoBehaviour
 {
     [SerializeField] Vector2 aimDirRaw;
@@ -21,12 +23,16 @@ public class Player : MonoBehaviour
     private Camera _cam;
     // We can remove "serialize" once we've settled on a speed
     [SerializeField] private float maxSpeed = 2f;
+    private float _speedMult = 1f; //Should be reset to 1 always
+
     private Vector3 _mousePos;
     private Vector3 _gpPos;
     private bool _kbMoving;
     private bool _gpMoving;
     private bool _kbAiming;
     private bool _gpAiming;
+    private bool _dashing; //Tracks if the player is dashing
+    private Vector2 _dashTarget; //Target to dash towards
 
 
     void Awake()
@@ -41,20 +47,35 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        // Dashing movement
+        // Move towards a fixed location determined at the moment the dash spell is cast
+        if (_dashing)
+        {
+            _rb.transform.position = Vector2.MoveTowards(
+                _rb.transform.position,
+                _dashTarget,
+                maxSpeed * _speedMult * Time.deltaTime);
+        }
+
         // Kb/M movement
-        if (_kbMoving) {
+        if (_kbMoving)
+        {
             _rb.transform.position = Vector2.MoveTowards(
                 _rb.transform.position,
                 _cam.ScreenToWorldPoint(Mouse.current.position.ReadValue()),
-                maxSpeed * Time.deltaTime);
+                maxSpeed * _speedMult * Time.deltaTime);
         }
         // GP movement
-        else if (_gpMoving) {
+        else if (_gpMoving)
+        {
             _rb.transform.position = Vector2.MoveTowards(
                 _rb.transform.position,
                 new Vector2(_rb.transform.position.x + Gamepad.current.leftStick.x.value, _rb.transform.position.y + Gamepad.current.leftStick.y.value),
-                maxSpeed * Time.deltaTime);
+                maxSpeed * _speedMult * Time.deltaTime);
         }
+            
+
 
         // Kb/M aiming
         if (_kbAiming) {
@@ -82,6 +103,24 @@ public class Player : MonoBehaviour
     public void OnGP_Move(InputAction.CallbackContext context)
     {
         _gpMoving = context.started || context.performed;
+    }
+    public void Dash(float dashSpeed, float dashTime)
+    {
+        _speedMult = dashSpeed;
+        _dashTarget = _crosshair.transform.localPosition;
+        _dashTarget *= 20;
+        Debug.Log(_dashTarget + " + " + AimDirNorm);
+        if (!_dashing)
+        {
+            StartCoroutine(DashTimer(dashTime));
+        }
+    }
+    IEnumerator DashTimer(float dashTime)
+    {
+        _dashing = true;
+        yield return new WaitForSeconds(dashTime);
+        _dashing = false;
+        _speedMult = 1;
     }
     #endregion
 
