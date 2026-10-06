@@ -9,14 +9,14 @@ using System.IO;
 public class Player : MonoBehaviour
 {
     [SerializeField] Vector2 aimDirRaw;
-    
+
     public Vector2 AimDirNorm
     {
         get => Vector2.Normalize(aimDirRaw);
         private set => aimDirRaw = value;
     }
-    
-    
+
+
     // Movement/Aiming Variables
     private Rigidbody2D _rb; // Reference to the player's rigid body
     private GameObject _crosshair;
@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
     private float _speedMult = 1f; //Should be reset to 1 always
 
     private Vector3 _mousePos;
-    private Vector3 _prevMousePos;
     private Vector3 _gpPos;
     private bool _kbMoving;
     private bool _gpMoving;
@@ -37,7 +36,7 @@ public class Player : MonoBehaviour
 
 
     void Awake()
-    {        
+    {
         _rb = GetComponent<Rigidbody2D>();
         _crosshair = transform.Find("crosshair").gameObject;
         _crosshair.SetActive(true);
@@ -48,8 +47,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        // Keeps the camera centered on the player
-        _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
 
         // Dashing movement
         // Move towards a fixed location determined at the moment the dash spell is cast
@@ -77,27 +74,26 @@ public class Player : MonoBehaviour
                 new Vector2(_rb.transform.position.x + Gamepad.current.leftStick.x.value, _rb.transform.position.y + Gamepad.current.leftStick.y.value),
                 maxSpeed * _speedMult * Time.deltaTime);
         }
-            
 
 
+
+        // Kb/M aiming
+        if (_kbAiming)
+        {
+            _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
+            _crosshair.transform.position = _rb.transform.position + _mousePos;
+            aimDirRaw = _crosshair.transform.position - _rb.transform.position;
+        }
         // GP aiming
-        if (_gpAiming)
+        else if (_gpAiming)
         {
             _gpPos = new Vector3(Gamepad.current.rightStick.value.x, Gamepad.current.rightStick.value.y, 0).normalized * 2;
             _crosshair.transform.position = _rb.transform.position + _gpPos;
             aimDirRaw = _crosshair.transform.position - _rb.transform.position;
         }
-        // Kb/M aiming
-        if (_kbAiming) {
-            _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width/2, Screen.height/2)).normalized * 2;
-            if (_mousePos == _prevMousePos)
-            {
-                return;
-            }
-            _crosshair.transform.position = _rb.transform.position + _mousePos;
-            aimDirRaw = _crosshair.transform.position - _rb.transform.position;
-            _prevMousePos = _mousePos;
-        }
+
+        // Keeps the camera centered on the player
+        _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
     }
 
     // ***** MOVEMENT METHODS *****

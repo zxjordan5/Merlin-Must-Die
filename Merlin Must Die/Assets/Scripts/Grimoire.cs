@@ -47,7 +47,7 @@ public class Grimoire : MonoBehaviour
     /// Current sequence of inputs the player has entered
     /// </summary>
     private List<Direction> _playerInputSequence;
-    
+
 
     /// <summary>
     /// The spell codes actively being displayed
@@ -71,16 +71,16 @@ public class Grimoire : MonoBehaviour
         _instantiatedActiveSpells = new List<Spell>();
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
-       //GetSpells();
+        //GetSpells();
         GetGrimoireText();
 
         foreach (Spell spell in activeSpells)
         {
             // Need to instantiate spells in order to track their timers
             _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
-            
+
             //Get the longest spell code
-            if(spell.spellCode.Count > _maxSpellLength)
+            if (spell.spellCode.Count > _maxSpellLength)
             {
                 _maxSpellLength = spell.spellCode.Count;
             }
@@ -95,18 +95,18 @@ public class Grimoire : MonoBehaviour
     void GetSpells()
     {
         // allSpells = // get from list somewhere else in the code??
-        
+
         // add learned and active spells to their lists as needed
         //for (int i = 0; i < allSpells.Count; i++)
         //{
-            /// if (allSpells[i].learned)
-            /// {
-            ///     learnedSpells.Add(allSpells[i]);
-            /// }
-            /// if (allSpells[i].active)
-            /// {
-            ///     activeSpells.Add(allSpells[i]);
-            /// }
+        /// if (allSpells[i].learned)
+        /// {
+        ///     learnedSpells.Add(allSpells[i]);
+        /// }
+        /// if (allSpells[i].active)
+        /// {
+        ///     activeSpells.Add(allSpells[i]);
+        /// }
         //}
     }
 
@@ -178,7 +178,7 @@ public class Grimoire : MonoBehaviour
 
         //Debug.Log("ActiveSpells size:" + instantiatedActiveSpells.Count);
         //Debug.Log(instantiatedActiveSpells[0]);
-        foreach(Spell spell in _instantiatedActiveSpells)
+        foreach (Spell spell in _instantiatedActiveSpells)
         {
             if (IsMatch(spell))
             {
@@ -194,9 +194,9 @@ public class Grimoire : MonoBehaviour
                 spellMismatches++;
             }
         }
-        if(spellMismatches >= activeSpells.Count)
+        if (spellMismatches >= activeSpells.Count)
         {
-            Debug.Log("no spells match, resetting");
+            //Debug.Log("no spells match, resetting");
             ResetInputSequence();
         }
     }
@@ -263,7 +263,7 @@ public class Grimoire : MonoBehaviour
     private void DebugInputString()
     {
         string output = "Input: ";
-        foreach(Direction input in _playerInputSequence)
+        foreach (Direction input in _playerInputSequence)
         {
             output += input + ", ";
         }
@@ -300,7 +300,7 @@ public class Grimoire : MonoBehaviour
 
     public void OnPrepareSpellDown(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
             ProcessInput(Direction.Down);
         }
