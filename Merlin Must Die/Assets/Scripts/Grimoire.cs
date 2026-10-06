@@ -9,6 +9,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class Grimoire : MonoBehaviour
 {
@@ -42,6 +43,7 @@ public class Grimoire : MonoBehaviour
     /// Current sequence of inputs the player has entered
     /// </summary>
     private List<Direction> _playerInputSequence;
+    private List<Direction> _previousInputSequence;
 
     private int _inputSequenceIndex = 0;
     
@@ -59,6 +61,12 @@ public class Grimoire : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI grimoireTextUI;
 
+    // The Spell Input GO with 4 cardinal direction arrow sprites as children
+    [SerializeField]
+    private GameObject spellInputIcon;
+    [SerializeField]
+    private List<GameObject> arrowIcons;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -68,37 +76,16 @@ public class Grimoire : MonoBehaviour
         _instantiatedActiveSpells = new List<Spell>();
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
-       //GetSpells();
+        _previousInputSequence = new List<Direction>();
+
         GetGrimoireText();
+        spellInputIcon.SetActive(false);
 
         foreach (Spell spell in activeSpells)
         {
             // Need to instantiate spells in order to track their timers
             _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
         }
-    }
-
-    /// <summary>
-    /// Gets all spells to store them; filters by learned and active
-    /// MAY BE DEPRECATED
-    /// </summary>
-    /// <returns></returns>
-    void GetSpells()
-    {
-        // allSpells = // get from list somewhere else in the code??
-        
-        // add learned and active spells to their lists as needed
-        //for (int i = 0; i < allSpells.Count; i++)
-        //{
-            /// if (allSpells[i].learned)
-            /// {
-            ///     learnedSpells.Add(allSpells[i]);
-            /// }
-            /// if (allSpells[i].active)
-            /// {
-            ///     activeSpells.Add(allSpells[i]);
-            /// }
-        //}
     }
 
     /// <summary>
@@ -154,7 +141,22 @@ public class Grimoire : MonoBehaviour
             debug += dir.ToString() + ", ";
         }
         Debug.Log(debug);
+
+        //for (int i = 0; i < _previousInputSequence.Count; i++)
+        //{
+        //    Debug.Log("prev " + _previousInputSequence[i]);
+        //}
+        //for (int i = 0; i < _playerInputSequence.Count; i++)
+        //{
+        //    Debug.Log("curr " + _playerInputSequence[i]);
+        //}
+
+        if (_previousInputSequence != _playerInputSequence)
+        {
+            HandleSpellInputIcon(input);
+        }
         CheckForMatches();
+        _previousInputSequence = _playerInputSequence;
     }
 
     public void CheckForMatches()
@@ -226,6 +228,7 @@ public class Grimoire : MonoBehaviour
     public void ResetInputSequence()
     {
         _playerInputSequence.Clear();
+
         _inputSequenceIndex = 0;
     }
 
@@ -245,6 +248,43 @@ public class Grimoire : MonoBehaviour
                 ResetInputSequence(); 
                 Debug.Log("no spell prepared");
             }
+        }
+    }
+    
+    // === UI ===
+
+    /// <summary>
+    /// Determines the direction of the spell icon arrow based on the current input
+    /// </summary>
+    /// <param name="input"></param>
+    public void HandleSpellInputIcon(Direction input)
+    {
+        // Gets the parent SpellInput object
+        GameObject thisIcon = Instantiate(spellInputIcon, spellInputIcon.transform.parent.transform);
+        Debug.Log("Spawned here");
+        Debug.Log("Input dir: " + input);
+        thisIcon.SetActive(true);
+
+        // Set arrow icons active false - invisible
+        for (int i = 0; i < arrowIcons.Count; i++)
+        {
+            arrowIcons[i].SetActive(false);
+        }
+        // assuming these are in order -- check later
+        switch (input)
+        {
+            case Direction.Up:
+                arrowIcons[0].SetActive(true);
+                break;
+            case Direction.Down:
+                arrowIcons[1].SetActive(true);
+                break;
+            case Direction.Left:
+                arrowIcons[2].SetActive(true);
+                break;
+            case Direction.Right:
+                arrowIcons[3].SetActive(true);
+                break;
         }
     }
 
