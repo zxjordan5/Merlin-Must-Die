@@ -11,6 +11,7 @@ public abstract class Spell : MonoBehaviour
 
 
     [SerializeField] public List<Grimoire.Direction> spellCode;
+
     [SerializeField] public GameObject spellObj;
 
     [SerializeField] public AudioClip castSound;

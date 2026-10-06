@@ -78,6 +78,8 @@ public class Grimoire : MonoBehaviour
         {
             // Need to instantiate spells in order to track their timers
             _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
+            
+            //Get the longest spell code
             if(spell.spellCode.Count > _maxSpellLength)
             {
                 _maxSpellLength = spell.spellCode.Count;
@@ -171,25 +173,42 @@ public class Grimoire : MonoBehaviour
 
     public void CheckForMatches()
     {
+        //Check if no spells match
+        int spellMismatches = 0;
+
         //Debug.Log("ActiveSpells size:" + instantiatedActiveSpells.Count);
         //Debug.Log(instantiatedActiveSpells[0]);
         foreach(Spell spell in _instantiatedActiveSpells)
         {
             if (IsMatch(spell))
             {
-                Debug.Log("match with spell");
+                //Debug.Log("match with spell");
                 // Do we want to block additional inputs until the spell is cast (do this through an event)
                 _preparedSpell = spell;
                 ResetInputSequence();
                 break; // Exit the loop after preparing a spell
             }
             // if all spells on cooldown, reset input sequence
+            if (!IsSequenceValid(spell))
+            {
+                spellMismatches++;
+            }
+        }
+        if(spellMismatches >= activeSpells.Count)
+        {
+            //Debug.Log("no spells match, resetting");
+            ResetInputSequence();
         }
     }
 
+    /// <summary>
+    /// </summary>
+    /// <param name="spell"></param>
+    /// <returns>True if the players input sequence matches the spells spellcode</returns>
     private bool IsMatch(Spell spell)
     {
         int codeLength = spell.spellCode.Count;
+        //Don't check if spell can be cast if the code is longer already or if the spell is on cooldown
         if (_playerInputSequence.Count < codeLength || spell.OnCooldown)
         {
             return false;
@@ -209,6 +228,27 @@ public class Grimoire : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// </summary>
+    /// <param name="spell"></param>
+    /// <returns>True if the current input sequence is contained within a spells full input sequence
+    /// False as soon as the current input does not match the spell
+    /// </returns>
+    private bool IsSequenceValid(Spell spell)
+    {
+        if (_playerInputSequence.Count >= spell.spellCode.Count)
+        {
+            return false;
+        }
+        for (int i = 0; i < _playerInputSequence.Count; i++)
+        {
+            if (_playerInputSequence[i] != spell.spellCode[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     /// <summary>
     /// Clear the current player input seqeunce
     /// </summary>
