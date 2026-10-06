@@ -43,7 +43,6 @@ public class Grimoire : MonoBehaviour
     /// Current sequence of inputs the player has entered
     /// </summary>
     private List<Direction> _playerInputSequence;
-    private List<Direction> _previousInputSequence;
 
     private int _inputSequenceIndex = 0;
     
@@ -76,8 +75,7 @@ public class Grimoire : MonoBehaviour
         _instantiatedActiveSpells = new List<Spell>();
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
-        _previousInputSequence = new List<Direction>();
-
+       //GetSpells();
         GetGrimoireText();
         spellInputIcon.SetActive(false);
 
@@ -86,6 +84,29 @@ public class Grimoire : MonoBehaviour
             // Need to instantiate spells in order to track their timers
             _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
         }
+    }
+
+    /// <summary>
+    /// Gets all spells to store them; filters by learned and active
+    /// MAY BE DEPRECATED
+    /// </summary>
+    /// <returns></returns>
+    void GetSpells()
+    {
+        // allSpells = // get from list somewhere else in the code??
+        
+        // add learned and active spells to their lists as needed
+        //for (int i = 0; i < allSpells.Count; i++)
+        //{
+            /// if (allSpells[i].learned)
+            /// {
+            ///     learnedSpells.Add(allSpells[i]);
+            /// }
+            /// if (allSpells[i].active)
+            /// {
+            ///     activeSpells.Add(allSpells[i]);
+            /// }
+        //}
     }
 
     /// <summary>
@@ -141,22 +162,8 @@ public class Grimoire : MonoBehaviour
             debug += dir.ToString() + ", ";
         }
         Debug.Log(debug);
-
-        //for (int i = 0; i < _previousInputSequence.Count; i++)
-        //{
-        //    Debug.Log("prev " + _previousInputSequence[i]);
-        //}
-        //for (int i = 0; i < _playerInputSequence.Count; i++)
-        //{
-        //    Debug.Log("curr " + _playerInputSequence[i]);
-        //}
-
-        if (_previousInputSequence != _playerInputSequence)
-        {
-            HandleSpellInputIcon(input);
-        }
+        HandleSpellInputIcon(input);
         CheckForMatches();
-        _previousInputSequence = _playerInputSequence;
     }
 
     public void CheckForMatches()
@@ -228,7 +235,6 @@ public class Grimoire : MonoBehaviour
     public void ResetInputSequence()
     {
         _playerInputSequence.Clear();
-
         _inputSequenceIndex = 0;
     }
 
