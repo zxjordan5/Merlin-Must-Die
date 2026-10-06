@@ -13,8 +13,8 @@ public class Fireball_Spell : Spell
     /// <param name="player"></param>
     public override void Cast(Player player)
     {
-        GameObject fb_Obj = Instantiate(spellObj, player.transform.position, player.transform.rotation);
-        Projectile fb_Projectile = fb_Obj.GetComponent<Projectile>();
-        fb_Projectile.LaunchProjectile(player.AimDirNorm);
+        GameObject fbObj = Instantiate(spellObj, player.transform.position, player.transform.rotation);
+        Projectile fbProjectile = fbObj.GetComponent<Projectile>();
+        fbProjectile.LaunchProjectile(player.AimDirNorm);
     }
 }

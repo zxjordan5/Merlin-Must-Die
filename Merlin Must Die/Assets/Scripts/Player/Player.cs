@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
         _speedMult = dashSpeed;
         _dashTarget = _crosshair.transform.localPosition;
         _dashTarget *= 20;
-        Debug.Log(_dashTarget + " + " + AimDirNorm);
+        //Debug.Log(_dashTarget + " + " + AimDirNorm);
         if (!_dashing)
         {
             StartCoroutine(DashTimer(dashTime));
