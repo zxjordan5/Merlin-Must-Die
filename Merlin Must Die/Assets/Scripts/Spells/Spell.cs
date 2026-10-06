@@ -12,6 +12,7 @@ public abstract class Spell : MonoBehaviour
 
 
     [SerializeField] public List<Grimoire.Direction> spellCode;
+
     [SerializeField] public GameObject spellObj;
 
     [SerializeField] public AudioClip castSound;
@@ -45,7 +46,12 @@ public abstract class Spell : MonoBehaviour
     }
 
     //Cast method to be implemented by every spell
-    public abstract void Cast(Player player);
+    public virtual void Cast(Player player)
+    {
+        ResetCooldown();
+
+        AudioSource.PlayClipAtPoint(castSound, player.transform.position);
+    }
 
     public void ResetCooldown()
     {

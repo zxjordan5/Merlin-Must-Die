@@ -2,13 +2,12 @@
 /// Contains the full grimoire and a list of active spells in the level
 /// Reads player input and finds the matching spell code
 /// Shows cooldowns for spells
-
-using System;
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class Grimoire : MonoBehaviour
 {
@@ -39,11 +38,15 @@ public class Grimoire : MonoBehaviour
     private Spell _preparedSpell;
 
     /// <summary>
+    /// Tracks longest spell code to reset after that limit is reached
+    /// </summary>
+    private int _maxSpellLength = 0;
+
+
+    /// <summary>
     /// Current sequence of inputs the player has entered
     /// </summary>
     private List<Direction> _playerInputSequence;
-
-    private int _inputSequenceIndex = 0;
     
 
     /// <summary>
@@ -75,6 +78,12 @@ public class Grimoire : MonoBehaviour
         {
             // Need to instantiate spells in order to track their timers
             _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
+            
+            //Get the longest spell code
+            if(spell.spellCode.Count > _maxSpellLength)
+            {
+                _maxSpellLength = spell.spellCode.Count;
+            }
         }
     }
 
@@ -112,7 +121,7 @@ public class Grimoire : MonoBehaviour
 
         for (int i = 0; i < activeSpells.Count; i++)
         {
-            text += activeSpells[i].SpellName;
+            text += activeSpells[i].name;
             text += " | ";
             List<Direction> activeSpellCode = activeSpells[i].spellCode;
             for (int j = 0; j < activeSpellCode.Count; j++)
@@ -138,7 +147,8 @@ public class Grimoire : MonoBehaviour
         }
 
         // Setting the UI component
-        grimoireTextUI.text = text;
+        // TODO: create an actual UI component
+        //grimoireTextUI.text = text;
     }
 
     /// <summary>
@@ -147,62 +157,59 @@ public class Grimoire : MonoBehaviour
     /// <param name="input">The direction of the new input</param>
     public void ProcessInput(Direction input)
     {
-        _playerInputSequence.Add(input);
-        String debug = "";
-        foreach (Direction dir in _playerInputSequence)
+
+        if (_playerInputSequence.Count == _maxSpellLength)
         {
-            debug += dir.ToString() + ", ";
+            ResetInputSequence();
+            Debug.Log("resetting sequence");
         }
-        Debug.Log(debug);
+
+        _playerInputSequence.Add(input);
+
+        DebugInputString();
+
         CheckForMatches();
     }
 
     public void CheckForMatches()
     {
+        //Check if no spells match
+        int spellMismatches = 0;
+
         //Debug.Log("ActiveSpells size:" + instantiatedActiveSpells.Count);
         //Debug.Log(instantiatedActiveSpells[0]);
-
-        bool spellWithMatchingFirstIndex = false;
-        foreach (Spell spell in _instantiatedActiveSpells)
-        {
-            if (_playerInputSequence[0] == spell.spellCode[0])
-            {
-                spellWithMatchingFirstIndex = true;
-            }
-        }
-
-        if (!spellWithMatchingFirstIndex)
-        {
-            // Reset and return early if there's no first match
-            // prevents input bugs
-            ResetInputSequence();
-            return;
-        }
-        
         foreach(Spell spell in _instantiatedActiveSpells)
         {
             if (IsMatch(spell))
-            { 
+            {
+                //Debug.Log("match with spell");
+                // Do we want to block additional inputs until the spell is cast (do this through an event)
                 _preparedSpell = spell;
                 ResetInputSequence();
                 break; // Exit the loop after preparing a spell
             }
             // if all spells on cooldown, reset input sequence
+            if (!IsSequenceValid(spell))
+            {
+                spellMismatches++;
+            }
+        }
+        if(spellMismatches >= activeSpells.Count)
+        {
+            Debug.Log("no spells match, resetting");
+            ResetInputSequence();
         }
     }
 
+    /// <summary>
+    /// </summary>
+    /// <param name="spell"></param>
+    /// <returns>True if the players input sequence matches the spells spellcode</returns>
     private bool IsMatch(Spell spell)
     {
         int codeLength = spell.spellCode.Count;
-
-        if ((_playerInputSequence[0] != spell.spellCode[0]))
-        {
-            ResetInputSequence();
-            return false;
-        }
-
-        // Need to recheck the player's input when a spell's cooldown ends
-        if (_playerInputSequence.Count < codeLength)// || spell.OnCooldown)
+        //Don't check if spell can be cast if the code is longer already or if the spell is on cooldown
+        if (_playerInputSequence.Count < codeLength || spell.OnCooldown)
         {
             return false;
         }
@@ -213,9 +220,7 @@ public class Grimoire : MonoBehaviour
             // Quit out early after any mismatches
             if (_playerInputSequence[i] != spell.spellCode[i])
             {
-                ResetInputSequence();
                 return false;
-                
             }
         }
 
@@ -223,10 +228,47 @@ public class Grimoire : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// </summary>
+    /// <param name="spell"></param>
+    /// <returns>True if the current input sequence is contained within a spells full input sequence
+    /// False as soon as the current input does not match the spell
+    /// </returns>
+    private bool IsSequenceValid(Spell spell)
+    {
+        if (_playerInputSequence.Count >= spell.spellCode.Count)
+        {
+            return false;
+        }
+        for (int i = 0; i < _playerInputSequence.Count; i++)
+        {
+            if (_playerInputSequence[i] != spell.spellCode[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    /// <summary>
+    /// Clear the current player input seqeunce
+    /// </summary>
     public void ResetInputSequence()
     {
         _playerInputSequence.Clear();
-        _inputSequenceIndex = 0;
+    }
+
+    /// <summary>
+    /// A debug function for printing the current inputted characters
+    /// </summary>
+    private void DebugInputString()
+    {
+        string output = "Input: ";
+        foreach(Direction input in _playerInputSequence)
+        {
+            output += input + ", ";
+        }
+        Debug.Log(output);
+
     }
 
     public void OnCast(InputAction.CallbackContext context)
@@ -241,8 +283,6 @@ public class Grimoire : MonoBehaviour
             }
             else
             {
-                // If the player tries to cast a spell when it isn't prepared, reset the code
-                ResetInputSequence(); 
                 Debug.Log("no spell prepared");
             }
         }
