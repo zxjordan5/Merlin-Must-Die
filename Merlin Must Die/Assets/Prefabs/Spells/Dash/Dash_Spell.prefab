@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dash_Spell
   cooldown: 0.5
-  spellCode: 02000000i
+  spellCode: 0200000002000000i
   spellObj: {fileID: 7440391782456400889, guid: a310795239b9dfc4bafd2b189d3c15d5, type: 3}
   castSound: {fileID: 8300000, guid: 4903e46cf72dc7f4cb7b91c3bf009a33, type: 3}
-  dashSpeed: 2
-  dashTime: 1
+  dashSpeed: 3
+  dashTime: 0.3

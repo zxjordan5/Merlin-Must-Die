@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class Grimoire : MonoBehaviour
 {
@@ -35,6 +36,12 @@ public class Grimoire : MonoBehaviour
     /// The currently prepared spell of the player. If this is null, the player has no spell prepared
     /// </summary>
     private Spell _preparedSpell;
+
+    /// <summary>
+    /// Tracks longest spell code to reset after that limit is reached
+    /// </summary>
+    private int _maxSpellLength = 0;
+
 
     /// <summary>
     /// Current sequence of inputs the player has entered
@@ -71,6 +78,10 @@ public class Grimoire : MonoBehaviour
         {
             // Need to instantiate spells in order to track their timers
             _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
+            if(spell.spellCode.Count > _maxSpellLength)
+            {
+                _maxSpellLength = spell.spellCode.Count;
+            }
         }
     }
 
@@ -144,7 +155,17 @@ public class Grimoire : MonoBehaviour
     /// <param name="input">The direction of the new input</param>
     public void ProcessInput(Direction input)
     {
+
+        if (_playerInputSequence.Count == _maxSpellLength)
+        {
+            ResetInputSequence();
+            Debug.Log("resetting sequence");
+        }
+
         _playerInputSequence.Add(input);
+
+        DebugInputString();
+
         CheckForMatches();
     }
 
@@ -152,11 +173,11 @@ public class Grimoire : MonoBehaviour
     {
         //Debug.Log("ActiveSpells size:" + instantiatedActiveSpells.Count);
         //Debug.Log(instantiatedActiveSpells[0]);
-        
         foreach(Spell spell in _instantiatedActiveSpells)
         {
             if (IsMatch(spell))
-            { 
+            {
+                Debug.Log("match with spell");
                 // Do we want to block additional inputs until the spell is cast (do this through an event)
                 _preparedSpell = spell;
                 ResetInputSequence();
@@ -180,7 +201,6 @@ public class Grimoire : MonoBehaviour
             // Quit out early after any mismatches
             if (_playerInputSequence[i] != spell.spellCode[i])
             {
-                ResetInputSequence();
                 return false;
             }
         }
@@ -189,9 +209,26 @@ public class Grimoire : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Clear the current player input seqeunce
+    /// </summary>
     public void ResetInputSequence()
     {
         _playerInputSequence.Clear();
+    }
+
+    /// <summary>
+    /// A debug function for printing the current inputted characters
+    /// </summary>
+    private void DebugInputString()
+    {
+        string output = "Input: ";
+        foreach(Direction input in _playerInputSequence)
+        {
+            output += input + ", ";
+        }
+        Debug.Log(output);
+
     }
 
     public void OnCast(InputAction.CallbackContext context)
