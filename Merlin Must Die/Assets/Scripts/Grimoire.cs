@@ -62,6 +62,13 @@ public class Grimoire : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI grimoireTextUI;
 
+    //Cooldown and Combo trackers
+    private float _comboCounter;
+    private float _comboTimer;
+    private float _comboGapTime = 1.5f;
+    
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -85,6 +92,19 @@ public class Grimoire : MonoBehaviour
                 _maxSpellLength = spell.spellCode.Count;
             }
         }
+    }
+
+    /// <summary>
+    /// Tracks combo timing
+    /// </summary>
+    void Update()
+    {
+        if(_comboTimer > _comboGapTime)
+        {
+            _comboTimer = 0;
+            _comboCounter = 0;
+        }
+        _comboTimer++;
     }
 
     /// <summary>
@@ -271,6 +291,9 @@ public class Grimoire : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Cast prepared spell and reset input sequence
+    /// </summary>
     public void OnCast(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -280,11 +303,22 @@ public class Grimoire : MonoBehaviour
                 _preparedSpell.Cast(_player);
                 _preparedSpell = null;
                 ResetInputSequence();
+                UpdateCombos();
             }
             else
             {
                 Debug.Log("no spell prepared");
             }
+        }
+    }
+
+    private void UpdateCombos()
+    {
+        _comboCounter++;
+        _comboTimer = 0;
+        foreach(Spell spell in _instantiatedActiveSpells)
+        {
+            spell.ReduceCooldownPercent(_comboCounter * 5);
         }
     }
 

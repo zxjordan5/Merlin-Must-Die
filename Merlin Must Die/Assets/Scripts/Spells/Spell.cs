@@ -53,6 +53,10 @@ public abstract class Spell : MonoBehaviour
         AudioSource.PlayClipAtPoint(castSound, player.transform.position);
     }
 
+    public void ReduceCooldownPercent(float percentage)
+    {
+        cooldownTimer += (100 - percentage) * cooldown;
+    }
     public void ResetCooldown()
     {
         cooldownTimer = 0;
