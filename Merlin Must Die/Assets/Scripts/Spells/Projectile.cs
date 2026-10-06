@@ -7,25 +7,37 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] float initialVelocity = 1;
-    
-    //Lifetime field and timer
-    
+
+
+    /// <summary>
+    /// Time until entire projectile object is deleted
+    /// Does not delete if set to 0
+    /// </summary>
     [SerializeField] protected float lifetime;
     protected float lifetimeTimer;
 
 
     public float Velocity
     {
-        get; private set;
+        get; set;
     } = 0;
     public Vector2 Direction
     {
-        get; private set;
+        get; set;
     } = new Vector2();
 
 
     //Move projectile with velocity and direction
     // Using transform.Translate currently instead of simulating forces
+
+    protected void Awake()
+    {
+        if(lifetime == 0)
+        {
+            lifetime = 999;
+        }
+    }
+
     protected void FixedUpdate()
     {
         gameObject.transform.Translate(Velocity * Time.deltaTime * Direction);

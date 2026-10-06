@@ -161,12 +161,12 @@ public class Grimoire : MonoBehaviour
         if (_playerInputSequence.Count == _maxSpellLength)
         {
             ResetInputSequence();
-            Debug.Log("resetting sequence");
+            //Debug.Log("resetting sequence");
         }
 
         _playerInputSequence.Add(input);
 
-        DebugInputString();
+        //DebugInputString();
 
         CheckForMatches();
     }
