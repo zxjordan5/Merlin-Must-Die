@@ -1,53 +1,20 @@
 using System.Collections.Generic;
-using System.ComponentModel;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEditor;
+using UnityEngine.UI;
+using TMPro;
 
 public class CooldownUI : MonoBehaviour
 {
-    /// <summary>
-    /// List of every spell cooldown bar
-    /// </summary>
-    private List<ProgressBar> _cooldownBars = new List<ProgressBar>();
+    [SerializeField]
+    VerticalLayoutGroup spellbarArea;
 
-    int m_Version = 0;
- 
-    /// <summary>
-    /// Connect the panel renderer to update on UI calls
-    /// 
-    /// TODO:
-    /// Understand what calls ui reloads...
-    /// </summary>
-    private void OnEnable()
-    {
-        PanelRenderer _root = GetComponent<PanelRenderer>();
+    [SerializeField]
+    GameObject spellbar;
 
-        _root.RegisterUIReloadCallback(OnUIReload);
+    private List<Image> _currentSpellbars = new List<Image>();
 
-    }
 
-    /// <summary>
-    /// Add all changes to CooldownUI here, using rootElement to find other visual elements.
-    /// </summary>
-    public void OnUIReload(PanelRenderer panelRenderer, VisualElement rootElement, int version)
-    {
-        if (version == m_Version)
-            return; // UI already up-to-date, no need to reload
-
-        m_Version = version;
-
-        
-        //Add each progress bar
-        VisualElement container = rootElement.Q("Container");
-        if(container.childCount != _cooldownBars.Count)
-        {
-            for (int i = 0; i < _cooldownBars.Count; i++)
-            {
-                container.Add(_cooldownBars[i]);
-            }
-        }
-    }
 
     /// <summary>
     /// Creates a progress bar UI element using the spells information
@@ -55,14 +22,20 @@ public class CooldownUI : MonoBehaviour
     /// <param name="spell">Spell name and cooldown will be connected to the progress bar</param>
     public void AddSpell(Spell spell)
     {
-        ProgressBar spellBar = new ProgressBar
-        {
-            title = spell.name,
-            lowValue = 0f,
-            highValue = 100f,
-            value = 0f,
-        };
+        GameObject newBar = Instantiate(spellbar, spellbarArea.transform);
+        newBar.GetComponentInChildren<TMP_Text>().text = spell.SpellName;
+        newBar.name = spell.SpellName + " bar";
 
-        _cooldownBars.Add(spellBar);
+        _currentSpellbars.Add(newBar.GetComponent<Image>());
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="spellIndex"></param>
+    /// <param name="cooldownPercentage"></param>
+    public void UpdateSpell(int spellIndex, float cooldownPercentage)
+    {
+        _currentSpellbars[spellIndex].fillAmount = cooldownPercentage / 100;
     }
 }

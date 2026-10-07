@@ -111,8 +111,16 @@ public class Grimoire : MonoBehaviour
         {
             _comboTimer = 0;
             _comboCounter = 0;
+            //Debug.Log("Combo Resetting");
         }
-        _comboTimer++;
+        _comboTimer += Time.deltaTime;
+        //Debug.Log("Combo count: " + _comboCounter + "\nCombo Timer " + _comboTimer);
+
+        //Update cooldown bar UI
+        for(int i = 0; i < _instantiatedActiveSpells.Count; i++)
+        {
+            _cooldownUI.UpdateSpell(i, _instantiatedActiveSpells[i].CooldownPercent);
+        }
     }
 
     /// <summary>
@@ -326,7 +334,7 @@ public class Grimoire : MonoBehaviour
         _comboTimer = 0;
         foreach(Spell spell in _instantiatedActiveSpells)
         {
-            spell.ReduceCooldownPercent(_comboCounter * 5);
+            spell.ReduceCooldownPercent(_comboCounter);
         }
     }
 
