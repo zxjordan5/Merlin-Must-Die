@@ -318,7 +318,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   aimDirRaw: {x: 0, y: 0}
-  maxSpeed: 8
+  maxSpeed: 6
+  _targetDirection: {x: 0, y: 0}
+  _targetVelocity: {x: 0, y: 0}
 --- !u!50 &531207048
 Rigidbody2D:
   serializedVersion: 5
