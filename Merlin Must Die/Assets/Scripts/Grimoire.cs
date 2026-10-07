@@ -3,11 +3,13 @@
 /// Reads player input and finds the matching spell code
 /// Shows cooldowns for spells
 using NUnit.Framework;
-using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Grimoire : MonoBehaviour
 {
@@ -62,6 +64,9 @@ public class Grimoire : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI grimoireTextUI;
 
+    [SerializeField]
+    private CooldownUI _cooldownUI;
+
     //Cooldown and Combo trackers
     private float _comboCounter;
     private float _comboTimer;
@@ -91,6 +96,9 @@ public class Grimoire : MonoBehaviour
             {
                 _maxSpellLength = spell.spellCode.Count;
             }
+
+            //Add the spell to the cooldown UI element
+            _cooldownUI.AddSpell(spell);
         }
     }
 
