@@ -58,10 +58,14 @@ public class CooldownUI : MonoBehaviour
     {
         _currentSpellbars[spellIndex].fillAmount = cooldownPercentage / 100;
     }
+
     public void UpdateComboText(int combo)
     {
         _comboText.text = "Combo: " + combo;
     }
+    /// <summary>
+    /// Updates the cooldown bar to count down, indicating when the cooldown will reset
+    /// </summary>
     public void UpdateComboBar(float timeUntilReset, float resetTime)
     {
         _comboBarImage.fillAmount = 1 - timeUntilReset / resetTime;

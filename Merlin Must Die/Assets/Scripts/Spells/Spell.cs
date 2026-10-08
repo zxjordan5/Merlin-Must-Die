@@ -9,9 +9,7 @@ public abstract class Spell : MonoBehaviour
 {
     //Cooldown field and timer
     [SerializeField] protected float cooldown;
-    protected float cooldownTimer;
-
-    [CreateProperty]
+    protected float cooldownTimer; //Time until cooldown resets
 
     public float CooldownPercent
     {
@@ -71,10 +69,6 @@ public abstract class Spell : MonoBehaviour
     public void ReduceCooldownPercent(float percentage)
     {
         cooldownTimer += percentage * (cooldown / 100);
-    }
-    public float GetCooldown()
-    {
-        return cooldownTimer;
     }
     public void ResetCooldown()
     {
