@@ -3,11 +3,13 @@
 /// Reads player input and finds the matching spell code
 /// Shows cooldowns for spells
 using NUnit.Framework;
-using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Grimoire : MonoBehaviour
 {
@@ -48,7 +50,6 @@ public class Grimoire : MonoBehaviour
     /// </summary>
     private List<Direction> _playerInputSequence;
 
-
     /// <summary>
     /// The spell codes actively being displayed
     /// </summary>
@@ -61,6 +62,14 @@ public class Grimoire : MonoBehaviour
     // Displayed text in the UI
     [SerializeField]
     private TextMeshProUGUI grimoireTextUI;
+
+    [SerializeField]
+    private CooldownUI _cooldownUI;
+
+    //Cooldown and Combo trackers
+    private int _comboCounter;
+    private float _comboTimer;
+    private float _comboGapTime = 1.5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -84,6 +93,24 @@ public class Grimoire : MonoBehaviour
             {
                 _maxSpellLength = spell.spellCode.Count;
             }
+
+            //Add the spell to the cooldown UI element
+            _cooldownUI.AddSpell(spell);
+        }
+    }
+
+    void Update()
+    {
+        UpdateComboTimer();
+
+        //Update cooldown bar UI
+        for(int i = 0; i < _instantiatedActiveSpells.Count; i++)
+        {
+            _cooldownUI.UpdateSpellBar(i, _instantiatedActiveSpells[i].CooldownPercent);
+        }
+        if(_comboCounter > 0)
+        {
+            _cooldownUI.UpdateComboBar(_comboTimer, _comboGapTime);
         }
     }
 
@@ -271,6 +298,9 @@ public class Grimoire : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Cast prepared spell and reset input sequence
+    /// </summary>
     public void OnCast(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -280,6 +310,7 @@ public class Grimoire : MonoBehaviour
                 _preparedSpell.Cast(_player);
                 _preparedSpell = null;
                 ResetInputSequence();
+                UpdateCombos();
             }
             else
             {
@@ -287,6 +318,34 @@ public class Grimoire : MonoBehaviour
             }
         }
     }
+
+    // **** COMBO METHODS ****
+    #region Combos
+    /// <summary>
+    /// Increase the combo count and reset the combo cooldown
+    /// </summary>
+    private void UpdateCombos()
+    {
+        _comboCounter++;
+        _comboTimer = 0;
+        foreach(Spell spell in _instantiatedActiveSpells)
+        {
+            spell.ReduceCooldownPercent(_comboCounter);
+        }
+        _cooldownUI.UpdateComboText(_comboCounter);
+    }
+
+    private void UpdateComboTimer()
+    {
+        if (_comboTimer > _comboGapTime)
+        {
+            _comboTimer = 0;
+            _comboCounter = 0;
+            _cooldownUI.UpdateComboText(_comboCounter);
+        }
+        _comboTimer += Time.deltaTime;
+    }
+    #endregion
 
     // ***** INPUT METHODS *****
     #region Input Methods
