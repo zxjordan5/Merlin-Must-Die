@@ -48,8 +48,6 @@ public class Grimoire : MonoBehaviour
     /// </summary>
     private List<Direction> _playerInputSequence = new List<Direction>();
 
-    private List<Direction> _previousInputSequence = new List<Direction>();
-
 
     /// <summary>
     /// The spell codes actively being displayed
@@ -77,8 +75,9 @@ public class Grimoire : MonoBehaviour
         _allSpells = new List<Spell>();
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
-        //GetSpells();
         GetGrimoireText();
+
+        // The original spell input icon prefab is hidden; used for instantiating only
         spellInputIcon.SetActive(false);
 
         foreach (Spell spell in activeSpells)
@@ -92,29 +91,6 @@ public class Grimoire : MonoBehaviour
                 _maxSpellLength = spell.spellCode.Count;
             }
         }
-    }
-
-    /// <summary>
-    /// Gets all spells to store them; filters by learned and active
-    /// MAY BE DEPRECATED
-    /// </summary>
-    /// <returns></returns>
-    void GetSpells()
-    {
-        // allSpells = // get from list somewhere else in the code??
-
-        // add learned and active spells to their lists as needed
-        //for (int i = 0; i < allSpells.Count; i++)
-        //{
-        /// if (allSpells[i].learned)
-        /// {
-        ///     learnedSpells.Add(allSpells[i]);
-        /// }
-        /// if (allSpells[i].active)
-        /// {
-        ///     activeSpells.Add(allSpells[i]);
-        /// }
-        //}
     }
 
     /// <summary>
@@ -171,10 +147,10 @@ public class Grimoire : MonoBehaviour
 
         _playerInputSequence.Add(input);
 
+        // Makes the input icons appear above the player's head
         HandleSpellInputIcon(input);
 
         CheckForMatches();
-        _previousInputSequence = _playerInputSequence;
     }
 
     public void CheckForMatches()
@@ -261,15 +237,7 @@ public class Grimoire : MonoBehaviour
     public void ResetInputSequence()
     {
         _playerInputSequence.Clear();
-
-        // reset ui
-        for (int i = spellInputIcon.transform.parent.childCount - 1; i > 0; i--)
-        {
-            if (spellInputIcon.transform.parent.GetChild(i) != null)
-            {
-                Destroy(spellInputIcon.transform.parent.GetChild(i).gameObject);
-            }
-        }
+        ResetInputIconsUI();
     }
 
     /// <summary>
@@ -342,6 +310,23 @@ public class Grimoire : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// No input icons displayed over player's head
+    /// Used in ResetInputSequence()
+    /// </summary>
+    public void ResetInputIconsUI()
+    {
+        for (int i = spellInputIcon.transform.parent.childCount - 1; i > 0; i--)
+        {
+            if (spellInputIcon.transform.parent.GetChild(i) != null)
+            {
+                Destroy(spellInputIcon.transform.parent.GetChild(i).gameObject);
+            }
+        }
+    }
+
+    // =============
 
     // ***** INPUT METHODS *****
     #region Input Methods
