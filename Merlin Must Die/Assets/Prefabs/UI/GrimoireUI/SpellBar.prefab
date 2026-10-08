@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6583537526996825181}
   - component: {fileID: 797475402462629119}
   m_Layer: 0
-  m_Name: SpellBarUI
+  m_Name: SpellBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 152.52, y: 38.13}
+  m_AnchoredPosition: {x: 75.302826, y: 19.72699}
+  m_SizeDelta: {x: 150.6057, y: 39.454}
   m_Pivot: {x: 0.5, y: 0.50000006}
 --- !u!222 &6583537526996825181
 CanvasRenderer:
@@ -108,10 +108,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7769210249142524219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.0489, y: 0.86741}
-  m_SizeDelta: {x: 130.8978, y: 39.865}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 75.303, y: 19.727}
+  m_SizeDelta: {x: 150.61, y: 39.454}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1344048128823749121
 CanvasRenderer:
@@ -171,9 +171,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 16
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.000038146973, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

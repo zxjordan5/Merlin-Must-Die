@@ -676,7 +676,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8176368522206493973, guid: ad978e41f13f29d439e14c7c94ce6f60, type: 3}
       propertyPath: cooldown
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8176368522206493973, guid: ad978e41f13f29d439e14c7c94ce6f60, type: 3}
       propertyPath: dashTime

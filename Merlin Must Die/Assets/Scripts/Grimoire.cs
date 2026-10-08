@@ -50,7 +50,6 @@ public class Grimoire : MonoBehaviour
     /// </summary>
     private List<Direction> _playerInputSequence;
 
-
     /// <summary>
     /// The spell codes actively being displayed
     /// </summary>
@@ -68,11 +67,9 @@ public class Grimoire : MonoBehaviour
     private CooldownUI _cooldownUI;
 
     //Cooldown and Combo trackers
-    private float _comboCounter;
+    private int _comboCounter;
     private float _comboTimer;
     private float _comboGapTime = 1.5f;
-    
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -102,24 +99,18 @@ public class Grimoire : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Tracks combo timing
-    /// </summary>
     void Update()
     {
-        if(_comboTimer > _comboGapTime)
-        {
-            _comboTimer = 0;
-            _comboCounter = 0;
-            //Debug.Log("Combo Resetting");
-        }
-        _comboTimer += Time.deltaTime;
-        //Debug.Log("Combo count: " + _comboCounter + "\nCombo Timer " + _comboTimer);
+        UpdateComboTimer();
 
         //Update cooldown bar UI
         for(int i = 0; i < _instantiatedActiveSpells.Count; i++)
         {
-            _cooldownUI.UpdateSpell(i, _instantiatedActiveSpells[i].CooldownPercent);
+            _cooldownUI.UpdateSpellBar(i, _instantiatedActiveSpells[i].CooldownPercent);
+        }
+        if(_comboCounter > 0)
+        {
+            _cooldownUI.UpdateComboBar(_comboTimer, _comboGapTime);
         }
     }
 
@@ -328,6 +319,11 @@ public class Grimoire : MonoBehaviour
         }
     }
 
+    // **** COMBO METHODS ****
+    #region Combos
+    /// <summary>
+    /// Increase the combo count and reset the combo cooldown
+    /// </summary>
     private void UpdateCombos()
     {
         _comboCounter++;
@@ -336,7 +332,20 @@ public class Grimoire : MonoBehaviour
         {
             spell.ReduceCooldownPercent(_comboCounter);
         }
+        _cooldownUI.UpdateComboText(_comboCounter);
     }
+
+    private void UpdateComboTimer()
+    {
+        if (_comboTimer > _comboGapTime)
+        {
+            _comboTimer = 0;
+            _comboCounter = 0;
+            _cooldownUI.UpdateComboText(_comboCounter);
+        }
+        _comboTimer += Time.deltaTime;
+    }
+    #endregion
 
     // ***** INPUT METHODS *****
     #region Input Methods
