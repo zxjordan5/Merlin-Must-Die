@@ -42,8 +42,8 @@ public class DestructibleObject : MonoBehaviour
     {
         if(other.CompareTag("DamageSpell"))
         {
-            // TODO: Implement a common DamageSpell class and call TakeDamage() with the damage amount
-            // TakeDamage() call here
+            DamageObject dmgObj = other.GetComponent<DamageObject>();
+            TakeDamage(dmgObj.Damage);
 
             if (_spriteRenderer.sprite != damagedSprite && health <= _initialHealth / 2)
             {
@@ -71,7 +71,7 @@ public class DestructibleObject : MonoBehaviour
     /// </summary>
     void DestroyObject()
     {
-        
+        // TODO: Implement full destruction
     }
 
     /// <summary>

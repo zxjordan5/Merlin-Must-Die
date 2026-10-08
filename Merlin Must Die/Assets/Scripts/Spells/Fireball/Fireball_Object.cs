@@ -3,28 +3,22 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Fireball projectile that on collision will explode
-/// Damage not currently implemented
+/// Fireball projectile that on collision with an enemy or destructible object will explode
 /// </summary>
-public class Fireball_Object : MonoBehaviour
+public class Fireball_Object : DamageObject
 {
-
-    [SerializeField] float damage = 1;
-
     [SerializeField] protected AudioClip hitSound;
     [SerializeField] protected ParticleSystem explosionParticles;
 
 
     /// <summary>
     /// Collision logic for the fireball
-    /// 
-    /// TODO:
-    /// change this to work with enemies.
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.name == "Dummy")
+        // Will explode on collision objects in the environment, enemies, and destructible objects. Will not explode on collision with the player.
+        if (other.CompareTag("EnvironmentObject") ||other.CompareTag("Enemy") || other.CompareTag("Destructible"))
         {
             Explode();
         }
