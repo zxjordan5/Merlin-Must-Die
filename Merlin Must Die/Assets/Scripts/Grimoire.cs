@@ -167,7 +167,7 @@ public class Grimoire : MonoBehaviour
                 //Debug.Log("match with spell");
                 // Do we want to block additional inputs until the spell is cast (do this through an event)
                 _preparedSpell = spell;
-                ResetInputSequence();
+                //ResetInputSequence();
                 break; // Exit the loop after preparing a spell
             }
             // if all spells on cooldown, reset input sequence
