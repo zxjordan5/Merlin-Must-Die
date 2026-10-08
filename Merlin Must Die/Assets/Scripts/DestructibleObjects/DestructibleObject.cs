@@ -72,6 +72,8 @@ public class DestructibleObject : MonoBehaviour
     void DestroyObject()
     {
         // TODO: Implement full destruction
+        GameObject destroyedObject = (GameObject)Instantiate(destructiblePrefabRef, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 
     /// <summary>
