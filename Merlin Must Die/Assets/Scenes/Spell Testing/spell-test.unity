@@ -152,6 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   aimDirRaw: {x: 0, y: 0}
   maxSpeed: 8
+  _targetDirection: {x: 0, y: 0}
+  _targetVelocity: {x: 0, y: 0}
 --- !u!4 &49372456
 Transform:
   m_ObjectHideFlags: 0
@@ -217,12 +219,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1353817254481340646, guid: b314f52bedf763d4a9c0d4df3b08fe02, type: 3}
+  m_Sprite: {fileID: -511202077, guid: b314f52bedf763d4a9c0d4df3b08fe02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
