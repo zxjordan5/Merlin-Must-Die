@@ -5,45 +5,80 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Wander_Enemy : MonoBehaviour
 {
+    // Test vars
+
     //Set in this class
     [SerializeField] protected Rigidbody2D _rb;
-    [SerializeField] protected bool _wandering = false;
-    [SerializeField] protected float _timer;
+    protected bool _wandering = false;
+    [SerializeField] protected bool _attacking = false;
+    protected float _timer;
+    protected Player _player;
 
     //Set in child class
     protected float _leftBound, _rightBound, _topBound, _bottomBound;
-    [SerializeField] protected float _wanderTime;
-    [SerializeField] protected float _pauseTime;
-    protected float _detectionRadius;
+    protected float _wanderTime;
+    protected float _pauseTime;
+    protected GameObject _detectionCircle;
 
-    //Individual timer for the spells cooldown
+    protected virtual void Awake()
+    {
+        _player = FindAnyObjectByType<Player>();
+    }
+
     protected virtual void FixedUpdate()
     {
         _timer += Time.deltaTime;
+        _detectionCircle.transform.position = _rb.transform.position;
 
-        if (_wandering == true && _timer >= _wanderTime)
+        // Make the enemy pause
+        if (_wandering && _timer >= _wanderTime && !_attacking)
         {
             _wandering = false;
             _rb.linearVelocityX = 0;
             _rb.linearVelocityY = 0;
             _timer = 0;
         }
-
-        // Keep the enemy in their bounds
-        if (_rb.transform.position.x > _rightBound || _rb.transform.position.x < _leftBound)
-        {
-            _rb.linearVelocityX *= -1;
-        }
-        if (_rb.transform.position.y > _topBound || _rb.transform.position.y < _bottomBound)
-        {
-            _rb.linearVelocityY *= -1;
-        }
-
-        if (_wandering == false && _timer >= _pauseTime)
+        
+        // Once the enemy has paused for long enough, wander again
+        if (!_wandering && _timer >= _pauseTime && !_attacking)
         {
             Wander();
             _timer = 0;
         }
+
+        // If the player has not been detected, keep checking
+        if (!_attacking) { Detection(); }
+        // Once the player is detected, the enemy allways goes towards their location
+        if (_attacking)
+        {
+            _rb.transform.position = Vector2.MoveTowards(
+                _rb.transform.position,
+                _player.transform.position,
+                1.5f * Time.deltaTime);
+        }
+
+        // Flip the sprite properly (ONLY WORKS WHEN WANDERING RN)
+        if (_rb.linearVelocityX > 0 && transform.localScale.x < 0) 
+        { 
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z); 
+        }
+        else if (_rb.linearVelocityX < 0 && transform.localScale.x > 0) 
+        { 
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
+
+        // Keep the enemy in their bounds when not attacking
+        if ((_rb.transform.position.x > _rightBound || _rb.transform.position.x < _leftBound)
+            && !_attacking)
+        {
+            _rb.linearVelocityX *= -1;
+        }
+        if ((_rb.transform.position.y > _topBound || _rb.transform.position.y < _bottomBound)
+            && !_attacking)
+        {
+            _rb.linearVelocityY *= -1;
+        }
+
     }
 
     protected virtual void Wander()
@@ -56,4 +91,6 @@ public abstract class Wander_Enemy : MonoBehaviour
         //    5);
         _wandering = true;
     }
+
+    protected abstract void Detection();
 }
