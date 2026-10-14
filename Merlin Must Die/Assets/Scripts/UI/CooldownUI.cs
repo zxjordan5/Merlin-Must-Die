@@ -11,12 +11,16 @@ public class CooldownUI : MonoBehaviour
     /// Vertical layout group that will contain the spellbar UI elements
     /// </summary>
     [SerializeField]
-    private VerticalLayoutGroup _grimoireUIArea;
+    private VerticalLayoutGroup _cooldownUIArea;
 
     [SerializeField]
     private GameObject _comboBar;
-    private Image _comboBarImage;
+
     private TMP_Text _comboText;
+
+    [SerializeField]
+    private Image _comboBarImage;
+    
 
     /// <summary>
     /// Filled image that can have it's fillAmount changed to match the attached spells cooldown
@@ -42,7 +46,7 @@ public class CooldownUI : MonoBehaviour
     /// <param name="spell">Spell name and cooldown will be connected to the progress bar</param>
     public void AddSpell(Spell spell)
     {
-        GameObject newBar = Instantiate(_spellbar, _grimoireUIArea.transform);
+        GameObject newBar = Instantiate(_spellbar, _cooldownUIArea.transform);
         newBar.GetComponentInChildren<TMP_Text>().text = spell.SpellName;
         newBar.name = spell.SpellName + " bar";
 
