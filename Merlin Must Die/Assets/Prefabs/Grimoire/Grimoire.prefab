@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7434643073778803445}
   - component: {fileID: 5612183032171079160}
   m_Layer: 0
-  m_Name: '[DEPRECATED] Grimoire'
+  m_Name: Grimoire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

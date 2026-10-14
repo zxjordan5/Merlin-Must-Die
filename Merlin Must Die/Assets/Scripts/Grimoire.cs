@@ -51,11 +51,6 @@ public class Grimoire : MonoBehaviour
     private List<Direction> _playerInputSequence = new List<Direction>();
 
     /// <summary>
-    /// The spell codes actively being displayed
-    /// </summary>
-    private List<string> _grimoireText;
-
-    /// <summary>
     /// The current player in the scene
     /// </summary>
     private Player _player;
