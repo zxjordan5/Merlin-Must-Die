@@ -157,7 +157,7 @@ public class Grimoire : MonoBehaviour
 
         // Setting the UI component
         // TODO: create an actual UI component
-        //grimoireTextUI.text = text;
+        grimoireTextUI.text = text;
     }
 
     /// <summary>
