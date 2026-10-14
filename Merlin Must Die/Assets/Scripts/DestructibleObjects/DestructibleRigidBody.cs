@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Configures torque and force for all destructable object components. Attach to any destructable object "part"
 /// </summary>
-public class DestructableRigidBody : MonoBehaviour
+public class DestructibleRigidBody : MonoBehaviour
 {
     /// <summary>
     /// The average desired forceDirection for the destructable object
