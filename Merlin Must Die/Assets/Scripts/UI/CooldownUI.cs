@@ -15,8 +15,12 @@ public class CooldownUI : MonoBehaviour
 
     [SerializeField]
     private GameObject _comboBar;
-    private Image _comboBarImage;
+
     private TMP_Text _comboText;
+
+    [SerializeField]
+    private Image _comboBarImage;
+    
 
     /// <summary>
     /// Filled image that can have it's fillAmount changed to match the attached spells cooldown
