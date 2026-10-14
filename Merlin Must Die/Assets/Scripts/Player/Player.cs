@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using System.IO;
+using UnityEditor.Callbacks;
 
 public class Player : MonoBehaviour
 {
@@ -17,12 +18,14 @@ public class Player : MonoBehaviour
     }
 
 
-    // Movement/Aiming Variables
     private Rigidbody2D _rb; // Reference to the player's rigid body
     private GameObject _crosshair;
     private Camera _cam;
     // We can remove "serialize" once we've settled on a speed
     [SerializeField] private float maxSpeed = 2f;
+    [SerializeField] private Vector2 _targetDirection;
+    [SerializeField] private Vector2 _targetVelocity;
+
     private float _speedMult = 1f; //Should be reset to 1 always
 
     private Vector3 _mousePos;
@@ -47,6 +50,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Reset the target velocity so the player slows down
+        _targetVelocity = new Vector2(0,0);
 
         // Dashing movement
         // Move towards a fixed location determined at the moment the dash spell is cast
@@ -61,21 +66,23 @@ public class Player : MonoBehaviour
         // Kb/M movement
         if (_kbMoving)
         {
-            _rb.transform.position = Vector2.MoveTowards(
-                _rb.transform.position,
-                _cam.ScreenToWorldPoint(Mouse.current.position.ReadValue()),
-                maxSpeed * _speedMult * Time.deltaTime);
+            _targetDirection = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
+            _targetVelocity = _targetDirection * maxSpeed;
+            _rb.AddForce((_targetVelocity - _rb.linearVelocity)*2);
         }
         // GP movement
         else if (_gpMoving)
-        {
-            _rb.transform.position = Vector2.MoveTowards(
-                _rb.transform.position,
-                new Vector2(_rb.transform.position.x + Gamepad.current.leftStick.x.value, _rb.transform.position.y + Gamepad.current.leftStick.y.value),
-                maxSpeed * _speedMult * Time.deltaTime);
+        {   
+            _targetDirection = Gamepad.current.leftStick.value;
+            _targetVelocity = _targetDirection * maxSpeed;
+            _rb.AddForce((_targetVelocity - _rb.linearVelocity)*2);
+
+            if (!_gpAiming) {
+                _gpPos = new Vector3(Gamepad.current.leftStick.value.x, Gamepad.current.leftStick.value.y, 0).normalized * 2;
+            _crosshair.transform.position = _rb.transform.position + _gpPos;
+            aimDirRaw = _crosshair.transform.position - _rb.transform.position;
+            }
         }
-
-
 
         // Kb/M aiming
         if (_kbAiming)
@@ -90,6 +97,12 @@ public class Player : MonoBehaviour
             _gpPos = new Vector3(Gamepad.current.rightStick.value.x, Gamepad.current.rightStick.value.y, 0).normalized * 2;
             _crosshair.transform.position = _rb.transform.position + _gpPos;
             aimDirRaw = _crosshair.transform.position - _rb.transform.position;
+        }
+
+        // Slows player movement when not actively moving
+        if (!_kbMoving && !_gpMoving)
+        {
+            _rb.linearVelocity *= new Vector2(0.8f,0.8f);
         }
 
         // Keeps the camera centered on the player

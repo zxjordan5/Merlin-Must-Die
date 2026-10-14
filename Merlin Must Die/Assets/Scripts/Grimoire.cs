@@ -3,11 +3,13 @@
 /// Reads player input and finds the matching spell code
 /// Shows cooldowns for spells
 using NUnit.Framework;
-using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Grimoire : MonoBehaviour
 {
@@ -30,7 +32,7 @@ public class Grimoire : MonoBehaviour
     [SerializeField]
     public List<Spell> activeSpells;
 
-    private List<Spell> _instantiatedActiveSpells;
+    private List<Spell> _instantiatedActiveSpells = new List<Spell>();
 
     /// <summary>
     /// The currently prepared spell of the player. If this is null, the player has no spell prepared
@@ -46,8 +48,7 @@ public class Grimoire : MonoBehaviour
     /// <summary>
     /// Current sequence of inputs the player has entered
     /// </summary>
-    private List<Direction> _playerInputSequence;
-
+    private List<Direction> _playerInputSequence = new List<Direction>();
 
     /// <summary>
     /// The spell codes actively being displayed
@@ -62,17 +63,30 @@ public class Grimoire : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI grimoireTextUI;
 
+    // The Spell Input GO with 4 cardinal direction arrow sprites as children
+    [SerializeField]
+    private GameObject spellInputIcon;
+    [SerializeField]
+    private List<GameObject> arrowIcons;
+    [SerializeField]
+    private CooldownUI _cooldownUI;
+
+    //Cooldown and Combo trackers
+    private int _comboCounter;
+    private float _comboTimer;
+    private float _comboGapTime = 1.5f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         // get all spells from spell class; sort into .learned and .active
         _allSpells = new List<Spell>();
-        _playerInputSequence = new List<Direction>();
-        _instantiatedActiveSpells = new List<Spell>();
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
-        //GetSpells();
         GetGrimoireText();
+
+        // The original spell input icon prefab is hidden; used for instantiating only
+        spellInputIcon.SetActive(false);
 
         foreach (Spell spell in activeSpells)
         {
@@ -84,30 +98,25 @@ public class Grimoire : MonoBehaviour
             {
                 _maxSpellLength = spell.spellCode.Count;
             }
+
+            //Add the spell to the cooldown UI element
+            _cooldownUI.AddSpell(spell);
         }
     }
 
-    /// <summary>
-    /// Gets all spells to store them; filters by learned and active
-    /// MAY BE DEPRECATED
-    /// </summary>
-    /// <returns></returns>
-    void GetSpells()
+    void Update()
     {
-        // allSpells = // get from list somewhere else in the code??
+        UpdateComboTimer();
 
-        // add learned and active spells to their lists as needed
-        //for (int i = 0; i < allSpells.Count; i++)
-        //{
-        /// if (allSpells[i].learned)
-        /// {
-        ///     learnedSpells.Add(allSpells[i]);
-        /// }
-        /// if (allSpells[i].active)
-        /// {
-        ///     activeSpells.Add(allSpells[i]);
-        /// }
-        //}
+        //Update cooldown bar UI
+        for(int i = 0; i < _instantiatedActiveSpells.Count; i++)
+        {
+            _cooldownUI.UpdateSpellBar(i, _instantiatedActiveSpells[i].CooldownPercent);
+        }
+        if(_comboCounter > 0)
+        {
+            _cooldownUI.UpdateComboBar(_comboTimer, _comboGapTime);
+        }
     }
 
     /// <summary>
@@ -148,7 +157,7 @@ public class Grimoire : MonoBehaviour
 
         // Setting the UI component
         // TODO: create an actual UI component
-        //grimoireTextUI.text = text;
+        grimoireTextUI.text = text;
     }
 
     /// <summary>
@@ -157,16 +166,15 @@ public class Grimoire : MonoBehaviour
     /// <param name="input">The direction of the new input</param>
     public void ProcessInput(Direction input)
     {
-
         if (_playerInputSequence.Count == _maxSpellLength)
         {
             ResetInputSequence();
-            //Debug.Log("resetting sequence");
         }
 
         _playerInputSequence.Add(input);
 
-        //DebugInputString();
+        // Makes the input icons appear above the player's head
+        HandleSpellInputIcon(input);
 
         CheckForMatches();
     }
@@ -185,7 +193,7 @@ public class Grimoire : MonoBehaviour
                 //Debug.Log("match with spell");
                 // Do we want to block additional inputs until the spell is cast (do this through an event)
                 _preparedSpell = spell;
-                ResetInputSequence();
+                //ResetInputSequence();
                 break; // Exit the loop after preparing a spell
             }
             // if all spells on cooldown, reset input sequence
@@ -255,6 +263,7 @@ public class Grimoire : MonoBehaviour
     public void ResetInputSequence()
     {
         _playerInputSequence.Clear();
+        ResetInputIconsUI();
     }
 
     /// <summary>
@@ -271,6 +280,9 @@ public class Grimoire : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Cast prepared spell and reset input sequence
+    /// </summary>
     public void OnCast(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -280,6 +292,7 @@ public class Grimoire : MonoBehaviour
                 _preparedSpell.Cast(_player);
                 _preparedSpell = null;
                 ResetInputSequence();
+                UpdateCombos();
             }
             else
             {
@@ -287,6 +300,91 @@ public class Grimoire : MonoBehaviour
             }
         }
     }
+    
+    // === UI ===
+
+    /// <summary>
+    /// Determines the direction of the spell icon arrow based on the current input
+    /// </summary>
+    /// <param name="input"></param>
+    public void HandleSpellInputIcon(Direction input)
+    {
+        if (spellInputIcon.transform.parent.childCount <= _maxSpellLength)
+        {
+            // Gets the parent SpellInput object
+            GameObject thisIcon = Instantiate(spellInputIcon, spellInputIcon.transform.parent.transform);
+            Debug.Log("Input dir: " + input);
+            thisIcon.SetActive(true);
+
+            // Set arrow icons active false - invisible
+            for (int i = 0; i < arrowIcons.Count; i++)
+            {
+                arrowIcons[i] = thisIcon.transform.GetChild(i).gameObject;
+                arrowIcons[i].SetActive(false);
+            }
+            // assuming these are in order -- check later
+            switch (input)
+            {
+                case Direction.Up:
+                    arrowIcons[0].SetActive(true);
+                    break;
+                case Direction.Down:
+                    arrowIcons[1].SetActive(true);
+                    break;
+                case Direction.Left:
+                    arrowIcons[2].SetActive(true);
+                    break;
+                case Direction.Right:
+                    arrowIcons[3].SetActive(true);
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// No input icons displayed over player's head
+    /// Used in ResetInputSequence()
+    /// </summary>
+    public void ResetInputIconsUI()
+    {
+        for (int i = spellInputIcon.transform.parent.childCount - 1; i > 0; i--)
+        {
+            if (spellInputIcon.transform.parent.GetChild(i) != null)
+            {
+                Destroy(spellInputIcon.transform.parent.GetChild(i).gameObject);
+            }
+        }
+    }
+
+    // =============
+
+    // **** COMBO METHODS ****
+    #region Combos
+    /// <summary>
+    /// Increase the combo count and reset the combo cooldown
+    /// </summary>
+    private void UpdateCombos()
+    {
+        _comboCounter++;
+        _comboTimer = 0;
+        foreach(Spell spell in _instantiatedActiveSpells)
+        {
+            spell.ReduceCooldownPercent(_comboCounter);
+        }
+        _cooldownUI.UpdateComboText(_comboCounter);
+    }
+
+    private void UpdateComboTimer()
+    {
+        if (_comboTimer > _comboGapTime)
+        {
+            _comboTimer = 0;
+            _comboCounter = 0;
+            _cooldownUI.UpdateComboText(_comboCounter);
+        }
+        _comboTimer += Time.deltaTime;
+    }
+    #endregion
 
     // ***** INPUT METHODS *****
     #region Input Methods

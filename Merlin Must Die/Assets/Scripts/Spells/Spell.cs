@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,7 +9,19 @@ public abstract class Spell : MonoBehaviour
 {
     //Cooldown field and timer
     [SerializeField] protected float cooldown;
-    protected float cooldownTimer;
+    protected float cooldownTimer; //Time until cooldown resets
+
+    public float CooldownPercent
+    {
+        get
+        {
+            if(cooldownTimer > cooldown)
+            {
+                return 100;
+            }
+            return 100 * (cooldownTimer / cooldown);
+        }
+    }
 
 
     [SerializeField] public List<Grimoire.Direction> spellCode;
@@ -53,6 +66,10 @@ public abstract class Spell : MonoBehaviour
         AudioSource.PlayClipAtPoint(castSound, player.transform.position);
     }
 
+    public void ReduceCooldownPercent(float percentage)
+    {
+        cooldownTimer += percentage * (cooldown / 100);
+    }
     public void ResetCooldown()
     {
         cooldownTimer = 0;
