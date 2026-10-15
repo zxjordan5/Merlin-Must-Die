@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     }
 
     private Rigidbody2D _rb; 
-    public Rigidbody2D _RB
+    public Rigidbody2D RB
     {
         get => _rb;
         private set => _rb = value;
@@ -120,8 +120,6 @@ public class Player : MonoBehaviour
 
     public enum Direction {Up = 0, Right = 1, Down = 2, Left = 3}
 
-
-    private Rigidbody2D _rb; // Reference to the player's rigid body
     private GameObject _crosshair;
     private Camera _cam;
     // We can remove "serialize" once we've settled on a speed
