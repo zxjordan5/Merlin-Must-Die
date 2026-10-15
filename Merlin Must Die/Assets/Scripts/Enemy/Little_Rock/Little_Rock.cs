@@ -18,7 +18,7 @@ public class Little_Rock : Wander_Enemy
         _collider.radius = 4;
         _collider.isTrigger = true;
 
-        _health = 1;
+        _health = 2;
 
         _leftBound = _rb.transform.position.x - 3;
         _rightBound = _rb.transform.position.x + 3;

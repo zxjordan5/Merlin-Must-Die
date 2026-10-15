@@ -23,7 +23,7 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected float _wanderTime;
     protected float _pauseTime;
     protected GameObject _detectionCircle;
-    [SerializeField] protected int _health;
+    protected int _health;
 
 
     protected virtual void Awake()
@@ -67,6 +67,7 @@ public abstract class Wander_Enemy : MonoBehaviour
             }
         }
 
+
         // Attacking Logic
         if (!_dead)
         {
@@ -91,10 +92,12 @@ public abstract class Wander_Enemy : MonoBehaviour
                 transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
             }
         }
+        // Temp death logic
         else if (_dead)
         {
-            _renderer.material.color = new Color(_renderer.material.color.r, _renderer.material.color.g, _renderer.material.color.b, _renderer.material.color.a - 0.05f);
+            _renderer.material.color = new Color(_renderer.material.color.r, _renderer.material.color.g, _renderer.material.color.b, _renderer.material.color.a - 0.03f);
         }
+
 
         // To make sure the sprite flips
         _previousPOS = transform.position;
@@ -104,17 +107,11 @@ public abstract class Wander_Enemy : MonoBehaviour
     {
         _rb.linearVelocityX = (float)Random.Range(-100, 100)/50;
         _rb.linearVelocityY = (float) Random.Range(-100, 100)/50;
-        //_rb.transform.position = Vector2.MoveTowards(
-        //    _rb.transform.position,
-        //    new Vector2((Random.Range(-100,100)/100) + _rb.transform.position.x, (Random.Range(-100,100)/100) + _rb.transform.position.y),
-        //    5);
         _wandering = true;
     }
 
-    // NOT PROPERLY COLLIDING, CHECK HOW ZACH DOES IT
-    protected void OnTriggerEnter(Collider collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("collided");
         if (collision.gameObject.CompareTag("DamageSpell"))
         {
             _health--;
