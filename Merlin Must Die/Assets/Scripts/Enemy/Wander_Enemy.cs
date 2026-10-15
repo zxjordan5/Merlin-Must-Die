@@ -23,6 +23,8 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected float _wanderTime;
     protected float _pauseTime;
     protected GameObject _detectionCircle;
+
+    [SerializeField]
     protected int _health;
 
 

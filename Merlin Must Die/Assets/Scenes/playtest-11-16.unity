@@ -138,6 +138,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 898217896}
     m_Modifications:
+    - target: {fileID: 723826043813801195, guid: c2a85dc8c00dc504f850aa8ddab139c7, type: 3}
+      propertyPath: m_LinearDamping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740794822567565027, guid: c2a85dc8c00dc504f850aa8ddab139c7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8456091547553084952, guid: c2a85dc8c00dc504f850aa8ddab139c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.09
@@ -1935,6 +1943,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 898217896}
     m_Modifications:
+    - target: {fileID: 4740794822567565027, guid: c2a85dc8c00dc504f850aa8ddab139c7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8456091547553084952, guid: c2a85dc8c00dc504f850aa8ddab139c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.78
