@@ -10,15 +10,19 @@ using UnityEditor.Callbacks;
 public class Player : MonoBehaviour
 {
     [SerializeField] Vector2 aimDirRaw;
-
     public Vector2 AimDirNorm
     {
         get => Vector2.Normalize(aimDirRaw);
         private set => aimDirRaw = value;
     }
 
+    private Rigidbody2D _rb; 
+    public Rigidbody2D _RB
+    {
+        get => _rb;
+        private set => _rb = value;
+    }
 
-    private Rigidbody2D _rb; // Reference to the player's rigid body
     private GameObject _crosshair;
     private Camera _cam;
     // We can remove "serialize" once we've settled on a speed
