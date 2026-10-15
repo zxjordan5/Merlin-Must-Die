@@ -121,7 +121,7 @@ public class Grimoire : MonoBehaviour
     void GetGrimoireText()
     {
         // The initial text as a string
-        string text = "";
+        string text = "Spells:\n";
 
         for (int i = 0; i < activeSpells.Count; i++)
         {
