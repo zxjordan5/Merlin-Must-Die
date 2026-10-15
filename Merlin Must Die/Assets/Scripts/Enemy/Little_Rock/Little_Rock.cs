@@ -12,19 +12,19 @@ public class Little_Rock : Wander_Enemy
         _pauseTime = (float)Random.Range(50, 100) / 50; // Pauses for 0.5-1 seconds
 
         // Make the enemy's decection circle
-
         _detectionCircle = new GameObject("RockDetection");
         _detectionCircle.transform.position = _rb.transform.position;
         CircleCollider2D _collider = _detectionCircle.AddComponent<CircleCollider2D>();
         _collider.radius = 4;
         _collider.isTrigger = true;
 
+        _health = 1;
+
         _leftBound = _rb.transform.position.x - 3;
         _rightBound = _rb.transform.position.x + 3;
         _topBound = _rb.transform.position.y + 3;
         _bottomBound = _rb.transform.position.y - 3;
     }
-
 
     protected override void Wander()
     {
