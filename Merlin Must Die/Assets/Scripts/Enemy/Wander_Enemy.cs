@@ -10,9 +10,11 @@ public abstract class Wander_Enemy : MonoBehaviour
     //Set in this class
     [SerializeField] protected Rigidbody2D _rb;
     protected bool _wandering = false;
-    [SerializeField] protected bool _attacking = false;
+    protected bool _attacking = false;
+    protected Vector2 _previousPOS;
     protected float _timer;
     protected Player _player;
+    protected Collider2D _enemyCollider;
 
     //Set in child class
     protected float _leftBound, _rightBound, _topBound, _bottomBound;
@@ -23,6 +25,7 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         _player = FindAnyObjectByType<Player>();
+        _enemyCollider = GetComponent<Collider2D>();
     }
 
     protected virtual void FixedUpdate()
@@ -47,7 +50,7 @@ public abstract class Wander_Enemy : MonoBehaviour
         }
 
         // If the player has not been detected, keep checking
-        if (!_attacking) { Detection(); }
+        Detection();
         // Once the player is detected, the enemy allways goes towards their location
         if (_attacking)
         {
@@ -57,12 +60,12 @@ public abstract class Wander_Enemy : MonoBehaviour
                 1.5f * Time.deltaTime);
         }
 
-        // Flip the sprite properly (ONLY WORKS WHEN WANDERING RN)
-        if (_rb.linearVelocityX > 0 && transform.localScale.x < 0) 
+        // Flip the sprite properly
+        if (_previousPOS.x > transform.position.x && transform.localScale.x > 0) 
         { 
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z); 
         }
-        else if (_rb.linearVelocityX < 0 && transform.localScale.x > 0) 
+        else if (_previousPOS.x < transform.position.x && transform.localScale.x < 0) 
         { 
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         }
@@ -79,6 +82,8 @@ public abstract class Wander_Enemy : MonoBehaviour
             _rb.linearVelocityY *= -1;
         }
 
+        // To make sure the sprite flips
+        _previousPOS = transform.position;
     }
 
     protected virtual void Wander()
@@ -90,6 +95,14 @@ public abstract class Wander_Enemy : MonoBehaviour
         //    new Vector2((Random.Range(-100,100)/100) + _rb.transform.position.x, (Random.Range(-100,100)/100) + _rb.transform.position.y),
         //    5);
         _wandering = true;
+    }
+
+    protected void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Spell"))
+        {
+            // kill the enemy
+        }
     }
 
     protected abstract void Detection();

@@ -37,7 +37,7 @@ public class Little_Rock : Wander_Enemy
     protected override void Detection()
     {
         // If the player's position overlaps with a point on the detection circle's collider, attack
-        if (_detectionCircle.GetComponent<Collider2D>().OverlapPoint(_player.transform.position))
+        if (_detectionCircle.GetComponent<Collider2D>().OverlapPoint(_player.transform.position) && !_attacking)
         {
             _attacking = true;
             _rb.linearVelocity = new Vector2(0,0);
