@@ -20,6 +20,12 @@ public class Player : MonoBehaviour
         private set => _aimDirRaw = value;
     }
 
+    private Rigidbody2D _rb; 
+    public Rigidbody2D _RB
+    {
+        get => _rb;
+        private set => _rb = value;
+    }
 
 
     //***** ANGLE PROPERTIES *****
