@@ -26,6 +26,7 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     [SerializeField]
     protected int _health;
+    protected int _initialHealth;
 
 
     protected virtual void Awake()
@@ -107,8 +108,8 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected virtual void Wander()
     {
-        _rb.linearVelocityX = (float)Random.Range(-100, 100)/50;
-        _rb.linearVelocityY = (float) Random.Range(-100, 100)/50;
+        _rb.linearVelocityX = (float)Random.Range(-100, 100)/25;
+        _rb.linearVelocityY = (float) Random.Range(-100, 100)/25;
         _wandering = true;
     }
 
