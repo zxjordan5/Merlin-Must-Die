@@ -227,7 +227,7 @@ public class Grimoire : MonoBehaviour
             }
         }
 
-        Debug.Log("INPUT CORRECT, SPELL PREPARED");
+        //Debug.Log("INPUT CORRECT, SPELL PREPARED");
         return true;
     }
 
@@ -291,7 +291,7 @@ public class Grimoire : MonoBehaviour
             }
             else
             {
-                Debug.Log("no spell prepared");
+                //Debug.Log("no spell prepared");
             }
         }
     }
@@ -308,7 +308,7 @@ public class Grimoire : MonoBehaviour
         {
             // Gets the parent SpellInput object
             GameObject thisIcon = Instantiate(spellInputIcon, spellInputIcon.transform.parent.transform);
-            Debug.Log("Input dir: " + input);
+            //Debug.Log("Input dir: " + input);
             thisIcon.SetActive(true);
 
             // Set arrow icons active false - invisible
