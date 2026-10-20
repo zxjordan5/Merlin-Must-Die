@@ -168,24 +168,18 @@ public class Player : MonoBehaviour
         _targetVelocity = new Vector2(0,0);
 
         // Dashing movement
-        // Move towards a fixed location determined at the moment the dash spell is cast
+        // Move the player towards the dash target, which is the crosshair
+        // Add the players current position to the crosshair so the target continually gets further.
         if (_dashing)
         {
             _rb.transform.position = Vector2.MoveTowards(
                 _rb.transform.position,
-                _dashTarget,
+                (Vector2)_rb.transform.position + _dashTarget,
                 maxSpeed * _speedMult * Time.deltaTime);
         }
-
-        // Kb/M movement
-        if (_kbMoving)
-        {
-            _targetDirection = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
-            _targetVelocity = _targetDirection * maxSpeed;
-            _rb.AddForce((_targetVelocity - _rb.linearVelocity)*2);
-        }
+       
         // GP movement
-        else if (_gpMoving)
+        if (_gpMoving)
         {   
             _targetDirection = Gamepad.current.leftStick.value;
             _targetVelocity = _targetDirection * maxSpeed;
@@ -196,20 +190,27 @@ public class Player : MonoBehaviour
             _crosshair.transform.position = _rb.transform.position + _gpPos;
             _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
             }
+        } 
+        // Kb/M movement
+        else if (_kbMoving)
+        {
+            _targetDirection = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
+            _targetVelocity = _targetDirection * maxSpeed;
+            _rb.AddForce((_targetVelocity - _rb.linearVelocity) * 2);
         }
 
-        // Kb/M aiming
-        if (_kbAiming)
-        {
-            _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
-            _crosshair.transform.position = _rb.transform.position + _mousePos;
-            _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
-        }
         // GP aiming
-        else if (_gpAiming)
+        if (_gpAiming)
         {
             _gpPos = new Vector3(Gamepad.current.rightStick.value.x, Gamepad.current.rightStick.value.y, 0).normalized * 2;
             _crosshair.transform.position = _rb.transform.position + _gpPos;
+            _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
+        }
+        // Kb/M aiming
+        else if (_kbAiming)
+        {
+            _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
+            _crosshair.transform.position = _rb.transform.position + _mousePos;
             _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
         }
 
@@ -237,8 +238,6 @@ public class Player : MonoBehaviour
     {
         _speedMult = dashSpeed;
         _dashTarget = _crosshair.transform.localPosition;
-        _dashTarget *= 20;
-        //Debug.Log(_dashTarget + " + " + AimDirNorm);
         if (!_dashing)
         {
             StartCoroutine(DashTimer(dashTime));
