@@ -830,6 +830,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 648103981386280524, guid: ae49c51f58821354aa0dfc83b2a0a35d, type: 3}
+      propertyPath: _excalibur
+      value: 
+      objectReference: {fileID: 7639046319370712651}
+    - target: {fileID: 648103981386280524, guid: ae49c51f58821354aa0dfc83b2a0a35d, type: 3}
       propertyPath: _cooldownUI
       value: 
       objectReference: {fileID: 6920772874779044808}
@@ -1135,6 +1139,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1179050546307657424, guid: fc16fd4395a86fa40bbb868ab3fb5bd6, type: 3}
   m_PrefabInstance: {fileID: 2966696958058105306}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7639046319370712651 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4839270688459177873, guid: fc16fd4395a86fa40bbb868ab3fb5bd6, type: 3}
+  m_PrefabInstance: {fileID: 2966696958058105306}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b50451136570ee449afc824c5196e129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Excalibur
 --- !u!1001 &7923273113494489422
 PrefabInstance:
   m_ObjectHideFlags: 0
