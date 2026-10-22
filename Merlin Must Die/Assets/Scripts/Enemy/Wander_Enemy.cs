@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Wander_Enemy : MonoBehaviour
 {
+    #region Variables
+
     // Temp vars
     protected Renderer _renderer;
 
@@ -23,11 +25,13 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected float _wanderTime;
     protected float _pauseTime;
     protected GameObject _detectionCircle;
-
-    [SerializeField]
-    protected int _health;
+    protected Vector2 _target;
+    [SerializeField] protected int _health;
     protected int _initialHealth;
+    protected bool _rolling;
+    
 
+    #endregion
 
     protected virtual void Awake()
     {
@@ -76,14 +80,6 @@ public abstract class Wander_Enemy : MonoBehaviour
         {
             // If the player has not been detected, keep checking
             Detection();
-            // Once the player is detected, the enemy allways goes towards their location
-            if (_attacking)
-            {
-                _rb.transform.position = Vector2.MoveTowards(
-                    _rb.transform.position,
-                    _player.transform.position,
-                    1.5f * Time.deltaTime);
-            }
 
             // Flip the sprite properly
             if (_previousPOS.x > transform.position.x && transform.localScale.x > 0) 
@@ -132,4 +128,6 @@ public abstract class Wander_Enemy : MonoBehaviour
     }
 
     protected abstract void Detection();
+
+    protected abstract void Attack();
 }

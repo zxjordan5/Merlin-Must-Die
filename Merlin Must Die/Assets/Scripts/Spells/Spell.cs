@@ -23,6 +23,17 @@ public abstract class Spell : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// How much the spell should charge excalibur when cast
+    /// Could be changed here to be based on the complexity of the input
+    /// </summary>
+    public float ExcaliburCharge
+    {
+        get
+        {
+            return cooldown * 15;
+        }
+    }
 
     [SerializeField] public List<Grimoire.Direction> spellCode;
 
@@ -31,7 +42,7 @@ public abstract class Spell : MonoBehaviour
     [SerializeField] public AudioClip castSound;
 
     [SerializeField]
-    protected String spellName = "";
+    protected string spellName = "";
 
     public string SpellName
     {

@@ -10,6 +10,8 @@ using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
+
+    #region Variables
     private Vector2 _aimDirRaw;
 
     /// <summary>
@@ -167,6 +169,7 @@ public class Player : MonoBehaviour
 
     private Animator _animator;
 
+#endregion
 
     void Awake()
     {
