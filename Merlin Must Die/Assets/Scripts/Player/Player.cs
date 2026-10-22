@@ -50,6 +50,11 @@ public class Player : MonoBehaviour
     /// Is the player currently invincible. True if timeSinceDamageTaken < invincibility, false otherwise.
     /// </summary>
     private bool _isInvincible;
+
+    /// <summary>
+    /// Histop component on the character
+    /// </summary>
+    private HitStop _hitStop;
     #endregion
 
 
@@ -170,6 +175,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        _hitStop = GetComponent<HitStop>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _crosshair = transform.Find("crosshair").gameObject;
@@ -347,6 +353,11 @@ public class Player : MonoBehaviour
         health--;
         _isInvincible = true;
         Healthbar.Instance.UpdateHealthbar(health);
+        if(_hitStop != null && health > 0)
+        {
+            // Don't call hitstop if the player is dead, it will break time scale
+            _hitStop.Stop();
+        }
         if(health <= 0)
         {
             Death();

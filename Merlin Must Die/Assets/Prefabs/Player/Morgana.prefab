@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 5909014972022603232}
   - component: {fileID: -1260405148037170349}
   - component: {fileID: 1673369991783173919}
+  - component: {fileID: 969473783434841605}
   m_Layer: 3
   m_Name: Morgana
   m_TagString: Untagged
@@ -318,3 +319,15 @@ MonoBehaviour:
   - Enemy
   flashDuration: 0.2
   timesToFlash: 5
+--- !u!114 &969473783434841605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7785584488539943500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f70c624437dcdb3429c4f479374a05ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStop

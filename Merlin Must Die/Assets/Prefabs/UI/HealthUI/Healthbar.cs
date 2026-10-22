@@ -39,6 +39,10 @@ public class Healthbar : MonoBehaviour
         // DontDestroyOnLoad(gameObject); <-- Uncomment if we want the healthbar to persist across scenes
     }
 
+    /// <summary>
+    /// Clears the health bar and instantiates the new number of health
+    /// </summary>
+    /// <param name="numChunksToSpawn"></param>
     public void UpdateHealthbar(int numChunksToSpawn)
     {
         if (_activeChunks.Count > 0)
@@ -54,6 +58,9 @@ public class Healthbar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Clears the scene of the active chunks and resets the active chunk list
+    /// </summary>
     private void ClearChunks()
     {
         foreach(Image i in _activeChunks)
