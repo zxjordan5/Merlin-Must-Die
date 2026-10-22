@@ -1,12 +1,27 @@
+using NUnit.Framework;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Flash : MonoBehaviour
 {
+
+    /// <summary>
+    /// List of tags to check on collision to see if the flash animation should play.
+    /// EX) Enemy should have the tag DamageSpell in this list
+    /// </summary>
+    [SerializeField] private List<string> tagsToCheck;
+
     /// <summary>
     /// How long the barrel flashes for after getting hit
     /// </summary>
     [SerializeField] private float flashDuration = 0.2f;
+
+    /// <summary>
+    /// How many times the flash animation should play
+    /// </summary>
+    [SerializeField] private int timesToFlash = 1;
 
     /// <summary>
     /// SpriteRenderer for the object. We need to reference this to change sprites
@@ -32,10 +47,22 @@ public class Flash : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("DamageSpell"))
+        int tagsFound = 0;
+        foreach (string tag in tagsToCheck)
         {
-            Invoke(nameof(TriggerFlash), 0.0f);
+            if (!other.CompareTag(tag))
+            {
+                return;
+            }
+            tagsFound++;
         }
+
+        // We didn't hit something that should play the flash
+        if (tagsFound == 0) return;
+
+        // We hit something that should play the flash
+        Invoke(nameof(TriggerFlash), 0.0f);
+        
     }
 
 
@@ -55,8 +82,13 @@ public class Flash : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FlashOnHit()
     {
-        yield return FlashEffect();
-        yield return ResetFlash();
+        int timesFlashed = 0;
+        while (timesFlashed < timesToFlash)
+        {
+            yield return FlashEffect();
+            yield return ResetFlash();
+            timesFlashed++;
+        }
     }
 
     /// <summary>
