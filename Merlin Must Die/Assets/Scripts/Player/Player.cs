@@ -4,9 +4,6 @@ using System;
 using System.Collections;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
-using UnityEngine.UIElements;
-using Unity.VisualScripting;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -357,13 +354,18 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Calls the static scene handler to switch to the GameOver screen
+    /// Calls the static scene manager to switch to the GameOver screen
     /// </summary>
     private void Death()
     {
-        // TODO: Call the static scene handler method
+        // Need a reference to the scriptable object that contains the scene paths
+        LevelScenePaths levelScenePaths = ScriptableObject.CreateInstance<LevelScenePaths>();
+        GlobalSceneManager.Instance.ChangeScene(levelScenePaths.GameOverScene);
     }
 
+    /// <summary>
+    /// Reset invincibility variables
+    /// </summary>
     private void ResetInvincibility()
     {
         _timeSinceDamageTaken = 0;
