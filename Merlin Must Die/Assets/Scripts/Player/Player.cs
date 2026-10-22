@@ -6,6 +6,7 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -26,6 +27,31 @@ public class Player : MonoBehaviour
         get => _rb;
         private set => _rb = value;
     }
+    
+    //***** HEALTH AND DAMAGE PROPERTIES *****//
+    #region HealthAndDamageProperties
+    /// <summary>
+    /// Health of Morgana. Serializable only for testing.
+    /// </summary>
+    [SerializeField]
+    private int health = 3;
+
+    /// <summary>
+    /// How much time the player is invincible for after being hit.
+    /// </summary>
+    [SerializeField]
+    private float invincibilityWindow = 1.0f;
+
+    /// <summary>
+    /// How much time has passed since the player has taken damage.
+    /// </summary>
+    private float _timeSinceDamageTaken;
+
+    /// <summary>
+    /// Is the player currently invincible. True if timeSinceDamageTaken < invincibility, false otherwise.
+    /// </summary>
+    private bool _isInvincible;
+    #endregion
 
 
     //***** ANGLE PROPERTIES *****
@@ -159,6 +185,18 @@ public class Player : MonoBehaviour
         _animator.SetBool("Moving", _targetVelocity != Vector2.zero);
         _animator.SetInteger("AimDirection", (int)AimDirection);
         _animator.SetInteger("MoveDirection", (int)MoveDirection);
+
+        #region InvincibilityTimer
+        if (_isInvincible)
+        {
+            _timeSinceDamageTaken += Time.deltaTime;
+            if (_timeSinceDamageTaken > invincibilityWindow)
+            {
+                _timeSinceDamageTaken = 0;
+                _isInvincible = false;
+            }
+        }
+        #endregion
     }
 
     //Contains movement logic
@@ -268,4 +306,5 @@ public class Player : MonoBehaviour
 
     // ***** ANIMATION METHODS *****
 
+    
 }
