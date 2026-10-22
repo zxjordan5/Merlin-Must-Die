@@ -195,10 +195,13 @@ public class Player : MonoBehaviour
             _timeSinceDamageTaken += Time.deltaTime;
             // TODO: Add flashing effect while invincible
 
+            Debug.Log(_timeSinceDamageTaken);
 
             if (_timeSinceDamageTaken > invincibilityWindow)
             {
                 ResetInvincibility();
+                Debug.Log(_timeSinceDamageTaken);
+                Debug.Log(_isInvincible);
             }
         }
         #endregion
@@ -316,7 +319,17 @@ public class Player : MonoBehaviour
     #region DamageHandlers
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(_isInvincible || !collision.CompareTag("Enemy"))
+        HandleDamageAfterCollision(collision);
+    }
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        HandleDamageAfterCollision(collision);
+    }
+
+    private void HandleDamageAfterCollision(Collider2D collision)
+    {
+        if (_isInvincible || !collision.CompareTag("Enemy"))
         {
             // Not an enemy? Return
             // Also return if the player is currently invincible
