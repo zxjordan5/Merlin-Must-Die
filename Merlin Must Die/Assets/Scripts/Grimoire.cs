@@ -1,7 +1,4 @@
-/// Grimoire Class
-/// Contains the full grimoire and a list of active spells in the level
-/// Reads player input and finds the matching spell code
-/// Shows cooldowns for spells
+
 using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
@@ -11,6 +8,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// Grimoire Class
+/// Contains the full grimoire and a list of active spells in the level
+/// Reads player input and finds the matching spell code
+/// Shows cooldowns for spells
+/// </summary>
 public class Grimoire : MonoBehaviour
 {
     public enum Direction
@@ -70,6 +73,10 @@ public class Grimoire : MonoBehaviour
     private int _comboCounter;
     private float _comboTimer;
     private float _comboGapTime = 1.5f;
+
+    //Excalibur
+    [SerializeField] private Excalibur _excalibur;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -284,10 +291,15 @@ public class Grimoire : MonoBehaviour
         {
             if (_preparedSpell != null)
             {
+                //Charges Excalibur based on spell strength
+                _excalibur.IncreaseCharge(_preparedSpell.ExcaliburCharge);
+
                 _preparedSpell.Cast(_player);
                 _preparedSpell = null;
                 ResetInputSequence();
                 UpdateCombos();
+
+          
             }
             else
             {
