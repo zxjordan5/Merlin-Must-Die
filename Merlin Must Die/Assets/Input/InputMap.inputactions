@@ -95,6 +95,26 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "ExcaliburA",
+                    "type": "Button",
+                    "id": "b7278a1a-17fc-46db-92f3-8637b8b5f787",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "ExcaliburB",
+                    "type": "Button",
+                    "id": "97c78b15-7309-462b-b8d8-3509c4f0697e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -112,7 +132,7 @@
                 {
                     "name": "",
                     "id": "82c4bed3-f995-4d7e-8794-eafd6b0baf41",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -276,8 +296,8 @@
                 },
                 {
                     "name": "",
-                    "id": "7ef10170-7020-4379-900d-11f4badb9e08",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "0b161583-96c1-485e-b586-8ab70c99c165",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -299,7 +319,7 @@
                 {
                     "name": "",
                     "id": "bde344d0-3e68-4dd5-a604-ee20880ab717",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -315,6 +335,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "CastSpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54da9226-3def-45ad-858b-0056f61a7ce3",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExcaliburA",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "764ef2f4-4f1e-444d-982f-692211da84e7",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExcaliburA",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa6e74d5-9e51-4a90-b5f9-2db033a270dd",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExcaliburB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4dc94e95-6c2c-4b88-ab1d-6b72377e2d3c",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExcaliburB",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
