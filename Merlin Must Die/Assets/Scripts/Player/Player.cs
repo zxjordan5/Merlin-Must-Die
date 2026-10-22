@@ -195,13 +195,10 @@ public class Player : MonoBehaviour
             _timeSinceDamageTaken += Time.deltaTime;
             // TODO: Add flashing effect while invincible
 
-            Debug.Log(_timeSinceDamageTaken);
 
             if (_timeSinceDamageTaken > invincibilityWindow)
             {
                 ResetInvincibility();
-                Debug.Log(_timeSinceDamageTaken);
-                Debug.Log(_isInvincible);
             }
         }
         #endregion
@@ -327,6 +324,11 @@ public class Player : MonoBehaviour
         HandleDamageAfterCollision(collision);
     }
 
+    /// <summary>
+    /// Checks if the player is invincible and if the other collision object
+    /// is an enemy. If the player is not invincible and the other object is an enemy, the player takes damage.
+    /// </summary>
+    /// <param name="collision"></param>
     private void HandleDamageAfterCollision(Collider2D collision)
     {
         if (_isInvincible || !collision.CompareTag("Enemy"))
@@ -340,10 +342,26 @@ public class Player : MonoBehaviour
         TakeDamage();
     }
 
+    /// <summary>
+    /// Subtracts one health from the player. Calls static health UI update methods. If health is 0 or less, the player dies.
+    /// </summary>
     private void TakeDamage()
     {
         health--;
         _isInvincible = true;
+        Healthbar.Instance.UpdateHealthbar(health);
+        if(health <= 0)
+        {
+            Death();
+        }
+    }
+
+    /// <summary>
+    /// Calls the static scene handler to switch to the GameOver screen
+    /// </summary>
+    private void Death()
+    {
+        // TODO: Call the static scene handler method
     }
 
     private void ResetInvincibility()
