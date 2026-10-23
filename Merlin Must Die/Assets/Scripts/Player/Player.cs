@@ -253,7 +253,7 @@ public class Player : MonoBehaviour
             _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
         }
         // Kb/M aiming
-        else if (_kbAiming)
+        else if (_kbAiming && !_gpMoving)
         {
             _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
             _crosshair.transform.position = _rb.transform.position + _mousePos;

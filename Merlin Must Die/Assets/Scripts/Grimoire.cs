@@ -168,7 +168,7 @@ public class Grimoire : MonoBehaviour
     /// <param name="input">The direction of the new input</param>
     public void ProcessInput(Direction input)
     {
-        if (_playerInputSequence.Count == _maxSpellLength)
+        if (_playerInputSequence.Count == _maxSpellLength + 1)
         {
             ResetInputSequence();
         }
@@ -204,9 +204,9 @@ public class Grimoire : MonoBehaviour
                 spellMismatches++;
             }
         }
-        if (spellMismatches >= activeSpells.Count)
+        if (spellMismatches >= _instantiatedActiveSpells.Count)
         {
-            //Debug.Log("no spells match, resetting");
+            Debug.Log("no spells match, resetting");
             ResetInputSequence();
         }
     }
@@ -246,7 +246,8 @@ public class Grimoire : MonoBehaviour
     /// </returns>
     private bool IsSequenceValid(Spell spell)
     {
-        if (_playerInputSequence.Count >= spell.spellCode.Count)
+        //Sequence is invalid if it is longer than the current spell
+        if (_playerInputSequence.Count > spell.spellCode.Count)
         {
             return false;
         }
@@ -289,6 +290,8 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
+            CheckForMatches();
+
             if (_preparedSpell != null)
             {
                 //Charges Excalibur based on spell strength
@@ -298,8 +301,6 @@ public class Grimoire : MonoBehaviour
                 _preparedSpell = null;
                 ResetInputSequence();
                 UpdateCombos();
-
-          
             }
             else
             {
