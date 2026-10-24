@@ -18,8 +18,9 @@ public class EarthBarrierSpell : Spell
 
         GameObject earthBarrier = Instantiate(spellObj, player.transform.position, player.transform.rotation);
         Projectile earthProj = earthBarrier.GetComponent<Projectile>();
-        earthProj.LaunchProjectile(player.AimDirNorm););
+        earthProj.LaunchProjectile(player.AimDirNorm);
 
+        //If the player is moving fast enough, add it's speed to the object.
         if (player.Velocity > 1)
         {
             earthProj.UsePlayerVelocity(player.Velocity);

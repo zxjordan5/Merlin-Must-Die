@@ -56,6 +56,7 @@ public class Projectile : MonoBehaviour
             tempVelocity *= _initialPlayerVelocity;
         }
 
+        //Cap velocity
         if (_maxVelocity != 0 && tempVelocity > _maxVelocity)
         {
             tempVelocity = _maxVelocity;
@@ -85,5 +86,4 @@ public class Projectile : MonoBehaviour
         _usePlayerVelocity = true;
         _initialPlayerVelocity = playerVelocity;
     }
-
 }

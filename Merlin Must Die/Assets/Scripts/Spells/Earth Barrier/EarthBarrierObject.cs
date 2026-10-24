@@ -29,8 +29,15 @@ public class EarthBarrierObject : DamageObject
     /// </summary>
     private float _zIncrease = 5f;
 
+    /// <summary>
+    /// The starting scale of the object is saved so its scale can be modified non-destructively
+    /// </summary>
+    private Vector3 _baseScale;
+
     public void Awake()
     {
+        _baseScale = transform.localScale;
+
         _airTimeCounter = 0;
         _landed = false;
 
@@ -49,6 +56,16 @@ public class EarthBarrierObject : DamageObject
         if (_airTimeCounter < _airTime)
         {
             _airTimeCounter += Time.deltaTime;
+
+            //Scale the object based on how long it has been in the air
+            if(_airTimeCounter < _airTime / 2f) //First half - grow
+            {
+                transform.localScale = _baseScale * (1 + _airTimeCounter / _airTime);
+            }
+            else //Second half - return to normal size
+            {
+                transform.localScale = _baseScale * (1 + (_airTime - _airTimeCounter) / _airTime);
+            }
         }
 
         if (_airTimeCounter >= _airTime && !_landed)

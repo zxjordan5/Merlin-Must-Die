@@ -189,7 +189,7 @@ MonoBehaviour:
   damage: 1
   landSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
   landingParticles: {fileID: 8953315173316814783, guid: 4e554265b4fad774094f1eb64edaeea3, type: 3}
-  _airTime: 1.5
+  _airTime: 1.1
 --- !u!114 &9035029394887282329
 MonoBehaviour:
   m_ObjectHideFlags: 0
