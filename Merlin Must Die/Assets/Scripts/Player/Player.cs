@@ -157,6 +157,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 _targetDirection;
     [SerializeField] private Vector2 _targetVelocity;
 
+    public float Velocity
+    {
+        get { return RB.linearVelocity.magnitude; }
+    }
+
     private float _speedMult = 1f; //Should be reset to 1 always
 
     private Vector3 _mousePos;
@@ -209,20 +214,20 @@ public class Player : MonoBehaviour
 
     //Contains movement logic
     void FixedUpdate()
-    {
+    {  
         // Reset the target velocity so the player slows down
         _targetVelocity = new Vector2(0,0);
 
         // Dashing movement
         // Move the player towards the dash target, which is the crosshair
         // Add the players current position to the crosshair so the target continually gets further.
-        if (_dashing)
-        {
-            _rb.transform.position = Vector2.MoveTowards(
-                _rb.transform.position,
-                (Vector2)_rb.transform.position + _dashTarget,
-                maxSpeed * _speedMult * Time.deltaTime);
-        }
+        //if (_dashing)
+        //{
+        //    _rb.transform.position = Vector2.MoveTowards(
+        //        _rb.transform.position,
+        //        (Vector2)_rb.transform.position + _dashTarget,
+        //        maxSpeed * _speedMult * Time.deltaTime);
+        //}
        
         // GP movement
         if (_gpMoving)
@@ -261,7 +266,7 @@ public class Player : MonoBehaviour
         }
 
         // Slows player movement when not actively moving
-        if (!_kbMoving && !_gpMoving)
+        if (!_kbMoving && !_gpMoving && !_dashing)
         {
             _rb.linearVelocity *= new Vector2(0.8f,0.8f);
         }
@@ -284,6 +289,8 @@ public class Player : MonoBehaviour
     {
         _speedMult = dashSpeed;
         _dashTarget = _crosshair.transform.localPosition;
+        _targetVelocity = _dashTarget * maxSpeed * _speedMult;
+        _rb.AddForce((_targetVelocity - _rb.linearVelocity) * 15);
         if (!_dashing)
         {
             StartCoroutine(DashTimer(dashTime));

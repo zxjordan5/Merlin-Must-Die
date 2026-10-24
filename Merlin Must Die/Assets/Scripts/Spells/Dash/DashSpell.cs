@@ -6,7 +6,7 @@ using UnityEngine;
 /// Dash spell for testing
 /// </summary>
 [Serializable]
-public class Dash_Spell : Spell
+public class DashSpell : Spell
 {
     [SerializeField] private float dashSpeed;
     [SerializeField] private float dashTime;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Witchbolt_Spell : Spell
+public class WitchboltSpell : Spell
 {
     /// <summary>
     /// Create witchbolt and launch it using the projectile component
