@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Witchbolt_Object : DamageObject
+public class WitchboltObject : DamageObject
 {
     [SerializeField] protected float pushForce = 5.0f;
     [SerializeField] protected AudioClip hitSound;

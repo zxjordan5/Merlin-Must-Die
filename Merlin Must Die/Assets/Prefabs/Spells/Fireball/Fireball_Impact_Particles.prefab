@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8953315173316814783}
   - component: {fileID: 7040310085057568651}
   m_Layer: 0
-  m_Name: Fireball_Particles
+  m_Name: Fireball_Impact_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

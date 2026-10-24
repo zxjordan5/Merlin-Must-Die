@@ -6,16 +6,28 @@ using UnityEngine;
 /// </summary>
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] float initialVelocity = 1;
+    [SerializeField] private float _initialVelocity = 1;
+   
+    /// <summary>
+    /// Limit on the objects velocity
+    /// Will not work if set to 0
+    /// </summary>
+    [SerializeField] private float _maxVelocity = 0;
 
+    /// <summary>
+    /// Whether or not the initial player velocity field should be used
+    /// in calculations of the projectiles speed
+    /// </summary>
+    private bool _usePlayerVelocity = false;
+    private float _initialPlayerVelocity;
+    
 
     /// <summary>
     /// Time until entire projectile object is deleted
     /// Does not delete if set to 0
     /// </summary>
-    [SerializeField] protected float lifetime;
-    protected float lifetimeTimer;
-
+    [SerializeField] private float _lifetime;
+    private float _lifetimeTimer;
 
     public float Velocity
     {
@@ -26,27 +38,39 @@ public class Projectile : MonoBehaviour
         get; set;
     } = new Vector2();
 
-
-    //Move projectile with velocity and direction
-    // Using transform.Translate currently instead of simulating forces
-
+   
     protected void Awake()
     {
-        if(lifetime == 0)
+        if(_lifetime == 0)
         {
-            lifetime = 999;
+            _lifetime = 9999;
         }
     }
 
     protected void FixedUpdate()
     {
-        gameObject.transform.Translate(Velocity * Time.deltaTime * Direction);
+        float tempVelocity = Velocity;
+        
+        if (_usePlayerVelocity)
+        {
+            tempVelocity *= _initialPlayerVelocity;
+        }
+
+        //Cap velocity
+        if (_maxVelocity != 0 && tempVelocity > _maxVelocity)
+        {
+            tempVelocity = _maxVelocity;
+        }
+
+        Vector3 positionUpdate = tempVelocity * Time.deltaTime * Direction;
+
+        gameObject.transform.Translate(positionUpdate);
     }
 
     protected void Update()
     {
-        lifetimeTimer += Time.deltaTime;
-        if (lifetimeTimer > lifetime)
+        _lifetimeTimer += Time.deltaTime;
+        if (_lifetimeTimer > _lifetime)
         {
             Destroy(gameObject);
         }
@@ -54,8 +78,12 @@ public class Projectile : MonoBehaviour
 
     public void LaunchProjectile(Vector2 direction)
     {
-        Velocity = initialVelocity;
+        Velocity = _initialVelocity;
         Direction = direction;
     }
 
+    public void UsePlayerVelocity(float playerVelocity) {
+        _usePlayerVelocity = true;
+        _initialPlayerVelocity = playerVelocity;
+    }
 }
