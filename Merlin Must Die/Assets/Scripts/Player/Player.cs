@@ -4,8 +4,6 @@ using System;
 using System.Collections;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
-using UnityEngine.UIElements;
-using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -28,6 +26,36 @@ public class Player : MonoBehaviour
         get => _rb;
         private set => _rb = value;
     }
+    
+    //***** HEALTH AND DAMAGE PROPERTIES *****//
+    #region HealthAndDamageProperties
+    /// <summary>
+    /// Health of Morgana. Serializable only for testing.
+    /// </summary>
+    [SerializeField]
+    private int health = 3;
+
+    /// <summary>
+    /// How much time the player is invincible for after being hit.
+    /// </summary>
+    [SerializeField]
+    private float invincibilityWindow = 1.0f;
+
+    /// <summary>
+    /// How much time has passed since the player has taken damage.
+    /// </summary>
+    private float _timeSinceDamageTaken;
+
+    /// <summary>
+    /// Is the player currently invincible. True if timeSinceDamageTaken < invincibility, false otherwise.
+    /// </summary>
+    private bool _isInvincible;
+
+    /// <summary>
+    /// Histop component on the character
+    /// </summary>
+    private HitStop _hitStop;
+    #endregion
 
 
     //***** ANGLE PROPERTIES *****
@@ -147,6 +175,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        _hitStop = GetComponent<HitStop>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _crosshair = transform.Find("crosshair").gameObject;
@@ -162,6 +191,20 @@ public class Player : MonoBehaviour
         _animator.SetBool("Moving", _targetVelocity != Vector2.zero);
         _animator.SetInteger("AimDirection", (int)AimDirection);
         _animator.SetInteger("MoveDirection", (int)MoveDirection);
+
+        #region InvincibilityTimer
+        if (_isInvincible)
+        {
+            _timeSinceDamageTaken += Time.deltaTime;
+            // TODO: Add flashing effect while invincible
+
+
+            if (_timeSinceDamageTaken > invincibilityWindow)
+            {
+                ResetInvincibility();
+            }
+        }
+        #endregion
     }
 
     //Contains movement logic
@@ -210,7 +253,7 @@ public class Player : MonoBehaviour
             _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
         }
         // Kb/M aiming
-        else if (_kbAiming)
+        else if (_kbAiming && !_gpMoving)
         {
             _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
             _crosshair.transform.position = _rb.transform.position + _mousePos;
@@ -271,4 +314,75 @@ public class Player : MonoBehaviour
 
     // ***** ANIMATION METHODS *****
 
+
+    // ***** DAMAGE HANDLING METHODS *****
+    #region DamageHandlers
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        HandleDamageAfterCollision(collision);
+    }
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        HandleDamageAfterCollision(collision);
+    }
+
+    /// <summary>
+    /// Checks if the player is invincible and if the other collision object
+    /// is an enemy. If the player is not invincible and the other object is an enemy, the player takes damage.
+    /// </summary>
+    /// <param name="collision"></param>
+    private void HandleDamageAfterCollision(Collider2D collision)
+    {
+        if (_isInvincible || !collision.CompareTag("Enemy"))
+        {
+            // Not an enemy? Return
+            // Also return if the player is currently invincible
+            // May need to change this functionality later for damaging environmental effects
+            return;
+        }
+
+        TakeDamage();
+    }
+
+    /// <summary>
+    /// Subtracts one health from the player. Calls static health UI update methods. If health is 0 or less, the player dies.
+    /// </summary>
+    private void TakeDamage()
+    {
+        health--;
+        _isInvincible = true;
+        Healthbar.Instance.UpdateHealthbar(health);
+        if(_hitStop != null && health > 0)
+        {
+            // Don't call hitstop if the player is dead, it will break time scale
+            _hitStop.Stop();
+        }
+        if(health <= 0)
+        {
+            Death();
+        }
+    }
+
+    /// <summary>
+    /// Calls the static scene manager to switch to the GameOver screen
+    /// </summary>
+    private void Death()
+    {
+        // Need a reference to the scriptable object that contains the scene paths
+        LevelScenePaths levelScenePaths = ScriptableObject.CreateInstance<LevelScenePaths>();
+        GlobalSceneManager.Instance.ChangeScene(levelScenePaths.GameOverScene);
+    }
+
+    /// <summary>
+    /// Reset invincibility variables
+    /// </summary>
+    private void ResetInvincibility()
+    {
+        _timeSinceDamageTaken = 0;
+        _isInvincible = false;
+    }
+
+
+    #endregion
 }
