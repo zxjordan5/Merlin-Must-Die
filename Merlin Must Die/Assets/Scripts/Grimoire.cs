@@ -126,14 +126,16 @@ public class Grimoire : MonoBehaviour
     /// <returns></returns>
     void GetGrimoireContents()
     {
-        // Cycle through every spell for this level
+        // A list of each spell with spell icons stored in a list
         List<List<GameObject>> sprites = new List<List<GameObject>>();
+
+        // Cycle through every spell for this level
         for (int i = 0; i < activeSpells.Count; i++)
         {
             // A list of all sprites for ONE spell
             List<GameObject> spellSprites = new List<GameObject>();
 
-            // Spell Icon
+            // Spell Icon (GO) - the actual icon is added to the sprites list later
             spellSprites.Add(activeSpells[i].gameObject);
 
             // Spell Code icons
@@ -165,7 +167,9 @@ public class Grimoire : MonoBehaviour
         for (int i = 0; i < sprites.Count; i++)
         {
             int index = sprites[i].Count;
-            // Each icon in list
+
+            // Spell List contains all icons within a spell (name icon + directions)
+
             GameObject spellList = new GameObject("SpellList" + i, typeof(UnityEngine.UI.HorizontalLayoutGroup));
             UnityEngine.UI.HorizontalLayoutGroup xLayout = spellList.GetComponent<UnityEngine.UI.HorizontalLayoutGroup>();
             xLayout.childAlignment = TextAnchor.MiddleLeft;
@@ -174,10 +178,12 @@ public class Grimoire : MonoBehaviour
             xLayout.childForceExpandWidth = false;
             xLayout.childForceExpandHeight = false;
             xLayout.spacing = 20;
-
             spellList.transform.SetParent(grimoireContents.transform, false);
+
+            // Puts all icons in the spell list component
             for (int j = 0; j < index; j++)
             {
+                // Defining icons as part of the layout + sizing to fit in grimoire
                 GameObject iconSprite = Instantiate(new GameObject("SpellSprites" + i + "_" + j), grimoireContents.transform);
                 iconSprite.transform.SetParent(spellList.transform);
                 Image grimoireSprite = iconSprite.AddComponent<Image>();
@@ -186,10 +192,14 @@ public class Grimoire : MonoBehaviour
                 layout.preferredHeight = 45;
                 layout.minHeight = 45;
                 layout.minWidth = 45;
+
+                // The first icon (spell name icon)
                 if (j == 0)
                 {
                     grimoireSprite.sprite = activeSpells[i].spellIcon;
                 }
+
+                // All other icons (directional inputs)
                 else
                 {
                     grimoireSprite.sprite = sprites[i][j].GetComponent<SpriteRenderer>().sprite;
