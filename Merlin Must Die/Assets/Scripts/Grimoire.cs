@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 /// <summary>
 /// Grimoire Class
@@ -57,9 +57,6 @@ public class Grimoire : MonoBehaviour
     /// The current player in the scene
     /// </summary>
     private Player _player;
-    // Displayed text in the UI
-    [SerializeField]
-    private TextMeshProUGUI grimoireTextUI;
 
     // The Spell Input GO with 4 cardinal direction arrow sprites as children
     [SerializeField]
@@ -77,6 +74,8 @@ public class Grimoire : MonoBehaviour
     //Excalibur
     [SerializeField] private Excalibur _excalibur;
 
+    [SerializeField] private GameObject grimoireContents;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -85,7 +84,7 @@ public class Grimoire : MonoBehaviour
         _allSpells = new List<Spell>();
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
-        GetGrimoireText();
+        GetGrimoireContents();
 
         // The original spell input icon prefab is hidden; used for instantiating only
         spellInputIcon.SetActive(false);
@@ -122,44 +121,81 @@ public class Grimoire : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets all grimoire text and displays it in the UI
+    /// Gets all grimoire contents and displays it in the UI
     /// </summary>
     /// <returns></returns>
-    void GetGrimoireText()
+    void GetGrimoireContents()
     {
-        // The initial text as a string
-        string text = "Spells:\n";
-
+        // Cycle through every spell for this level
+        List<List<GameObject>> sprites = new List<List<GameObject>>();
         for (int i = 0; i < activeSpells.Count; i++)
         {
-            text += activeSpells[i].name;
-            text += " | ";
+            // A list of all sprites for ONE spell
+            List<GameObject> spellSprites = new List<GameObject>();
+
+            // Spell Icon
+            spellSprites.Add(activeSpells[i].gameObject);
+
+            // Spell Code icons
             List<Direction> activeSpellCode = activeSpells[i].spellCode;
             for (int j = 0; j < activeSpellCode.Count; j++)
             {
                 switch (activeSpellCode[j])
                 {
                     case Direction.Up:
-                        text += "Up";
+                        spellSprites.Add(arrowIcons[0]);
                         break;
                     case Direction.Down:
-                        text += "Down";
+                        spellSprites.Add(arrowIcons[1]);
                         break;
                     case Direction.Left:
-                        text += "Left";
+                        spellSprites.Add(arrowIcons[2]);
                         break;
                     case Direction.Right:
-                        text += "Right";
+                        spellSprites.Add(arrowIcons[3]);
                         break;
                 }
-                text += " ";
             }
-            text += '\n';
+            sprites.Add(spellSprites);
         }
 
-        // Setting the UI component
-        // TODO: create an actual UI component
-        grimoireTextUI.text = text;
+        // Adding contents to the grimoireContents GO
+
+        // Loops through each spell (a list of spell's sprites on the UI)
+        for (int i = 0; i < sprites.Count; i++)
+        {
+            int index = sprites[i].Count;
+            // Each icon in list
+            GameObject spellList = new GameObject("SpellList" + i, typeof(UnityEngine.UI.HorizontalLayoutGroup));
+            UnityEngine.UI.HorizontalLayoutGroup xLayout = spellList.GetComponent<UnityEngine.UI.HorizontalLayoutGroup>();
+            xLayout.childAlignment = TextAnchor.MiddleLeft;
+            xLayout.childControlHeight = true;
+            xLayout.childControlWidth = true;
+            xLayout.childForceExpandWidth = false;
+            xLayout.childForceExpandHeight = false;
+            xLayout.spacing = 20;
+
+            spellList.transform.SetParent(grimoireContents.transform, false);
+            for (int j = 0; j < index; j++)
+            {
+                GameObject iconSprite = Instantiate(new GameObject("SpellSprites" + i + "_" + j), grimoireContents.transform);
+                iconSprite.transform.SetParent(spellList.transform);
+                Image grimoireSprite = iconSprite.AddComponent<Image>();
+                UnityEngine.UI.LayoutElement layout = iconSprite.AddComponent<UnityEngine.UI.LayoutElement>();
+                layout.preferredWidth = 45;
+                layout.preferredHeight = 45;
+                layout.minHeight = 45;
+                layout.minWidth = 45;
+                if (j == 0)
+                {
+                    grimoireSprite.sprite = activeSpells[i].spellIcon;
+                }
+                else
+                {
+                    grimoireSprite.sprite = sprites[i][j].GetComponent<SpriteRenderer>().sprite;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -321,7 +357,6 @@ public class Grimoire : MonoBehaviour
         {
             // Gets the parent SpellInput object
             GameObject thisIcon = Instantiate(spellInputIcon, spellInputIcon.transform.parent.transform);
-            //Debug.Log("Input dir: " + input);
             thisIcon.SetActive(true);
 
             // Set arrow icons active false - invisible
