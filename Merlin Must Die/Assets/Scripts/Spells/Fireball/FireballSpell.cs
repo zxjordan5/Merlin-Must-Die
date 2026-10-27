@@ -5,7 +5,7 @@ using UnityEngine;
 /// Fireball spell for testing
 /// </summary>
 [Serializable]
-public class Fireball_Spell : Spell
+public class FireballSpell : Spell
 {
     /// <summary>
     /// Create fireball and launch it using the projectile component

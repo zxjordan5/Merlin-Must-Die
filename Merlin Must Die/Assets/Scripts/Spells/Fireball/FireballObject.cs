@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Fireball projectile that on collision with an enemy or destructible object will explode
 /// </summary>
-public class Fireball_Object : DamageObject
+public class FireballObject : DamageObject
 {
     [SerializeField] protected AudioClip hitSound;
     [SerializeField] protected ParticleSystem explosionParticles;
