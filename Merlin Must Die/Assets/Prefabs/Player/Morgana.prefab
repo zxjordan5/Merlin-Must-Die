@@ -125,7 +125,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4744792481409463929}
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   health: 3
   invincibilityWindow: 1
-  maxSpeed: 8
+  maxSpeed: 4
   _targetDirection: {x: 0, y: 0}
   _targetVelocity: {x: 0, y: 0}
 --- !u!212 &771436654858557702
@@ -331,3 +331,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70c624437dcdb3429c4f479374a05ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitStop
+  _duration: 0.1
