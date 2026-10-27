@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 /// <summary>
@@ -86,17 +87,18 @@ public class Excalibur : MonoBehaviour
 
     public void ActivateAbility(int abilityNum)
     {
-        if (Charge == 100)
+        if (Mathf.Approximately(Charge, 100.0f))
         {
             ResetCharge();
 
-            if (abilityNum == 1)
+            switch (abilityNum)
             {
-                _abilityOne.Activate();
-            }
-            if (abilityNum == 2)
-            {
-                _abilityTwo.Activate();
+                case 1:
+                    _abilityOne.Activate();
+                    break;
+                case 2:
+                    _abilityTwo.Activate();
+                    break;
             }
         }
     }
@@ -116,5 +118,17 @@ public class Excalibur : MonoBehaviour
 
     #endregion
 
+    // ***** INPUT EVENTS ***** //
+    #region InputEvents
+    public void ExcaliburAbilityOneActivate(InputAction.CallbackContext context)
+    {
+        ActivateAbility(1);
+    }
 
+    public void ExcaliburAbilityTwoActivate(InputAction.CallbackContext context)
+    {
+        ActivateAbility(2);
+    }
+    
+    #endregion
 }
