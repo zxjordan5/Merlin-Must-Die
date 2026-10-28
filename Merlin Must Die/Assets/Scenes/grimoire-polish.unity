@@ -4755,12 +4755,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2015172803598060845, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: activeSpells.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2015172803598060845, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: 'activeSpells.Array.data[2]'
       value: 
       objectReference: {fileID: 201143550662159319, guid: f0aaaeac0d7b07e05a6db0071a6f363f, type: 3}
+    - target: {fileID: 2015172803598060845, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: 'activeSpells.Array.data[3]'
+      value: 
+      objectReference: {fileID: -6105830751466794179, guid: e98c0a333bf975c4dab65866ce11331b, type: 3}
     - target: {fileID: 2306185591741327024, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
