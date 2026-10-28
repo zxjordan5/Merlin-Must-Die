@@ -1,3 +1,4 @@
+using Unity.U2D.Physics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,6 +13,9 @@ public class Excalibur : MonoBehaviour
 
     [SerializeField] private ExcaliburAbility _abilityOne;
     [SerializeField] private ExcaliburAbility _abilityTwo;
+
+    private ExcaliburAbility _abilityOneInstance;
+    private ExcaliburAbility _abilityTwoInstance;
 
     //UI
     private Image _excaliburBar;
@@ -43,6 +47,8 @@ public class Excalibur : MonoBehaviour
     public void Awake()
     {
         _excaliburBar = transform.Find("ExcaliburBar").GetComponent<Image>();
+        _abilityOneInstance = Instantiate(_abilityOne, new Vector2(0, 0), Quaternion.identity);
+        _abilityTwoInstance = Instantiate(_abilityTwo, new Vector2(0, 0), Quaternion.identity);
     }
 
     public void Update()
@@ -94,10 +100,10 @@ public class Excalibur : MonoBehaviour
             switch (abilityNum)
             {
                 case 1:
-                    _abilityOne.Activate();
+                    _abilityOneInstance.Activate();
                     break;
                 case 2:
-                    _abilityTwo.Activate();
+                    _abilityTwoInstance.Activate();
                     break;
             }
         }

@@ -16,7 +16,12 @@ MonoBehaviour:
   m_GUID: 28c07b7a9998b7702ba37ac618ea6938
   m_SerializeEntries:
   - m_GUID: 84d54de5001d7300cb54064d9a608d31
-    m_Address: Assets/Prefabs/Excalibur/ExcaliburAbilities/BackInTheStone/BackInTheStone_DamageField.prefab
+    m_Address: BackInTheStone_DamageField
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dfc9e1588b8f21a058a5232ca809f375
+    m_Address: BackInTheStone_InitialAOE
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
