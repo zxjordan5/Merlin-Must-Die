@@ -5,16 +5,18 @@ using UnityEngine;
 /// <summary>
 /// Fireball projectile that on collision with an enemy or destructible object will explode
 /// </summary>
-public class EarthBarrierObject : DamageObject
+public class EarthBarrierObject : MonoBehaviour
 {
     
     [SerializeField] protected AudioClip landSound;
     [SerializeField] protected ParticleSystem landingParticles;
+    
 
     /// <summary>
     /// Reference to the collider to be disabled while the object is in the air
     /// </summary>
     private Collider2D _collider;
+    [SerializeField] private Collider2D _damageCollider;
     private Projectile _projectile;
 
     /// <summary>
@@ -36,6 +38,8 @@ public class EarthBarrierObject : DamageObject
 
     public void Awake()
     {
+        
+
         _baseScale = transform.localScale;
 
         _airTimeCounter = 0;
@@ -48,6 +52,9 @@ public class EarthBarrierObject : DamageObject
         _collider.enabled = false;
 
         _projectile = GetComponent<Projectile>();
+
+        Physics2D.IgnoreCollision(_collider, _damageCollider);
+        _damageCollider.enabled = false;
     }
 
     public void Update()
@@ -89,5 +96,15 @@ public class EarthBarrierObject : DamageObject
         _collider.enabled = true;
         AudioSource.PlayClipAtPoint(landSound, transform.position);
         Instantiate(landingParticles, transform.position, transform.rotation);
+
+        _damageCollider.enabled = true;
+        StartCoroutine("DisableDamageCollider");
     }
+
+    private IEnumerator DisableDamageCollider()
+    {
+        yield return new WaitForSeconds(0.3f);
+        _damageCollider.enabled = false;
+    }
+
 }
