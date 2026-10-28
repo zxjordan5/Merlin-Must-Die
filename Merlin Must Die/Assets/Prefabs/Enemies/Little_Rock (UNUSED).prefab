@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5519185386960120524}
   - component: {fileID: -4971359952240304460}
   m_Layer: 0
-  m_Name: Little_Rock
+  m_Name: Little_Rock (UNUSED)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
 
-public class Little_Rock : Wander_Enemy
+public class Golemite : Wander_Enemy
 {
     protected override void Awake()
     {
