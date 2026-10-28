@@ -21,5 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/SceneTransitionTesting/TempGameOverScene.unity
     guid: b6bb6a7adeece094b9cb79e2698c03bf
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: ae23c344a838df2918b44d3c2ef54bc2, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 3a96d82f37145944ca801d67407d89e1, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

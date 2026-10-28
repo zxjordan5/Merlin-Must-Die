@@ -1,7 +1,18 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class BackInTheStone : ExcaliburAbility
 {
+    private GameObject _initialAOEObj;
+    private GameObject _damageField;
+
+    private void Awake()
+    {
+        AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>("");
+        Addressables.LoadAssetAsync<>()
+    }
+    
     public override void Activate()
     {
         // TODO: Spawn damage field and delete after some time

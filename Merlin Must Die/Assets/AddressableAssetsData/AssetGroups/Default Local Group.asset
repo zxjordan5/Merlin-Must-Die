@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Default Local Group
+  m_GUID: 28c07b7a9998b7702ba37ac618ea6938
+  m_SerializeEntries:
+  - m_GUID: 84d54de5001d7300cb54064d9a608d31
+    m_Address: Assets/Prefabs/Excalibur/ExcaliburAbilities/BackInTheStone/BackInTheStone_DamageField.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: d026e2a5d46535f4dbcf1cd9a2433175, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 8d6830ceb9cfad0faa79c3adb5d3e99e, type: 2}
+    - {fileID: 11400000, guid: 0f2f2dc51cdafdd41847b20da4ed92c9, type: 2}

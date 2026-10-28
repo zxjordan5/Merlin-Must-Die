@@ -1,6 +1,8 @@
+using System;
 using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public abstract class Wander_Enemy : MonoBehaviour
@@ -9,6 +11,7 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     // Temp vars
     protected Renderer _renderer;
+    protected Flash _flash;
 
     //Set in this class
     [SerializeField] protected Rigidbody2D _rb;
@@ -19,6 +22,22 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected float _timer;
     protected Player _player;
     protected Collider2D _enemyCollider;
+    
+    /// <summary>
+    /// How much time the player is invincible for after being hit.
+    /// </summary>
+    [SerializeField]
+    protected float damageOverTimeWindow = 2.0f;
+
+    /// <summary>
+    /// How much time has passed since the enemy last took damage from a damage over time effect.
+    /// </summary>
+    protected float _timeSinceDamageOverTimeTick;
+
+    /// <summary>
+    /// Whether or not the enemy is taking damage over time. True if they are within a damaging effect such as Back In The Stone's damaging field, false otherwise.
+    /// </summary>
+    protected bool _isTakingDamageOverTime;
 
     //Set in child class
     protected float _leftBound, _rightBound, _topBound, _bottomBound;
@@ -30,11 +49,13 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected int _initialHealth;
     protected bool _rolling;
     
-
+    
+    
     #endregion
 
     protected virtual void Awake()
     {
+        _flash = GetComponent<Flash>();
         _player = FindAnyObjectByType<Player>();
         _enemyCollider = GetComponent<Collider2D>();
     }
@@ -100,6 +121,15 @@ public abstract class Wander_Enemy : MonoBehaviour
 
         // To make sure the sprite flips
         _previousPOS = transform.position;
+        
+        #region DamageOverTimeTimer
+
+        if (_isTakingDamageOverTime)
+        {
+            _timeSinceDamageOverTimeTick += Time.deltaTime;
+        }
+
+        #endregion
     }
 
     protected virtual void Wander()
@@ -109,12 +139,10 @@ public abstract class Wander_Enemy : MonoBehaviour
         _wandering = true;
     }
 
-    protected void OnTriggerEnter2D(Collider2D collision)
+    protected void TakeDamage()
     {
-        if (collision.gameObject.CompareTag("DamageSpell"))
-        {
-            _health--;
-        }
+        _health--;
+        
         if (_health <= 0)
         {
             _dead = true;
@@ -125,6 +153,52 @@ public abstract class Wander_Enemy : MonoBehaviour
                 collider.enabled = false;
             }
         }
+    }
+
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("DamageSpell"))
+        {
+            TakeDamage();
+            _isTakingDamageOverTime = true;
+        }
+    }
+
+    protected void OnTriggerStay2D(Collider2D collision)
+    {
+        // Damage over time effect
+        if (!collision.gameObject.CompareTag("DamageSpell"))
+        {
+            return;
+        }
+        
+        if (_timeSinceDamageOverTimeTick >= damageOverTimeWindow)
+        {
+            ResetDamageOverTimeTick();
+            TakeDamage();
+
+            if (_flash != null)
+            {
+                _flash.SingleFlash();
+            }
+        }
+        
+    }
+    
+    protected void OnTriggerExit2D(Collider2D other)
+    {
+        ResetDamageOverTimeFields();
+    }
+
+    protected void ResetDamageOverTimeTick()
+    {
+        _timeSinceDamageOverTimeTick = 0.0f;
+    }
+
+    protected void ResetDamageOverTimeFields()
+    {
+        _isTakingDamageOverTime = false;
+        _timeSinceDamageOverTimeTick = 0.0f;
     }
 
     protected abstract void Detection();
