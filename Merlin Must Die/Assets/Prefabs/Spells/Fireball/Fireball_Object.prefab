@@ -1812,11 +1812,11 @@ ParticleSystem:
   TrailModule:
     enabled: 1
     mode: 0
-    ratio: 0.58
+    ratio: 0.5
     lifetime:
       serializedVersion: 3
       minMaxState: 1
-      scalar: 0.58
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2531,7 +2531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fc6bbd4362e3346b6fc484d9978267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  _initialVelocity: 12
+  _initialVelocity: 7
+  _maxVelocity: 0
   _lifetime: 0
 --- !u!58 &7942374459745988773
 CircleCollider2D:
