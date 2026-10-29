@@ -84,25 +84,14 @@ public class Grimoire : MonoBehaviour
         _allSpells = new List<Spell>();
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
+
         GetGrimoireContents();
 
         // The original spell input icon prefab is hidden; used for instantiating only
         spellInputIcon.SetActive(false);
 
-        foreach (Spell spell in activeSpells)
-        {
-            // Need to instantiate spells in order to track their timers
-            _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
 
-            //Get the longest spell code
-            if (spell.spellCode.Count > _maxSpellLength)
-            {
-                _maxSpellLength = spell.spellCode.Count;
-            }
-
-            //Add the spell to the cooldown UI element
-            _cooldownUI.AddSpell(spell);
-        }
+        InstantiateSpells();
     }
 
     void Update()
@@ -113,10 +102,6 @@ public class Grimoire : MonoBehaviour
         for(int i = 0; i < _instantiatedActiveSpells.Count; i++)
         {
             _cooldownUI.UpdateSpellBar(i, _instantiatedActiveSpells[i].CooldownPercent);
-        }
-        if(_comboCounter > 0)
-        {
-            _cooldownUI.UpdateComboBar(_comboTimer, _comboGapTime);
         }
     }
 
@@ -168,7 +153,17 @@ public class Grimoire : MonoBehaviour
         {
             int index = sprites[i].Count;
 
+            GameObject spellUI = new GameObject(activeSpells[i].SpellName + "UI");
+            UnityEngine.UI.LayoutElement spellUILayout = spellUI.AddComponent<UnityEngine.UI.LayoutElement>();
+
+            spellUI.transform.SetParent(grimoireContents.transform, false); 
+            //spellUILayout.preferredWidth = 45;
+            //spellUILayout.preferredHeight = 45;
+            spellUILayout.minHeight = 45;
+            //spellUILayout.minWidth = 45;
+
             // Spell List contains all icons within a spell (name icon + directions)
+            //GameObject spellBlock = new GameObject("SpellUI" + i, typeof()
 
             GameObject spellList = new GameObject("SpellList" + i, typeof(UnityEngine.UI.HorizontalLayoutGroup));
             UnityEngine.UI.HorizontalLayoutGroup xLayout = spellList.GetComponent<UnityEngine.UI.HorizontalLayoutGroup>();
@@ -178,11 +173,12 @@ public class Grimoire : MonoBehaviour
             xLayout.childForceExpandWidth = false;
             xLayout.childForceExpandHeight = false;
             xLayout.spacing = 20;
-            spellList.transform.SetParent(grimoireContents.transform, false);
+            spellList.transform.SetParent(spellUI.transform, false);
 
             // Puts all icons in the spell list component
             for (int j = 0; j < index; j++)
             {
+             
                 // Defining icons as part of the layout + sizing to fit in grimoire
                 GameObject iconSprite = Instantiate(new GameObject("SpellSprites" + i + "_" + j), grimoireContents.transform);
                 iconSprite.transform.SetParent(spellList.transform);
@@ -205,6 +201,24 @@ public class Grimoire : MonoBehaviour
                     grimoireSprite.sprite = sprites[i][j].GetComponent<SpriteRenderer>().sprite;
                 }
             }
+        }
+    }
+
+    public void InstantiateSpells()
+    {
+        foreach (Spell spell in activeSpells)
+        {
+            // Need to instantiate spells in order to track their timers
+            _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
+
+            //Get the longest spell code
+            if (spell.spellCode.Count > _maxSpellLength)
+            {
+                _maxSpellLength = spell.spellCode.Count;
+            }
+
+            //Add the spell to the cooldown UI element
+            _cooldownUI.AddSpell(spell);
         }
     }
 
@@ -424,7 +438,6 @@ public class Grimoire : MonoBehaviour
         {
             spell.ReduceCooldownPercent(_comboCounter);
         }
-        _cooldownUI.UpdateComboText(_comboCounter);
     }
 
     private void UpdateComboTimer()
@@ -433,7 +446,6 @@ public class Grimoire : MonoBehaviour
         {
             _comboTimer = 0;
             _comboCounter = 0;
-            _cooldownUI.UpdateComboText(_comboCounter);
         }
         _comboTimer += Time.deltaTime;
     }

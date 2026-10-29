@@ -13,29 +13,34 @@ public class CooldownUI : MonoBehaviour
     private VerticalLayoutGroup _cooldownUIArea;
 
     [SerializeField]
-    private GameObject _comboBar;
+    Vector2 _cooldownBarOffset;
 
-    private TMP_Text _comboText;
 
-    [SerializeField]
-    private Image _comboBarImage;
+    //No longer needed -> not displaying UI
+    //[SerializeField]
+    //private GameObject _comboBar;
+
+    //private TMP_Text _comboText;
+
+    //[SerializeField]
+    //private Image _comboBarImage;
     
 
     /// <summary>
     /// Filled image that can have it's fillAmount changed to match the attached spells cooldown
     /// </summary>
     [SerializeField]
-    private GameObject _spellbar;
+    private GameObject _cooldownBar;
 
     /// <summary>
     /// Container for every current active spellbar UI 
     /// </summary>
-    private List<Image> _currentSpellbars = new List<Image>();
+    private List<Image> _activeCooldownBars = new List<Image>();
+    private List<Color> _activeCooldownColors = new List<Color>();
 
     private void Awake()
     {
-        _comboText = _comboBar.GetComponentInChildren<TMP_Text>();
-        _comboBarImage = _comboBar.GetComponent<Image>();
+
     }
 
 
@@ -45,11 +50,15 @@ public class CooldownUI : MonoBehaviour
     /// <param name="spell">Spell name and cooldown will be connected to the progress bar</param>
     public void AddSpell(Spell spell)
     {
-        GameObject newBar = Instantiate(_spellbar, _cooldownUIArea.transform);
-        newBar.GetComponentInChildren<TMP_Text>().text = spell.SpellName;
-        newBar.name = spell.SpellName + " bar";
+        GameObject newBar = Instantiate(_cooldownBar, _cooldownUIArea.transform.position, _cooldownUIArea.transform.rotation);
+        _activeCooldownBars.Add(newBar.GetComponent<Image>());
+        _activeCooldownColors.Add(spell.spellColor);
 
-        _currentSpellbars.Add(newBar.GetComponent<Image>());
+        newBar.transform.SetParent(_cooldownUIArea.transform.Find(spell.SpellName + "UI"), false);
+        newBar.transform.SetAsFirstSibling();
+        RectTransform barRect = newBar.GetComponent<RectTransform>();
+        barRect.anchoredPosition = _cooldownBarOffset;
+        barRect.sizeDelta = new Vector2(_cooldownUIArea.GetComponent<RectTransform>().rect.width * 0.9f, barRect.sizeDelta.y);
     }
 
     /// <summary>
@@ -59,18 +68,23 @@ public class CooldownUI : MonoBehaviour
     /// <param name="cooldownPercentage"></param>
     public void UpdateSpellBar(int spellIndex, float cooldownPercentage)
     {
-        _currentSpellbars[spellIndex].fillAmount = cooldownPercentage / 100;
+        _activeCooldownBars[spellIndex].fillAmount = cooldownPercentage / 100;
+        Color spellbarColor = Color.black + (_activeCooldownColors[spellIndex] * (cooldownPercentage / 100));
+        spellbarColor.a = 0.5f;
+
+
+        _activeCooldownBars[spellIndex].color = spellbarColor;
     }
 
-    public void UpdateComboText(int combo)
-    {
-        _comboText.text = "Combo: " + combo;
-    }
-    /// <summary>
-    /// Updates the cooldown bar to count down, indicating when the cooldown will reset
-    /// </summary>
-    public void UpdateComboBar(float timeUntilReset, float resetTime)
-    {
-        _comboBarImage.fillAmount = 1 - timeUntilReset / resetTime;
-    }
+    //public void UpdateComboText(int combo)
+    //{
+    //    _comboText.text = "Combo: " + combo;
+    //}
+    ///// <summary>
+    ///// Updates the cooldown bar to count down, indicating when the cooldown will reset
+    ///// </summary>
+    //public void UpdateComboBar(float timeUntilReset, float resetTime)
+    //{
+    //    _comboBarImage.fillAmount = 1 - timeUntilReset / resetTime;
+    //}
 }

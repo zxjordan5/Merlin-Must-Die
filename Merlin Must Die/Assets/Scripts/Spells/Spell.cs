@@ -40,6 +40,7 @@ public abstract class Spell : MonoBehaviour
 
     // The spell icon in the UI
     [SerializeField] public Sprite spellIcon;
+    [SerializeField] public Color spellColor;
 
     [SerializeField] public GameObject spellObj;
 
