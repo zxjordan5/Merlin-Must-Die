@@ -266,7 +266,7 @@ public class Grimoire : MonoBehaviour
         }
         if (spellMismatches >= _instantiatedActiveSpells.Count)
         {
-            Debug.Log("no spells match, resetting");
+            //Debug.Log("no spells match, resetting");
             ResetInputSequence();
         }
     }
