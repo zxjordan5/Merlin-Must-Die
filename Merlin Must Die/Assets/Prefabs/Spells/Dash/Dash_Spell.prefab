@@ -47,6 +47,7 @@ MonoBehaviour:
   cooldown: 0.5
   spellCode: 0200000002000000i
   spellIcon: {fileID: 8434809954532097666, guid: f3ecdcfb1c2b64944ac7dc6c00864a59, type: 3}
+  spellColor: {r: 0.47358483, g: 1, b: 0.9682129, a: 1}
   spellObj: {fileID: 7440391782456400889, guid: a310795239b9dfc4bafd2b189d3c15d5, type: 3}
   castSound: {fileID: 8300000, guid: 4903e46cf72dc7f4cb7b91c3bf009a33, type: 3}
   spellName: Dash

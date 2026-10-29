@@ -84,25 +84,14 @@ public class Grimoire : MonoBehaviour
         _allSpells = new List<Spell>();
         _preparedSpell = null;
         _player = FindAnyObjectByType<Player>();
+
         GetGrimoireContents();
 
         // The original spell input icon prefab is hidden; used for instantiating only
         spellInputIcon.SetActive(false);
 
-        foreach (Spell spell in activeSpells)
-        {
-            // Need to instantiate spells in order to track their timers
-            _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
 
-            //Get the longest spell code
-            if (spell.spellCode.Count > _maxSpellLength)
-            {
-                _maxSpellLength = spell.spellCode.Count;
-            }
-
-            //Add the spell to the cooldown UI element
-            _cooldownUI.AddSpell(spell);
-        }
+        InstantiateSpells();
     }
 
     void Update()
@@ -212,6 +201,24 @@ public class Grimoire : MonoBehaviour
                     grimoireSprite.sprite = sprites[i][j].GetComponent<SpriteRenderer>().sprite;
                 }
             }
+        }
+    }
+
+    public void InstantiateSpells()
+    {
+        foreach (Spell spell in activeSpells)
+        {
+            // Need to instantiate spells in order to track their timers
+            _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
+
+            //Get the longest spell code
+            if (spell.spellCode.Count > _maxSpellLength)
+            {
+                _maxSpellLength = spell.spellCode.Count;
+            }
+
+            //Add the spell to the cooldown UI element
+            _cooldownUI.AddSpell(spell);
         }
     }
 

@@ -12,6 +12,9 @@ public class CooldownUI : MonoBehaviour
     [SerializeField]
     private VerticalLayoutGroup _cooldownUIArea;
 
+    [SerializeField]
+    Vector2 _cooldownBarOffset;
+
 
     //No longer needed -> not displaying UI
     //[SerializeField]
@@ -27,12 +30,13 @@ public class CooldownUI : MonoBehaviour
     /// Filled image that can have it's fillAmount changed to match the attached spells cooldown
     /// </summary>
     [SerializeField]
-    private GameObject _spellbar;
+    private GameObject _cooldownBar;
 
     /// <summary>
     /// Container for every current active spellbar UI 
     /// </summary>
-    private List<Image> _currentSpellbars = new List<Image>();
+    private List<Image> _activeCooldownBars = new List<Image>();
+    private List<Color> _activeCooldownColors = new List<Color>();
 
     private void Awake()
     {
@@ -46,10 +50,15 @@ public class CooldownUI : MonoBehaviour
     /// <param name="spell">Spell name and cooldown will be connected to the progress bar</param>
     public void AddSpell(Spell spell)
     {
-        GameObject newBar = Instantiate(_spellbar, _cooldownUIArea.transform.position, _cooldownUIArea.transform.rotation);
-        _currentSpellbars.Add(newBar.GetComponent<Image>());
+        GameObject newBar = Instantiate(_cooldownBar, _cooldownUIArea.transform.position, _cooldownUIArea.transform.rotation);
+        _activeCooldownBars.Add(newBar.GetComponent<Image>());
+        _activeCooldownColors.Add(spell.spellColor);
 
         newBar.transform.SetParent(_cooldownUIArea.transform.Find(spell.SpellName + "UI"), false);
+        newBar.transform.SetAsFirstSibling();
+        RectTransform barRect = newBar.GetComponent<RectTransform>();
+        barRect.anchoredPosition = _cooldownBarOffset;
+        barRect.sizeDelta = new Vector2(_cooldownUIArea.GetComponent<RectTransform>().rect.width * 0.9f, barRect.sizeDelta.y);
     }
 
     /// <summary>
@@ -59,7 +68,12 @@ public class CooldownUI : MonoBehaviour
     /// <param name="cooldownPercentage"></param>
     public void UpdateSpellBar(int spellIndex, float cooldownPercentage)
     {
-        _currentSpellbars[spellIndex].fillAmount = cooldownPercentage / 100;
+        _activeCooldownBars[spellIndex].fillAmount = cooldownPercentage / 100;
+        Color spellbarColor = Color.black + (_activeCooldownColors[spellIndex] * (cooldownPercentage / 100));
+        spellbarColor.a = 0.5f;
+
+
+        _activeCooldownBars[spellIndex].color = spellbarColor;
     }
 
     //public void UpdateComboText(int combo)
