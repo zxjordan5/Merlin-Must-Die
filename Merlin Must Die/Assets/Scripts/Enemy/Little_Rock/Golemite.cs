@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
 
-public class Little_Rock : Wander_Enemy
+public class Golemite : Wander_Enemy
 {
     protected override void Awake()
     {
@@ -56,7 +56,17 @@ public class Little_Rock : Wander_Enemy
             _rb.transform.position = Vector2.MoveTowards(
                 _rb.transform.position,
                 _target,
-                2 * Time.deltaTime);
+                5 * Time.deltaTime);
+        }
+
+        // Flip the sprite properly when rolling up
+        if (_player.transform.position.x - _rb.transform.position.x < 0 && transform.localScale.x > 0 && !_rolling)
+        {
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
+        if (_player.transform.position.x - _rb.transform.position.x > 0 && transform.localScale.x < 0 && !_rolling)
+        {
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         }
     }
 
@@ -76,18 +86,18 @@ public class Little_Rock : Wander_Enemy
         // If the player gets close enough, the rock stops, rolls for a sec, then dashes towards the players POS
         if (Vector2.Distance(_player.transform.position, _rb.transform.position) < 2.5)
         {
-            _rb.linearVelocity = new Vector2(0,0);
+            _rb.linearVelocity = new Vector2(1,1);
             _target = _player.transform.position;
-            StartCoroutine(RollTimer(2.5f));
+            StartCoroutine(RollTimer(1.5f));
         }
     }
 
     IEnumerator RollTimer(float rollTime)
     {
         yield return new WaitForSeconds(rollTime);
-        _target = _player.transform.position;
+        _target = _player.transform.position + (_player.transform.position - _rb.transform.position)*2;
         _rolling = true;
-        yield return new WaitForSeconds(rollTime/4);
+        yield return new WaitForSeconds(rollTime/1.5f);
         _rolling = false;
         _target = new Vector2(1,1);
     }

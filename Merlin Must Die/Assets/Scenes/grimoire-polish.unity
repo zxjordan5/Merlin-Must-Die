@@ -242,7 +242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (10)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -304,7 +304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (7)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -698,7 +698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (15)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -760,7 +760,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (5)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1448,7 +1448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (2)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2334,7 +2334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (20)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2457,7 +2457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (1)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2519,7 +2519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (8)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2581,7 +2581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (21)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3201,7 +3201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (18)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3263,7 +3263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (17)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3325,7 +3325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (19)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3573,7 +3573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (11)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3975,7 +3975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (4)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4360,7 +4360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (24)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4561,7 +4561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (13)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4755,12 +4755,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2015172803598060845, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: activeSpells.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2015172803598060845, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: 'activeSpells.Array.data[2]'
       value: 
       objectReference: {fileID: 201143550662159319, guid: f0aaaeac0d7b07e05a6db0071a6f363f, type: 3}
+    - target: {fileID: 2015172803598060845, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: 'activeSpells.Array.data[3]'
+      value: 
+      objectReference: {fileID: -6105830751466794179, guid: e98c0a333bf975c4dab65866ce11331b, type: 3}
     - target: {fileID: 2306185591741327024, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -4781,6 +4785,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1335361839}
+    - target: {fileID: 2355151895835167610, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2424619544789041361, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -5147,7 +5155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (12)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5209,7 +5217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (14)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5271,7 +5279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (23)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5333,7 +5341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (6)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5395,7 +5403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (22)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5596,7 +5604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (3)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5720,7 +5728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (16)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5782,7 +5790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock (9)
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6030,7 +6038,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

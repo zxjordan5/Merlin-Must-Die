@@ -141,8 +141,10 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected void TakeDamage()
     {
-        _health--;
-        
+        if (collision.gameObject.CompareTag("DamageSpell"))
+        {
+            _health -= collision.gameObject.GetComponent<DamageObject>().Damage;
+        }
         if (_health <= 0)
         {
             _dead = true;
