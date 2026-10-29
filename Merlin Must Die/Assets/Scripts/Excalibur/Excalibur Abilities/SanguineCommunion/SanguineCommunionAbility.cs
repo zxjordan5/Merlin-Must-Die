@@ -23,7 +23,7 @@ public class SanguineCommunionAbility : ExcaliburAbility
         // TODO: Make projectile move along rotated angle
         GameObject fbObj = Instantiate(_sanguineCommunionObjectRef, _player.transform.position, objQuat);
         Projectile fbProjectile = fbObj.GetComponent<Projectile>();
-        fbProjectile.LaunchProjectile(_player.AimDirNorm);
+        fbProjectile.LaunchProjectile(Vector2.right);
     }
 
     IEnumerator LoadDamageObjects()
