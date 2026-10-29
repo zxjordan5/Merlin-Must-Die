@@ -12,13 +12,15 @@ public class CooldownUI : MonoBehaviour
     [SerializeField]
     private VerticalLayoutGroup _cooldownUIArea;
 
-    [SerializeField]
-    private GameObject _comboBar;
 
-    private TMP_Text _comboText;
+    //No longer needed -> not displaying UI
+    //[SerializeField]
+    //private GameObject _comboBar;
 
-    [SerializeField]
-    private Image _comboBarImage;
+    //private TMP_Text _comboText;
+
+    //[SerializeField]
+    //private Image _comboBarImage;
     
 
     /// <summary>
@@ -34,8 +36,7 @@ public class CooldownUI : MonoBehaviour
 
     private void Awake()
     {
-        _comboText = _comboBar.GetComponentInChildren<TMP_Text>();
-        _comboBarImage = _comboBar.GetComponent<Image>();
+
     }
 
 
@@ -45,11 +46,10 @@ public class CooldownUI : MonoBehaviour
     /// <param name="spell">Spell name and cooldown will be connected to the progress bar</param>
     public void AddSpell(Spell spell)
     {
-        GameObject newBar = Instantiate(_spellbar, _cooldownUIArea.transform);
-        newBar.GetComponentInChildren<TMP_Text>().text = spell.SpellName;
-        newBar.name = spell.SpellName + " bar";
-
+        GameObject newBar = Instantiate(_spellbar, _cooldownUIArea.transform.position, _cooldownUIArea.transform.rotation);
         _currentSpellbars.Add(newBar.GetComponent<Image>());
+
+        newBar.transform.SetParent(_cooldownUIArea.transform.Find(spell.SpellName + "UI"), false);
     }
 
     /// <summary>
@@ -62,15 +62,15 @@ public class CooldownUI : MonoBehaviour
         _currentSpellbars[spellIndex].fillAmount = cooldownPercentage / 100;
     }
 
-    public void UpdateComboText(int combo)
-    {
-        _comboText.text = "Combo: " + combo;
-    }
-    /// <summary>
-    /// Updates the cooldown bar to count down, indicating when the cooldown will reset
-    /// </summary>
-    public void UpdateComboBar(float timeUntilReset, float resetTime)
-    {
-        _comboBarImage.fillAmount = 1 - timeUntilReset / resetTime;
-    }
+    //public void UpdateComboText(int combo)
+    //{
+    //    _comboText.text = "Combo: " + combo;
+    //}
+    ///// <summary>
+    ///// Updates the cooldown bar to count down, indicating when the cooldown will reset
+    ///// </summary>
+    //public void UpdateComboBar(float timeUntilReset, float resetTime)
+    //{
+    //    _comboBarImage.fillAmount = 1 - timeUntilReset / resetTime;
+    //}
 }
