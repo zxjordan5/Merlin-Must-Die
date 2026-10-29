@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7d5086a7ef95b7990340d67a22dba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestructibleObject
-  health: 3
+  health: 2
   destructiblePrefabRef: {fileID: 5307854558222162063, guid: e730a2681dfd8d8e2b324cedd4e53d2f, type: 3}
   particleExplosionRef: {fileID: 500345726442012828, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
   fullHealthSprite: {fileID: -8568042794190644651, guid: b4c7529d662a70343828ab3194b0a8a7, type: 3}

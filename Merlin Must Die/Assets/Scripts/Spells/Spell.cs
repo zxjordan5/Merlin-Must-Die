@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public abstract class Spell : MonoBehaviour
@@ -36,6 +37,10 @@ public abstract class Spell : MonoBehaviour
     }
 
     [SerializeField] public List<Grimoire.Direction> spellCode;
+
+    // The spell icon in the UI
+    [SerializeField] public Sprite spellIcon;
+    [SerializeField] public Color spellColor;
 
     [SerializeField] public GameObject spellObj;
 

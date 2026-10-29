@@ -32,8 +32,13 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Health of Morgana. Serializable only for testing.
     /// </summary>
+    private int _health = 3;
+
+    /// <summary>
+    /// Max health of Morgana
+    /// </summary>
     [SerializeField]
-    private int health = 3;
+    private int maxHealth = 3;
 
     /// <summary>
     /// How much time the player is invincible for after being hit.
@@ -157,6 +162,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 _targetDirection;
     [SerializeField] private Vector2 _targetVelocity;
 
+    public float Velocity
+    {
+        get { return RB.linearVelocity.magnitude; }
+    }
+
     private float _speedMult = 1f; //Should be reset to 1 always
 
     private Vector3 _mousePos;
@@ -175,6 +185,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        _health = maxHealth;
         _hitStop = GetComponent<HitStop>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
@@ -191,6 +202,8 @@ public class Player : MonoBehaviour
         _animator.SetBool("Moving", _targetVelocity != Vector2.zero);
         _animator.SetInteger("AimDirection", (int)AimDirection);
         _animator.SetInteger("MoveDirection", (int)MoveDirection);
+        
+        Debug.Log(this.AimAngle);
 
         #region InvincibilityTimer
         if (_isInvincible)
@@ -209,20 +222,20 @@ public class Player : MonoBehaviour
 
     //Contains movement logic
     void FixedUpdate()
-    {
+    {  
         // Reset the target velocity so the player slows down
         _targetVelocity = new Vector2(0,0);
 
         // Dashing movement
         // Move the player towards the dash target, which is the crosshair
         // Add the players current position to the crosshair so the target continually gets further.
-        if (_dashing)
-        {
-            _rb.transform.position = Vector2.MoveTowards(
-                _rb.transform.position,
-                (Vector2)_rb.transform.position + _dashTarget,
-                maxSpeed * _speedMult * Time.deltaTime);
-        }
+        //if (_dashing)
+        //{
+        //    _rb.transform.position = Vector2.MoveTowards(
+        //        _rb.transform.position,
+        //        (Vector2)_rb.transform.position + _dashTarget,
+        //        maxSpeed * _speedMult * Time.deltaTime);
+        //}
        
         // GP movement
         if (_gpMoving)
@@ -261,7 +274,7 @@ public class Player : MonoBehaviour
         }
 
         // Slows player movement when not actively moving
-        if (!_kbMoving && !_gpMoving)
+        if (!_kbMoving && !_gpMoving && !_dashing)
         {
             _rb.linearVelocity *= new Vector2(0.8f,0.8f);
         }
@@ -284,6 +297,8 @@ public class Player : MonoBehaviour
     {
         _speedMult = dashSpeed;
         _dashTarget = _crosshair.transform.localPosition;
+        _targetVelocity = _dashTarget * maxSpeed * _speedMult;
+        _rb.AddForce((_targetVelocity - _rb.linearVelocity) * 15);
         if (!_dashing)
         {
             StartCoroutine(DashTimer(dashTime));
@@ -328,6 +343,18 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// Heals the player one chunk. The player can only heal if they are below max health
+    /// </summary>
+    public void Heal()
+    {
+        if (_health < maxHealth)
+        {
+            _health++;
+            Healthbar.Instance.UpdateHealthbar(_health);
+        }
+    }
+
+    /// <summary>
     /// Checks if the player is invincible and if the other collision object
     /// is an enemy. If the player is not invincible and the other object is an enemy, the player takes damage.
     /// </summary>
@@ -350,15 +377,15 @@ public class Player : MonoBehaviour
     /// </summary>
     private void TakeDamage()
     {
-        health--;
+        _health--;
         _isInvincible = true;
-        Healthbar.Instance.UpdateHealthbar(health);
-        if(_hitStop != null && health > 0)
+        Healthbar.Instance.UpdateHealthbar(_health);
+        if(_hitStop != null && _health > 0)
         {
             // Don't call hitstop if the player is dead, it will break time scale
             _hitStop.Stop();
         }
-        if(health <= 0)
+        if(_health <= 0)
         {
             Death();
         }

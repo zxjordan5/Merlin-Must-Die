@@ -9,10 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Deprecated/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 0
-    path: Assets/Scenes/playtest-10-2.unity
+    path: Assets/Scenes/pt-10-2.unity
     guid: ed6d3755be016e64798e5d64335313e7
-  - enabled: 1
-    path: Assets/Scenes/playtest-10-16.unity
+  - enabled: 0
+    path: Assets/Scenes/pt-10-16.unity
     guid: 9a51d0eeda8e71a108cd63c834157d29
   - enabled: 1
     path: Assets/Scenes/SceneTransitionTesting/TempMainMenu.unity
@@ -20,6 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SceneTransitionTesting/TempGameOverScene.unity
     guid: b6bb6a7adeece094b9cb79e2698c03bf
+  - enabled: 1
+    path: Assets/Scenes/pt-10-30.unity
+    guid: 9aa8eace1fa57d44a9bdf5cd0b76faf7
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: ae23c344a838df2918b44d3c2ef54bc2, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 3a96d82f37145944ca801d67407d89e1, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

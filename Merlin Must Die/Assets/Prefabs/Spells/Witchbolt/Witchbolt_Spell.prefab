@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Witchbolt_Spell
   cooldown: 1
   spellCode: 020000000000000003000000i
+  spellIcon: {fileID: 8193288575119485115, guid: 42e77c0738411e3488ab59bd7e5965fb, type: 3}
+  spellColor: {r: 0.30373242, g: 0, b: 0.509434, a: 1}
   spellObj: {fileID: 5762526835167957530, guid: 25f76e8177b90fad6bdd693cbc07c695, type: 3}
   castSound: {fileID: 8300000, guid: 4903e46cf72dc7f4cb7b91c3bf009a33, type: 3}
   spellName: Witchbolt
