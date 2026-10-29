@@ -10,7 +10,7 @@ public class EarthBarrierObject : MonoBehaviour
     
     [SerializeField] protected AudioClip landSound;
     [SerializeField] protected ParticleSystem landingParticles;
-    
+   
 
     /// <summary>
     /// Reference to the collider to be disabled while the object is in the air
@@ -19,10 +19,16 @@ public class EarthBarrierObject : MonoBehaviour
     [SerializeField] private Collider2D _damageCollider;
     private Projectile _projectile;
 
+
+    //Sprites
+    SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _inAirSprite;
+    [SerializeField] private GameObject _holeObject;
+
     /// <summary>
     /// How long the object should stay in the air before it lands
     /// </summary>
-    [SerializeField] private float _airTime = 2.0f;
+   [SerializeField] private float _airTime = 2.0f;
     private float _airTimeCounter = 0;
     private bool _landed = false;
 
@@ -38,8 +44,6 @@ public class EarthBarrierObject : MonoBehaviour
 
     public void Awake()
     {
-        
-
         _baseScale = transform.localScale;
 
         _airTimeCounter = 0;
@@ -55,6 +59,12 @@ public class EarthBarrierObject : MonoBehaviour
 
         Physics2D.IgnoreCollision(_collider, _damageCollider);
         _damageCollider.enabled = false;
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.enabled = false;
+        _inAirSprite.enabled = true;
+
+        GameObject hole = Instantiate(_holeObject, new Vector3(transform.position.x, transform.position.y - 0.2f, 1), transform.rotation);
     }
 
     public void Update()
@@ -99,6 +109,9 @@ public class EarthBarrierObject : MonoBehaviour
 
         _damageCollider.enabled = true;
         StartCoroutine("DisableDamageCollider");
+
+        _spriteRenderer.enabled = true;
+        _inAirSprite.enabled = false;
     }
 
     private IEnumerator DisableDamageCollider()
