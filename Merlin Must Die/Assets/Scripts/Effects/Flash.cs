@@ -62,7 +62,14 @@ public class Flash : MonoBehaviour
 
         // We hit something that should play the flash
         Invoke(nameof(TriggerFlash), 0.0f);
-        
+    }
+
+    /// <summary>
+    /// Method that calls an individual flash. Can be referenced in another script if custom flash functionality is needed
+    /// </summary>
+    public void SingleFlash()
+    {
+        Invoke(nameof(TriggerFlash), 0.0f);
     }
 
 
