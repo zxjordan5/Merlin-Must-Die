@@ -69,7 +69,7 @@ public class BackInTheStone : ExcaliburAbility
     
     public override void Activate()
     {
-        // Debug.Log("Ability activated!");
+         Debug.Log("Ability activated!");
         // Spawn initial AOE then delete, then spawn damage field in the same location as the AOE
         // (Additional spawning logic handled in Update())
         _initialAoeInstance = Instantiate(_initialAoeObjRef, _player.transform.position, Quaternion.identity);
@@ -84,7 +84,7 @@ public class BackInTheStone : ExcaliburAbility
         if(handleDamageField.Status == AsyncOperationStatus.Succeeded)
         {
             // FOR TESTING
-            Instantiate(handleDamageField.Result.gameObject, _player.transform.position, Quaternion.identity);
+            //Instantiate(handleDamageField.Result.gameObject, _player.transform.position, Quaternion.identity);
             
             _damageFieldObjRef = handleDamageField.Result.gameObject;
         }

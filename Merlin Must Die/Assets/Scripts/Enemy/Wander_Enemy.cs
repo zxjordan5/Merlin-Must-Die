@@ -27,7 +27,7 @@ public abstract class Wander_Enemy : MonoBehaviour
     /// How much time the player is invincible for after being hit.
     /// </summary>
     [SerializeField]
-    protected float damageOverTimeWindow = 2.0f;
+    protected float damageOverTimeWindow = 1.0f;
 
     /// <summary>
     /// How much time has passed since the enemy last took damage from a damage over time effect.
@@ -127,6 +127,7 @@ public abstract class Wander_Enemy : MonoBehaviour
         if (_isTakingDamageOverTime)
         {
             _timeSinceDamageOverTimeTick += Time.deltaTime;
+            //Debug.Log("DoT Tick: " + _timeSinceDamageOverTimeTick);
         }
 
         #endregion
@@ -139,7 +140,7 @@ public abstract class Wander_Enemy : MonoBehaviour
         _wandering = true;
     }
 
-    protected void TakeDamage()
+    protected void TakeDamage(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("DamageSpell"))
         {
@@ -159,10 +160,17 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("DamageSpell"))
+        if (!collision.gameObject.CompareTag("DamageSpell"))
         {
-            TakeDamage();
-            _isTakingDamageOverTime = true;
+            return;
+        }
+        
+        // This check prevents repeated damage calls
+        if (!_isTakingDamageOverTime)
+        {
+            // Initial damage
+            TakeDamage(collision);
+            _isTakingDamageOverTime = true;  
         }
     }
 
@@ -176,15 +184,14 @@ public abstract class Wander_Enemy : MonoBehaviour
         
         if (_timeSinceDamageOverTimeTick >= damageOverTimeWindow)
         {
-            ResetDamageOverTimeTick();
-            TakeDamage();
-
-            if (_flash != null)
-            {
-                _flash.SingleFlash();
-            }
+           //Debug.Log("Damage Over Time");
+           ResetDamageOverTimeTick();
+           TakeDamage(collision);
+           if (_flash != null)
+           {
+              _flash.SingleFlash();
+           }
         }
-        
     }
     
     protected void OnTriggerExit2D(Collider2D other)
