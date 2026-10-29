@@ -31,6 +31,7 @@ public class DestructibleObject : MonoBehaviour
 
     // Sprite to use when object passes a certain damage threshold
     [SerializeField] private Sprite damagedSprite;
+    public Sprite DamagedSprite { get; }
 
     /// <summary>
     /// SpriteRenderer for the object. We need to reference this to change sprites

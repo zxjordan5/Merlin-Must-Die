@@ -202,8 +202,6 @@ public class Player : MonoBehaviour
         _animator.SetBool("Moving", _targetVelocity != Vector2.zero);
         _animator.SetInteger("AimDirection", (int)AimDirection);
         _animator.SetInteger("MoveDirection", (int)MoveDirection);
-        
-        Debug.Log(this.AimAngle);
 
         #region InvincibilityTimer
         if (_isInvincible)

@@ -10,7 +10,7 @@ public class WitchboltObject : DamageObject
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("PushEnemy called");
+            //Debug.Log("PushEnemy called");
             PushEnemy(other);
             Explode();
         }
