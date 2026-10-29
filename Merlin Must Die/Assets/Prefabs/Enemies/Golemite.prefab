@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9163368288487434778, guid: c2a85dc8c00dc504f850aa8ddab139c7, type: 3}
       propertyPath: m_Name
-      value: Smaller_Rock
+      value: Golemite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
