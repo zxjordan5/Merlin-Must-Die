@@ -48,9 +48,9 @@ public class Excalibur : MonoBehaviour
     {
         _excaliburBar = transform.Find("ExcaliburBar").GetComponent<Image>();
 
-        if(_abilityOneInstance != null )
+        if(_abilityOne != null )
             _abilityOneInstance = Instantiate(_abilityOne, new Vector2(0, 0), Quaternion.identity);
-        if(_abilityTwoInstance != null )
+        if(_abilityTwo != null )
             _abilityTwoInstance = Instantiate(_abilityTwo, new Vector2(0, 0), Quaternion.identity);
     }
 
