@@ -83682,6 +83682,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8878531497264320830, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_Size.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878531497264320830, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_Size.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878531497264320830, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9051585247292019412, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_Name
       value: Smaller_Rock

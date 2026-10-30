@@ -370,7 +370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestructibleObject
   health: 3
-  destructiblePrefabRef: {fileID: 5307854558222162063, guid: e730a2681dfd8d8e2b324cedd4e53d2f, type: 3}
+  destructiblePrefabRef: {fileID: 6009325252677230322, guid: 66a55e32922b9c84ab39abfd897d640a, type: 3}
   particleExplosionRef: {fileID: 500345726442012828, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
   fullHealthSprite: {fileID: 2949406587819106843, guid: 5d0e51b86fab75d46afe78c8a2624284, type: 3}
   damagedSprite: {fileID: -436615413, guid: 5d0e51b86fab75d46afe78c8a2624284, type: 3}
