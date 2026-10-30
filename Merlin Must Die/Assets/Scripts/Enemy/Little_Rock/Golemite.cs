@@ -8,10 +8,10 @@ public class Golemite : Wander_Enemy
     [SerializeField] private float _rollTime;
 
     [SerializeField] private float _attackCooldown;
-    private float _attackCooldownTimer;
+    [SerializeField] private float _attackCooldownTimer;
 
     private Animator _animator;
-    private bool _charging;
+    [SerializeField] private bool _charging;
 
     public enum State { Idle = 0, Walking = 1, Charging = 2, Rolling = 3}
     public State MoveState
@@ -23,7 +23,7 @@ public class Golemite : Wander_Enemy
             if (_rolling)
                 return State.Rolling;
 
-            if (_wandering)
+            if (_attacking)
                 return State.Walking;
 
             
@@ -45,7 +45,7 @@ public class Golemite : Wander_Enemy
         _detectionCircle = new GameObject("RockDetection");
         _detectionCircle.transform.position = _rb.transform.position;
         CircleCollider2D _collider = _detectionCircle.AddComponent<CircleCollider2D>();
-        _collider.radius = 4;
+        _collider.radius = 3.5f;
         _collider.isTrigger = true;
 
         _health = 2;
@@ -60,8 +60,8 @@ public class Golemite : Wander_Enemy
 
     protected override void Wander()
     {
-        _wanderTime = (float)Random.Range(25, 50) / 50; // Wanders for 1-2 seconds
-        _pauseTime = (float)Random.Range(1, 2) / 50; // Pauses for 0.5-1 seconds
+        _wanderTime = (float)Random.Range(25, 50) / 50; 
+        _pauseTime = (float)Random.Range(10, 25) / 50; 
 
         base.Wander();
     }
@@ -69,12 +69,12 @@ public class Golemite : Wander_Enemy
     protected void Update()
     {
         _animator.SetInteger("State", (int)MoveState);
-        _attackCooldownTimer += Time.deltaTime;
+        //_attackCooldownTimer += Time.deltaTime;
 
-        if (_attackCooldownTimer > _attackCooldown)
-        {
-            _attacking = false;
-        }
+        //if (_attackCooldownTimer > _attackCooldown)
+        //{
+        //    _attacking = false;
+        //}
     }
 
     protected override void FixedUpdate()
@@ -114,9 +114,10 @@ public class Golemite : Wander_Enemy
     {
         // If the player's position overlaps with a point on the detection circle's collider or the enemy get hit, attack
         if ((_detectionCircle.GetComponent<Collider2D>().OverlapPoint(_player.transform.position) 
-            || _initialHealth != _health) && !_attacking && _attackCooldownTimer > _attackCooldown)
+            || _initialHealth != _health) && !_attacking) //&& _attackCooldownTimer > _attackCooldown)
         {
             _attacking = true;
+            _wandering = false;
             _rb.linearVelocity = new Vector2(0,0);
         }
     }
@@ -124,7 +125,7 @@ public class Golemite : Wander_Enemy
     protected override void Attack()
     {
         // If the player gets close enough, the rock stops, rolls for a sec, then dashes towards the players POS
-        if (Vector2.Distance(_player.transform.position, _rb.transform.position) < 2.5)
+        if (Vector2.Distance(_player.transform.position, _rb.transform.position) < 2)
         {
             _rb.linearVelocity = new Vector2(1,1);
             _target = _player.transform.position;
@@ -142,7 +143,7 @@ public class Golemite : Wander_Enemy
         yield return new WaitForSeconds(_rollTime);
         _rolling = false;
         _target = new Vector2(1,1);
-        _attackCooldownTimer = 0;
+        //_attackCooldownTimer = 0;
     }
 
 }

@@ -15,8 +15,8 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     //Set in this class
     [SerializeField] protected Rigidbody2D _rb;
-    protected bool _wandering = false;
-    protected bool _attacking = false;
+    [SerializeField] protected bool _wandering = false;
+    [SerializeField] protected bool _attacking = false;
     protected bool _dead = false;
     protected Vector2 _previousPOS;
     protected float _timer;
@@ -47,7 +47,7 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected Vector2 _target;
     [SerializeField] protected int _health;
     protected int _initialHealth;
-    protected bool _rolling;
+    [SerializeField] protected bool _rolling;
     
     
     
