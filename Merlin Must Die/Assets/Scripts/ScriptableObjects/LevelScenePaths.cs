@@ -10,4 +10,5 @@ public class LevelScenePaths : ScriptableObject
     public string MainMenuScene = "Assets/Scenes/SceneTransitionTesting/TempMainMenu.unity";
     public string GameOverScene = "Assets/Scenes/SceneTransitionTesting/TempGameOverScene.unity";
     public string LevelOne = "Assets/Scenes/pt-10-30.unity";
+    public string WinScene = "Assets/Scenes/SceneTransitionTesting/TempWinScreen.unity";
 }
