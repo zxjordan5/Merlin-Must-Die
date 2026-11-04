@@ -11,23 +11,23 @@ public class Golemite : Wander_Enemy
     [SerializeField] private float _attackCooldownTimer;
 
     private Animator _animator;
-    [SerializeField] private bool _charging;
 
-    public enum State { Idle = 0, Walking = 1, Charging = 2, Rolling = 3}
+    public enum State{ Wandering = 0, Attacking = 1, Charging = 2, Rolling = 3, Dead = 4 }
+    public State CurrentState { get; private set; } = State.Wandering;
+    [SerializeField] private int _state = 0;
     public State MoveState
     {
         get
         {
-            if (_charging)
+            if (CurrentState == State.Charging)
                 return State.Charging;
-            if (_rolling)
+            if (CurrentState == State.Rolling)
                 return State.Rolling;
 
-            if (_attacking)
-                return State.Walking;
+            if (CurrentState == State.Attacking)
+                return State.Attacking;
 
-            
-            return State.Idle;
+            return State.Wandering;
         }
     }
 
@@ -48,9 +48,8 @@ public class Golemite : Wander_Enemy
         _collider.radius = 3.5f;
         _collider.isTrigger = true;
 
-        _health = 2;
-        _initialHealth = _health;
-        _rolling = false;
+        _initialHealth = 2;
+        _health = _initialHealth;
 
         _leftBound = _rb.transform.position.x - 3;
         _rightBound = _rb.transform.position.x + 3;
@@ -58,17 +57,18 @@ public class Golemite : Wander_Enemy
         _bottomBound = _rb.transform.position.y - 3;
     }
 
-    protected override void Wander()
-    {
-        _wanderTime = (float)Random.Range(25, 50) / 50; 
-        _pauseTime = (float)Random.Range(10, 25) / 50; 
-
-        base.Wander();
-    }
-
     protected void Update()
     {
         _animator.SetInteger("State", (int)MoveState);
+        
+        if (Detection() && CurrentState == State.Wandering)
+        {
+            CurrentState = State.Attacking;
+            _rb.linearVelocity = new Vector2(0, 0);
+        }
+
+        _state = (int)CurrentState;
+
         //_attackCooldownTimer += Time.deltaTime;
 
         //if (_attackCooldownTimer > _attackCooldown)
@@ -82,7 +82,7 @@ public class Golemite : Wander_Enemy
         base.FixedUpdate();
 
         // Once the player is detected, the enemy allways goes towards their location to attack
-        if (_attacking && _target == new Vector2(1,1))
+        if (CurrentState == State.Attacking && _target == new Vector2(1,1))
         {
             Attack();
             _rb.transform.position = Vector2.MoveTowards(
@@ -91,35 +91,14 @@ public class Golemite : Wander_Enemy
                 1.5f * Time.deltaTime);
         }
 
-        if (_rolling)
+        if (CurrentState == State.Rolling)
         {
             _rb.transform.position = Vector2.MoveTowards(
                 _rb.transform.position,
                 _target,
                 5 * Time.deltaTime);
         }
-
-        // Flip the sprite properly when rolling up
-        if (_player.transform.position.x - _rb.transform.position.x < 0 && transform.localScale.x > 0 && !_rolling)
-        {
-            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-        }
-        if (_player.transform.position.x - _rb.transform.position.x > 0 && transform.localScale.x < 0 && !_rolling)
-        {
-            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-        }
-    }
-
-    protected override void Detection()
-    {
-        // If the player's position overlaps with a point on the detection circle's collider or the enemy get hit, attack
-        if ((_detectionCircle.GetComponent<Collider2D>().OverlapPoint(_player.transform.position) 
-            || _initialHealth != _health) && !_attacking) //&& _attackCooldownTimer > _attackCooldown)
-        {
-            _attacking = true;
-            _wandering = false;
-            _rb.linearVelocity = new Vector2(0,0);
-        }
+        
     }
 
     protected override void Attack()
@@ -133,15 +112,22 @@ public class Golemite : Wander_Enemy
         }
     }
 
+    protected override void Wander()
+    {
+        _wanderTime = (float)Random.Range(25, 50) / 50; 
+        _pauseTime = (float)Random.Range(10, 25) / 50; 
+
+        base.Wander();
+    }
+
     IEnumerator RollTimer()
     {
-        _charging = true;
+        CurrentState = State.Charging;
         yield return new WaitForSeconds(_chargeTime);
         _target = _player.transform.position + (_player.transform.position - _rb.transform.position)*2;
-        _charging = false;
-        _rolling = true;
+        CurrentState = State.Rolling;
         yield return new WaitForSeconds(_rollTime);
-        _rolling = false;
+        CurrentState = State.Attacking;
         _target = new Vector2(1,1);
         //_attackCooldownTimer = 0;
     }

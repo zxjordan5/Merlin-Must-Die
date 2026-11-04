@@ -15,9 +15,6 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     //Set in this class
     [SerializeField] protected Rigidbody2D _rb;
-    [SerializeField] protected bool _wandering = false;
-    [SerializeField] protected bool _attacking = false;
-    protected bool _dead = false;
     protected Vector2 _previousPOS;
     protected float _timer;
     protected Player _player;
@@ -47,8 +44,8 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected Vector2 _target;
     [SerializeField] protected int _health;
     protected int _initialHealth;
-    [SerializeField] protected bool _rolling;
-    
+    private enum States { Wandering = 0, Attacking = 1, Paused = 2, Dead = 3 }
+    private States CurrentState = States.Wandering;
     
     
     #endregion
@@ -58,6 +55,9 @@ public abstract class Wander_Enemy : MonoBehaviour
         _flash = GetComponent<Flash>();
         _player = FindAnyObjectByType<Player>();
         _enemyCollider = GetComponent<Collider2D>();
+
+        // Will be changed in child class, this just makes Detection() work
+        _health = _initialHealth = 1;
     }
 
     protected virtual void FixedUpdate()
@@ -65,20 +65,19 @@ public abstract class Wander_Enemy : MonoBehaviour
         _timer += Time.deltaTime;
         _detectionCircle.transform.position = _rb.transform.position;
 
-        // Wandering Logic
-        if (!_attacking && !_dead)
+        if (CurrentState == States.Wandering || CurrentState == States.Paused)
         {
             // Make the enemy pause
-            if (_wandering && _timer >= _wanderTime)
+            if (CurrentState == States.Wandering && _timer >= _wanderTime)
             {
-                _wandering = false;
+                CurrentState = States.Paused;
                 _rb.linearVelocityX = 0;
                 _rb.linearVelocityY = 0;
                 _timer = 0;
             }
 
             // Once the enemy has paused for long enough, wander again
-            if (!_wandering && _timer >= _pauseTime)
+            if (CurrentState == States.Paused && _timer >= _pauseTime)
             {
                 Wander();
                 _timer = 0;
@@ -93,16 +92,15 @@ public abstract class Wander_Enemy : MonoBehaviour
             {
                 _rb.linearVelocityY *= -1;
             }
-        }
 
-
-        // Attacking Logic
-        if (!_dead)
-        {
             // If the player has not been detected, keep checking
-            Detection();
+            if (Detection())
+            {
+                CurrentState = States.Attacking;
+                //_rb.linearVelocity = new Vector2(0, 0);
+            }
 
-            // Flip the sprite properly
+            // Flip the sprite properly when wandering
             if (_previousPOS.x > transform.position.x && transform.localScale.x > 0) 
             { 
                 transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z); 
@@ -112,8 +110,22 @@ public abstract class Wander_Enemy : MonoBehaviour
                 transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
             }
         }
+        
+        // Flip the sprite properly when attacking
+        else if (CurrentState == States.Attacking)
+        {
+            if (_player.transform.position.x - _rb.transform.position.x < 0 && transform.localScale.x > 0)
+            {
+                transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            }
+            if (_player.transform.position.x - _rb.transform.position.x > 0 && transform.localScale.x < 0)
+            {
+                transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            }
+        }
+
         // Temp death logic
-        else if (_dead)
+        if (CurrentState == States.Dead)
         {
             _renderer.material.color = new Color(_renderer.material.color.r, _renderer.material.color.g, _renderer.material.color.b, _renderer.material.color.a - 0.03f);
         }
@@ -137,7 +149,18 @@ public abstract class Wander_Enemy : MonoBehaviour
     {
         _rb.linearVelocityX = (float)Random.Range(-100, 100)/25;
         _rb.linearVelocityY = (float) Random.Range(-100, 100)/25;
-        _wandering = true;
+        CurrentState = States.Wandering;
+    }
+
+    protected bool Detection()
+    {
+        // If the player's position overlaps with a point on the detection circle's collider or the enemy get hit, attack
+        if (_detectionCircle.GetComponent<Collider2D>().OverlapPoint(_player.transform.position) ||
+            _initialHealth != _health) //&& _attackCooldownTimer > _attackCooldown)
+        {
+            return true;
+        }
+        return false;
     }
 
     protected void TakeDamage(Collider2D collision)
@@ -148,7 +171,7 @@ public abstract class Wander_Enemy : MonoBehaviour
         }
         if (_health <= 0)
         {
-            _dead = true;
+            CurrentState = States.Dead;
             _renderer = GetComponent<Renderer>();
             GetComponent<Rigidbody2D>().simulated = false;
             foreach (Collider2D collider in GetComponents<Collider2D>())
@@ -209,8 +232,6 @@ public abstract class Wander_Enemy : MonoBehaviour
         _isTakingDamageOverTime = false;
         _timeSinceDamageOverTimeTick = 0.0f;
     }
-
-    protected abstract void Detection();
 
     protected abstract void Attack();
 }
