@@ -11,38 +11,18 @@ public class ShowDialogue : Interaction
     private Image _moreTextIndicator;
     private TMP_Text _npcText;
 
+    private Player _player;
+
     private int _dialogueCounter = 0;
     private bool _allDialogueSeen = false;
-    private float _dialogueDisplayTime = 3f;
+    private static float _dialogueDisplayTime = 8f;
 
-    public override void Awake()
+    public void Awake()
     {
-        base.Awake();
-
+        _player = FindAnyObjectByType<Player>();
         _npcTextArea = GameObject.Find("NPCTextArea");
         _moreTextIndicator = _npcTextArea.transform.Find("Indicator").GetComponent<Image>();
         _npcText = _npcTextArea.GetComponentInChildren<TMP_Text>();
-    }
-
-    //Hide dialogue when switching lenses
-    public void OnEnable()
-    {
-        EndDialogue();
-    }
-    public void OnDisable()
-    {
-        EndDialogue();
-    }
-
-    /// <summary>
-    /// Activate the text panel and move it below the NPC
-    /// </summary>
-    public override void OnInteract()
-    {
-        _npcTextArea.SetActive(true);
-        _npcTextArea.transform.position = new Vector2(transform.position.x, transform.position.y - 1.2f);
-
-        ShowDialogue();
     }
 
     /// <summary>
@@ -53,8 +33,11 @@ public class ShowDialogue : Interaction
     {
         StopAllCoroutines();
 
+        _npcTextArea.transform.position = new Vector2(transform.position.x, transform.position.y - 1.2f);
+        _player.ReadingDialogue = true;
+
         //Check if all dialogue has been seen. Reset counter to play it again
-        if(_dialogueCounter >= mainText.DialogueCount)
+        if (_dialogueCounter >= mainText.DialogueCount)
         {
             _allDialogueSeen = true;
             _dialogueCounter = 0;
@@ -91,6 +74,8 @@ public class ShowDialogue : Interaction
     {
         if(_npcTextArea)
             _npcTextArea.transform.Translate(new Vector3(1000, 1000, 0));
+
+        _player.ReadingDialogue = false;
     }
 
     IEnumerator DialogueClearTimer()

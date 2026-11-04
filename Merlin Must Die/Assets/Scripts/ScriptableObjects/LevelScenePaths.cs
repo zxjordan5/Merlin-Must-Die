@@ -7,8 +7,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelScenePaths", menuName = "Scriptable Objects/LevelScenePaths")]
 public class LevelScenePaths : ScriptableObject
 {
-    public string MainMenuScene = "Assets/Scenes/SceneTransitionTesting/TempMainMenu.unity";
-    public string GameOverScene = "Assets/Scenes/SceneTransitionTesting/TempGameOverScene.unity";
-    public string LevelOne = "Assets/Scenes/pt-10-30.unity";
-    public string WinScene = "Assets/Scenes/SceneTransitionTesting/TempWinScreen.unity";
+    public string MainMenuScene = "Assets/Scenes/Menus/TempMainMenu.unity";
+    public string GameOverScene = "Assets/Scenes/Menus/TempGameOverScene.unity";
+    public string LevelOne = "Assets/Scenes/Playtests/pt-10-30.unity";
+    public string WinScene = "Assets/Scenes/Menus/TempWinScreen.unity";
 }

@@ -1,7 +1,8 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -153,6 +154,31 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    //***** INTERACTABLE PROPERTIES *****
+    #region InteractionProperties
+    CircleCollider2D _interactionCollider;
+    private List<Collider2D> _interactResults = new List<Collider2D>();
+
+    /// <summary>
+    /// True if an interactable object is found, false otherwise
+    /// </summary>
+    public bool CanInteract
+    {
+        get { return FindInteractable() != null; }
+    }
+
+    /// <summary>
+    /// Set in ShowDialogue script
+    /// </summary>
+    public bool ReadingDialogue
+    {
+        get; set;
+    } = false;
+    #endregion
+
+
+
+
     public enum Direction {Up = 0, Right = 1, Down = 2, Left = 3}
 
     private GameObject _crosshair;
@@ -189,6 +215,7 @@ public class Player : MonoBehaviour
         _hitStop = GetComponent<HitStop>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _interactionCollider = transform.Find("InteractionHitbox").GetComponent<CircleCollider2D>();
         _crosshair = transform.Find("crosshair").gameObject;
         _crosshair.SetActive(true);
         _crosshair.transform.position = _rb.transform.position + new Vector3(0, 2, 0);
@@ -280,6 +307,34 @@ public class Player : MonoBehaviour
         // Keeps the camera centered on the player
         _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
     }
+
+    // ***** INTERACTION METHODS *****
+    #region Interaction
+    public void Interact(InputAction.CallbackContext context)
+    {
+        Interactable _currentTarget = FindInteractable();
+
+        if (_currentTarget == null)
+            return;
+
+        if(context.performed)
+            _currentTarget.OnInteract();
+    }
+
+    public Interactable FindInteractable()
+    {
+        Physics2D.OverlapCollider(_interactionCollider, _interactResults);
+
+        if (_interactResults.Count > 0)
+        {
+            return _interactResults[0].GetComponentInParent<Interactable>();
+        }
+        
+        _interactResults.Clear();
+        return null;
+    }
+
+    #endregion
 
     // ***** MOVEMENT METHODS *****
     #region Movement

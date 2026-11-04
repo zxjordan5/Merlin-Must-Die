@@ -9,11 +9,12 @@ public abstract class Interactable : MonoBehaviour
 {
     private List<Interaction> _activeInteractions = new List<Interaction>();
 
-    [SerializeField] private Collider2D _interactionArea;
-    public bool BeingHeld { get; set; }
+    private Collider2D _interactionArea;
 
     public virtual void Awake()
     {
+        _interactionArea = transform.Find("InteractionHitbox").GetComponent<Collider2D>();
+
         //Get the reference to all attached interactions
         foreach (Interaction interaction in GetComponents<Interaction>()) {
             _activeInteractions.Add(interaction);
