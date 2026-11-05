@@ -151,7 +151,10 @@ public class EarthBarrierObject : SpellObject
         _spriteRenderer.enabled = true;
         _inAirSprite.enabled = false;
 
-        if (_collider.IsTouchingLayers(LayerMask.NameToLayer("Water")))
+       
+        //https://unity.huh.how/bitmasks.html
+        int layerMask = LayerMask.GetMask("Water");
+        if (_collider.IsTouchingLayers(layerMask))
         {
             _overWater = true;
         }

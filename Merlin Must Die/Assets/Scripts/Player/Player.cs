@@ -232,7 +232,9 @@ public class Player : MonoBehaviour
 
     //Contains movement logic
     void FixedUpdate()
-    {  
+    {
+
+        Debug.Log(InputManager.CurrentDevice);
         // Reset the target velocity so the player slows down
         _targetVelocity = new Vector2(0,0);
 
@@ -276,7 +278,7 @@ public class Player : MonoBehaviour
             _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
         }
         // Kb/M aiming
-        else if (_kbAiming && !_gpMoving)
+        else if (_kbAiming && InputManager.CurrentDevice == InputManager.ControlScheme.Keyboard)
         {
             _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
             _crosshair.transform.position = _rb.transform.position + _mousePos;
