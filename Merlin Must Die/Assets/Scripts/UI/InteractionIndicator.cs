@@ -1,11 +1,14 @@
 using UnityEngine;
+using TMPro;
 
-public class InteractionPrompt : MonoBehaviour
+
+public class InteractionIndicator : MonoBehaviour
 {
     //Player used to find interactions
     [SerializeField] private Player _player;
     //Object used to show the interactions
     [SerializeField] private GameObject _interactionIndicator;
+    private TMP_Text _interactionText;
 
     private void Awake()
     {
@@ -13,6 +16,8 @@ public class InteractionPrompt : MonoBehaviour
             _player = FindAnyObjectByType<Player>();
         if (_interactionIndicator == null)
             _interactionIndicator = GameObject.Find("InteractionIndicator");
+
+        _interactionText = _interactionIndicator.GetComponentInChildren<TMP_Text>();
 
     }
 
@@ -36,6 +41,16 @@ public class InteractionPrompt : MonoBehaviour
         {
             //Debug.Log("reading dialogue");
             _interactionIndicator.SetActive(false);
+        }
+
+        //Update the interaction prompt to match the control scheme
+        if(InputManager.CurrentDevice == InputManager.ControlScheme.Controller)
+        {
+            _interactionText.text = "[LB] Interact";
+        }
+        else
+        {
+            _interactionText.text = "[F] Interact";
         }
     }
 }

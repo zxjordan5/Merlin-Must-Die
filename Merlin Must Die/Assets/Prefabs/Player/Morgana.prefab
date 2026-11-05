@@ -378,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9094833506537677130, guid: d53f941de4614bc4cb6c0ff0c4b5d00a, type: 3}
       propertyPath: m_Name
-      value: InteractionHitbox
+      value: InteractionCollider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

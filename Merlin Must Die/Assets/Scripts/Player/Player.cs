@@ -200,7 +200,7 @@ public class Player : MonoBehaviour
         _hitStop = GetComponent<HitStop>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
-        _interactionCollider = transform.Find("InteractionHitbox").GetComponent<CircleCollider2D>();
+        _interactionCollider = transform.Find("InteractionCollider").GetComponent<CircleCollider2D>();
         _crosshair = transform.Find("crosshair").gameObject;
         _crosshair.SetActive(true);
         _crosshair.transform.position = _rb.transform.position + new Vector3(0, 2, 0);
@@ -233,8 +233,6 @@ public class Player : MonoBehaviour
     //Contains movement logic
     void FixedUpdate()
     {
-
-        Debug.Log(InputManager.CurrentDevice);
         // Reset the target velocity so the player slows down
         _targetVelocity = new Vector2(0,0);
 

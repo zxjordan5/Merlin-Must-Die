@@ -13,7 +13,7 @@ public abstract class Interactable : MonoBehaviour
 
     public virtual void Awake()
     {
-        _interactionArea = transform.Find("InteractionHitbox").GetComponent<Collider2D>();
+        _interactionArea = transform.Find("InteractionCollider").GetComponent<Collider2D>();
 
         //Get the reference to all attached interactions
         foreach (Interaction interaction in GetComponents<Interaction>()) {
@@ -22,8 +22,7 @@ public abstract class Interactable : MonoBehaviour
     }
 
     public abstract void OnInteract();
-    public virtual void Release() { }
-    
+
     /// <summary>
     /// Runs the interaction behavior for each attached interactable
     /// </summary>
@@ -32,6 +31,14 @@ public abstract class Interactable : MonoBehaviour
         foreach (Interaction interaction in _activeInteractions)
         {
             interaction.Behaviour();
+        }
+    }
+
+    public virtual void OnTriggerExit2D(Collider2D other) 
+    {
+        foreach(Interaction interaction in _activeInteractions)
+        {
+            interaction.Release();
         }
     }
 }

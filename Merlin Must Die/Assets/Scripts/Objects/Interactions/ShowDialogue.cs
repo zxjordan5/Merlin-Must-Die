@@ -45,13 +45,13 @@ public class ShowDialogue : Interaction
             return; //Quit early when using EndDialogue() to prevent dialogue counter from incrementing
         }
         //Disable more dialogue indactor when the last text has been loaded
-        if(_allDialogueSeen || _dialogueCounter == mainText.DialogueCount - 1)
-        {
+        if(_dialogueCounter == mainText.DialogueCount - 1)
             _moreTextIndicator.enabled = false;
-        }
-        
+        else
+            _moreTextIndicator.enabled = true;
+
         //If all dialogue has been seen and there is repeated dialogue at the end, play that
-        if(_allDialogueSeen && finishedText)
+        if (_allDialogueSeen && finishedText)
         {
             _npcText.text = finishedText.dialogue[0];
         }
@@ -64,7 +64,7 @@ public class ShowDialogue : Interaction
         _dialogueCounter++;
 
 
-        StartCoroutine("DialogueClearTimer");
+        StartCoroutine("ClearAfterTime", _dialogueDisplayTime);
     }
 
     /// <summary>
@@ -78,9 +78,15 @@ public class ShowDialogue : Interaction
         _player.ReadingDialogue = false;
     }
 
-    IEnumerator DialogueClearTimer()
+    public override void Release()
     {
-        yield return new WaitForSeconds(_dialogueDisplayTime);
+        if(isActiveAndEnabled)
+            StartCoroutine("ClearAfterTime", .6f);
+    }
+
+    IEnumerator ClearAfterTime(float clearTime)
+    {
+        yield return new WaitForSeconds(clearTime);
         EndDialogue();
     }
 }
