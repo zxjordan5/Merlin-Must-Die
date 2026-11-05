@@ -158,13 +158,19 @@ public class Player : MonoBehaviour
     private GameObject _crosshair;
     private Camera _cam;
     // We can remove "serialize" once we've settled on a speed
-    [SerializeField] private float maxSpeed = 2f;
+    [SerializeField] private float maxSpeed = 5.0f;
     [SerializeField] private Vector2 _targetDirection;
     [SerializeField] private Vector2 _targetVelocity;
 
     public float Velocity
     {
         get { return RB.linearVelocity.magnitude; }
+    }
+
+    public float MaxSpeed
+    {
+        get => maxSpeed;
+        set => maxSpeed = value;
     }
 
     private float _speedMult = 1f; //Should be reset to 1 always
