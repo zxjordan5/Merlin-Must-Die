@@ -113,7 +113,7 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: 4903e46cf72dc7f4cb7b91c3bf009a33, type: 3}
   splashParticles: {fileID: 6680657075183023858, guid: b72691690f94306419a82e7e30760eaf, type: 3}
   _pushDelay: 0
-  _pushEnemy: {fileID: 7617931538177876914}
+  pushEnemy: {fileID: 7617931538177876914}
 --- !u!114 &1541631102568161651
 MonoBehaviour:
   m_ObjectHideFlags: 0

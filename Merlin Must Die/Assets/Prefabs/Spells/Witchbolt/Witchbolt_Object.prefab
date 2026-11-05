@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7726029104563608812}
   - component: {fileID: 1541631102568161651}
   - component: {fileID: 6445464678705651950}
+  - component: {fileID: -4462851238446496151}
   - component: {fileID: 5341594084045922960}
   - component: {fileID: 828216532352191977}
   m_Layer: 8
@@ -110,7 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd50b24e287f41f4ca197588476d3074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Witchbolt_Object
-  damage: 1
   hitSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
   explosionParticles: {fileID: 6651247000163292862, guid: ecb38e0319a6ad44cbca52d7b5add7a6, type: 3}
   pushEnemy: {fileID: 6445464678705651950}
@@ -143,6 +143,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushEnemy
   pushForce: 5
+--- !u!114 &-4462851238446496151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5762526835167957530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c117e0d5841a74a906b87b78a30200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageObject
+  damage: 1
 --- !u!61 &5341594084045922960
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -197,7 +210,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5762526835167957530}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

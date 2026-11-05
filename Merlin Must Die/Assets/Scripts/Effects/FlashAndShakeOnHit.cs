@@ -61,7 +61,7 @@ public class FlashAndShakeOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("DamageSpell"))
+        if (other.GetComponent<DamageObject>())
         {
             // Object isn't destroyed from the damage, make it shake and flash white
             _startPosition = transform.position; //Update current position before changing it through shaking

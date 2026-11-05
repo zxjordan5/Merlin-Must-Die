@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 6845675332662316898}
   m_Layer: 8
   m_Name: DamageCollider
-  m_TagString: DamageSpell
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,7 +170,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.0040518, y: 0.82375705}
+  m_Size: {x: 1.34, y: 1.16}
   m_EdgeRadius: 0
 --- !u!114 &6314530885763314978
 MonoBehaviour:
@@ -227,7 +227,8 @@ GameObject:
   - component: {fileID: 6279819081068796268}
   - component: {fileID: 8583702793992404299}
   - component: {fileID: 9035029394887282329}
-  m_Layer: 0
+  - component: {fileID: -1419051302094319118}
+  m_Layer: 12
   m_Name: Earth_Barrier_Object
   m_TagString: Destructible
   m_Icon: {fileID: 0}
@@ -420,4 +421,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   _initialVelocity: 3
   _maxVelocity: 6
+  _rotateSpell: 0
   _lifetime: 0
+--- !u!50 &-1419051302094319118
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6801440715899116504}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

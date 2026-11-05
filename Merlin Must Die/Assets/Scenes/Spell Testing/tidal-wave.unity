@@ -1687,7 +1687,7 @@ GameObject:
   - component: {fileID: 1107988562}
   - component: {fileID: 1107988561}
   - component: {fileID: 1107988563}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81112,7 +81112,7 @@ GameObject:
   - component: {fileID: 1843040386}
   - component: {fileID: 1843040385}
   - component: {fileID: 1843040387}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83543,6 +83543,10 @@ PrefabInstance:
     - target: {fileID: 969473783434841605, guid: 2a6fb7400f08b93ff965403ab17e53e3, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3618367701076762467, guid: 2a6fb7400f08b93ff965403ab17e53e3, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 5909014972022603232, guid: 2a6fb7400f08b93ff965403ab17e53e3, type: 3}
       propertyPath: m_Size.x
