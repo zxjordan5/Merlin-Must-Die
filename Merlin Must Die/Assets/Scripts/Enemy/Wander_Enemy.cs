@@ -142,7 +142,7 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected void TakeDamage(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("DamageSpell"))
+        if (collision.gameObject.GetComponent<DamageObject>())
         {
             _health -= collision.gameObject.GetComponent<DamageObject>().Damage;
         }
@@ -160,7 +160,7 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("DamageSpell"))
+        if (!collision.gameObject.GetComponent<DamageObject>())
         {
             return;
         }
@@ -177,7 +177,7 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected void OnTriggerStay2D(Collider2D collision)
     {
         // Damage over time effect
-        if (!collision.gameObject.CompareTag("DamageSpell"))
+        if (!collision.gameObject.GetComponent<DamageObject>())
         {
             return;
         }

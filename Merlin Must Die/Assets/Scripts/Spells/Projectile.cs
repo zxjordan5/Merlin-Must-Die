@@ -14,12 +14,19 @@ public class Projectile : MonoBehaviour
     /// </summary>
     [SerializeField] private float _maxVelocity = 0;
 
+    private Rigidbody2D _rb;
+
     /// <summary>
     /// Whether or not the initial player velocity field should be used
     /// in calculations of the projectiles speed
     /// </summary>
     private bool _usePlayerVelocity = false;
     private float _initialPlayerVelocity;
+
+    /// <summary>
+    /// Whether or not the entire game object should be rotated based on the players aim direction
+    /// </summary>
+    [SerializeField] private bool _rotateSpell;
     
 
     /// <summary>
@@ -41,6 +48,7 @@ public class Projectile : MonoBehaviour
    
     protected void Awake()
     {
+        _rb = GetComponent<Rigidbody2D>();
         if(_lifetime == 0)
         {
             _lifetime = 9999;
@@ -50,7 +58,7 @@ public class Projectile : MonoBehaviour
     protected void FixedUpdate()
     {
         float tempVelocity = Velocity;
-        
+
         if (_usePlayerVelocity)
         {
             tempVelocity *= _initialPlayerVelocity;
@@ -76,10 +84,25 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Starts moving the projectile based on it's starting velocity
+    /// and adds a direction for the projectile to move
+    /// </summary>
+    /// <param name="direction"></param>
     public void LaunchProjectile(Vector2 direction)
     {
         Velocity = _initialVelocity;
-        Direction = direction;
+        Direction = Vector2.Normalize(direction);
+
+        //Rotates the object instead of the projectile
+        if (_rotateSpell)
+        {
+            transform.eulerAngles = new Vector3(0, 0, Globals.GetAngleInDegFromVec(direction));
+            Direction = Vector2.right;
+        }
+        
+        //Potential for using rigidbodies
+        //_rb.AddForce(Velocity * 50 * Direction);
     }
 
     public void UsePlayerVelocity(float playerVelocity) {
