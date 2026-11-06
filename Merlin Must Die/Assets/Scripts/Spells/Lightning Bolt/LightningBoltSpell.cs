@@ -9,6 +9,6 @@ public class LightningBoltSpell : Spell
     {
         base.Cast(player);
         Quaternion objRot = Quaternion.Euler(0, 0, player.AimAngle);
-        GameObject fbObj = Instantiate(spellObj, player.transform.position, objRot);
+        Instantiate(spellObj, player.transform.position, objRot);
     }
 }

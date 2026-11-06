@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9fb8f25578c9ada9d7535a80f82e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightningBoltSpell
-  cooldown: 0
-  spellCode: 020000000300000002000000030000000000000001000000i
-  spellIcon: {fileID: 0}
+  cooldown: 10
+  spellCode: 0200000003000000010000000200000003000000i
+  spellIcon: {fileID: 8621462557137499494, guid: aacb444ae11f2d248a0ae6fb547732f5, type: 3}
   spellColor: {r: 0.9688679, g: 1, b: 0.5330188, a: 0}
   spellObj: {fileID: 8141267592772806425, guid: e7e99069346bf5213831679f983aaa4e, type: 3}
-  castSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
+  castSound: {fileID: 8300000, guid: 3dfdaf483c64cec709ea4802979c74ad, type: 3}
   spellName: Lightning Bolt
