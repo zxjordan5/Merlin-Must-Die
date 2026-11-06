@@ -263,7 +263,7 @@ public class Player : MonoBehaviour
         // Kb/M movement
         else if (_kbMoving)
         {
-            _targetDirection = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
+            _targetDirection = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized;
             _targetVelocity = _targetDirection * maxSpeed;
             _rb.AddForce((_targetVelocity - _rb.linearVelocity) * 2);
         }
