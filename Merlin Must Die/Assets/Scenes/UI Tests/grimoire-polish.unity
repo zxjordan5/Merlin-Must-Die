@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1aee7334229964eb28ab24ad6103aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  health: 3
+  maxHealth: 3
   invincibilityWindow: 1
   maxSpeed: 5
   _targetDirection: {x: 0, y: 0}
@@ -4755,7 +4755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2015172803598060845, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: activeSpells.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2015172803598060845, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: 'activeSpells.Array.data[2]'
@@ -4765,6 +4765,10 @@ PrefabInstance:
       propertyPath: 'activeSpells.Array.data[3]'
       value: 
       objectReference: {fileID: -6105830751466794179, guid: e98c0a333bf975c4dab65866ce11331b, type: 3}
+    - target: {fileID: 2015172803598060845, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: 'activeSpells.Array.data[4]'
+      value: 
+      objectReference: {fileID: 201143550662159319, guid: 8cdf8c3a228fc374c97b3fc8f5c27766, type: 3}
     - target: {fileID: 2306185591741327024, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
