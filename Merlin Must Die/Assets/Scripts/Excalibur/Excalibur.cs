@@ -38,6 +38,11 @@ public class Excalibur : MonoBehaviour
         }
     }
 
+    public bool IsCharged
+    {
+        get { return _charge >= 100; }
+    }
+
     //Fields for charge decreasing
     [SerializeField] private float _timeToDecrease;
     [SerializeField] private float _decreaseRatePerSecond;
@@ -56,11 +61,10 @@ public class Excalibur : MonoBehaviour
 
     public void Update()
     {
-
         _decreaseTimer += Time.deltaTime;
 
         //Check if charge needs to decrease
-        if (_decreaseTimer > _timeToDecrease)
+        if (_decreaseTimer > _timeToDecrease && !IsCharged)
         {
             _decreasing = true;
         }

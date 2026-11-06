@@ -22,7 +22,7 @@ public class DashSpell : Spell
         GameObject dashObj = Instantiate(spellObj, player.transform);
         ParticleSystem dashParticles = dashObj.GetComponentInChildren<ParticleSystem>();
         var main = dashParticles.main;
-        main.startRotation = (float)Math.Atan2(player.AimDirNorm.x, player.AimDirNorm.y);
+        main.startRotation = Globals.GetAngleInDegFromVec(player.AimDirNorm);
         StartCoroutine(StartParticles(dashObj, dashParticles));
 
         player.Dash(dashSpeed, dashTime);

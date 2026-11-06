@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - DamageSpell
   - Enemy
   - Destructible
   - EnvironmentObject
@@ -19,9 +18,9 @@ TagManager:
   - 
   - Spell
   - 
+  - Interaction
   - 
-  - 
-  - 
+  - Environment
   - 
   - 
   - 
