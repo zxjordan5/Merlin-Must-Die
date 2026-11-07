@@ -144,8 +144,9 @@ public abstract class Wander_Enemy : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<DamageObject>())
         {
-            _health -= collision.gameObject.GetComponent<DamageObject>().Damage;
+            _health -= collision.gameObject.GetComponent<DamageObject>().Damage; 
         }
+
         if (_health <= 0)
         {
             _dead = true;

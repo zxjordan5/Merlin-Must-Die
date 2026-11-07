@@ -7,17 +7,17 @@ using System.Collections.Generic;
 /// </summary>
 public abstract class Interactable : MonoBehaviour
 {
-    private List<Interaction> _activeInteractions = new List<Interaction>();
+    protected List<Interaction> activeInteractions = new List<Interaction>();
 
-    private Collider2D _interactionArea;
+    protected Collider2D interactionArea;
 
     public virtual void Awake()
     {
-        _interactionArea = transform.Find("InteractionCollider").GetComponent<Collider2D>();
+        interactionArea = transform.Find("InteractionCollider").GetComponent<Collider2D>();
 
         //Get the reference to all attached interactions
         foreach (Interaction interaction in GetComponents<Interaction>()) {
-            _activeInteractions.Add(interaction);
+            activeInteractions.Add(interaction);
         }
     }
 
@@ -28,7 +28,7 @@ public abstract class Interactable : MonoBehaviour
     /// </summary>
     public virtual void ActivateInteractions()
     {
-        foreach (Interaction interaction in _activeInteractions)
+        foreach (Interaction interaction in activeInteractions)
         {
             interaction.Behaviour();
         }
@@ -36,7 +36,7 @@ public abstract class Interactable : MonoBehaviour
 
     public virtual void OnTriggerExit2D(Collider2D other) 
     {
-        foreach(Interaction interaction in _activeInteractions)
+        foreach(Interaction interaction in activeInteractions)
         {
             interaction.Release();
         }

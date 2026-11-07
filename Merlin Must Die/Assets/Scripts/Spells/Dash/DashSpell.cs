@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
 
 /// <summary>
@@ -22,7 +23,7 @@ public class DashSpell : Spell
         GameObject dashObj = Instantiate(spellObj, player.transform);
         ParticleSystem dashParticles = dashObj.GetComponentInChildren<ParticleSystem>();
         var main = dashParticles.main;
-        main.startRotation = Globals.GetAngleInDegFromVec(player.AimDirNorm);
+        main.startRotation = (float)Math.Atan2(player.AimDirNorm.x, player.AimDirNorm.y);
         StartCoroutine(StartParticles(dashObj, dashParticles));
 
         player.Dash(dashSpeed, dashTime);
