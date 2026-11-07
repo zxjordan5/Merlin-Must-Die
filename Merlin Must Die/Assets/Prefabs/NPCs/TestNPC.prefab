@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 3483903669424635350}
   - component: {fileID: 8594364136465283295}
   - component: {fileID: 5369046250991024405}
-  - component: {fileID: 3597193401221907188}
+  - component: {fileID: 7657844789712751630}
   - component: {fileID: 3140056995855483781}
   m_Layer: 3
   m_Name: TestNPC
@@ -254,7 +254,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.002100127, y: -0.0063003814}
   m_Size: {x: 0.7563853, y: 1.1176069}
   m_Direction: 0
---- !u!114 &3597193401221907188
+--- !u!114 &7657844789712751630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,9 +263,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5767290593157895766}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccc7b37cd4bd4094098a1a66e0d98c2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7726dcc149aff0f469d733dbaf82157e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InstantInteraction
+  m_EditorClassIdentifier: Assembly-CSharp::NPC
+  finishedInteractions: []
 --- !u!114 &3140056995855483781
 MonoBehaviour:
   m_ObjectHideFlags: 0

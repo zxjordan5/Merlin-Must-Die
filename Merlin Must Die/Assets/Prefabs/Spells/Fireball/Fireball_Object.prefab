@@ -2517,7 +2517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c772746e69e3aee4bb4a9ce86e43b7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fireball_Object
-  damage: 1
+  excaliburChargePerHit: 10
   hitSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
   explosionParticles: {fileID: 8953315173316814783, guid: 215a9aeb6ce55df41b5d32a9eab99446, type: 3}
 --- !u!114 &2777308365291417773

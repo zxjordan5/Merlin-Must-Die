@@ -7,6 +7,8 @@ public class ShowDialogue : Interaction
 {
     [SerializeField] DialogueAsset mainText;
     [SerializeField] DialogueAsset finishedText;
+
+
     private GameObject _npcTextArea;
     private Image _moreTextIndicator;
     private TMP_Text _npcText;
@@ -15,6 +17,7 @@ public class ShowDialogue : Interaction
 
     private int _dialogueCounter = 0;
     private bool _allDialogueSeen = false;
+    public bool AllDialogueSeen { get { return _allDialogueSeen; } }
     private static float _dialogueDisplayTime = 8f;
 
     public void Awake()

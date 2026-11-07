@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd50b24e287f41f4ca197588476d3074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Witchbolt_Object
+  excaliburChargePerHit: 15
   hitSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
   explosionParticles: {fileID: 6651247000163292862, guid: ecb38e0319a6ad44cbca52d7b5add7a6, type: 3}
   pushEnemy: {fileID: 6445464678705651950}

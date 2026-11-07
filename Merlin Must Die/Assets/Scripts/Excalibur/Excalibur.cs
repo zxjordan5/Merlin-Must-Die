@@ -10,6 +10,7 @@ using UnityEngine.UI;
 /// </summary>
 public class Excalibur : MonoBehaviour
 {
+    private Player _player;
 
     [SerializeField] private ExcaliburAbility _abilityOne;
     [SerializeField] private ExcaliburAbility _abilityTwo;
@@ -52,6 +53,7 @@ public class Excalibur : MonoBehaviour
     public void Awake()
     {
         _excaliburBar = transform.Find("ExcaliburBar").GetComponent<Image>();
+        _player = FindAnyObjectByType<Player>();
 
         if(_abilityOne != null )
             _abilityOneInstance = Instantiate(_abilityOne, new Vector2(0, 0), Quaternion.identity);
@@ -102,6 +104,7 @@ public class Excalibur : MonoBehaviour
     {
         if (Mathf.Approximately(Charge, 100.0f))
         {
+            _player.ExcaliburActivated();
             ResetCharge();
 
             switch (abilityNum)
