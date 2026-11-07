@@ -2,6 +2,15 @@ using UnityEngine;
 
 public abstract class SpellObject : MonoBehaviour
 {
+    [SerializeField] protected float excaliburChargePerHit;
+
+    protected Excalibur _excalibur;
+
+    public virtual void Awake()
+    {
+        _excalibur = FindAnyObjectByType<Excalibur>();
+    }
+
     /// <summary>
     /// Calls collision methods based on what the spell trigger hits
     /// </summary>
@@ -43,6 +52,8 @@ public abstract class SpellObject : MonoBehaviour
     /// Called when the spell hits an enemy
     /// </summary>
     /// <param name="other"></param>
-    protected virtual void EnemyCollision(Collider2D other) { }
-
+    protected virtual void EnemyCollision(Collider2D other) 
+    {
+        _excalibur.IncreaseCharge(excaliburChargePerHit);
+    }
 }

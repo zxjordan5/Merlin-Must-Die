@@ -11,7 +11,9 @@ public class EarthBarrierObject : SpellObject
     
     [SerializeField] protected AudioClip landSound;
     [SerializeField] protected ParticleSystem landingParticles;
-   
+    [SerializeField] protected AudioClip splashSound;
+    [SerializeField] protected ParticleSystem splashParticles;
+
 
     /// <summary>
     /// Reference to the collider to be disabled while the object is in the air
@@ -47,8 +49,10 @@ public class EarthBarrierObject : SpellObject
     /// </summary>
     private Vector3 _baseScale;
 
-    public void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         _baseScale = transform.localScale;
 
         _airTimeCounter = 0;
@@ -141,8 +145,33 @@ public class EarthBarrierObject : SpellObject
         _projectile.Velocity = 0; //Stop the earth barrier
 
         _collider.enabled = true; //Re-enable collision
-        AudioSource.PlayClipAtPoint(landSound, transform.position);
-        Instantiate(landingParticles, transform.position, transform.rotation);
+
+        List<Collider2D> results = new List<Collider2D>();
+        ContactFilter2D filter = new ContactFilter2D
+        {
+            useTriggers = true
+        };
+        _collider.Overlap(filter, results);
+
+        foreach (Collider2D collider in results)
+        {
+            if (LayerMask.LayerToName(collider.gameObject.layer) == "Water")
+            {
+                _overWater = true;
+                break;
+            }
+        }
+
+        if (!_overWater)
+        {
+            AudioSource.PlayClipAtPoint(landSound, transform.position);
+            Instantiate(landingParticles, transform.position, transform.rotation);
+        }
+        else
+        {
+            AudioSource.PlayClipAtPoint(splashSound, transform.position);
+            Instantiate(splashParticles, transform.position, transform.rotation);
+        }
 
         //Enable damage collider to cause damage at impact
         _damageCollider.enabled = true;
@@ -150,14 +179,7 @@ public class EarthBarrierObject : SpellObject
 
         _spriteRenderer.enabled = true;
         _inAirSprite.enabled = false;
-
-       
-        //https://unity.huh.how/bitmasks.html
-        int layerMask = LayerMask.GetMask("Water");
-        if (_collider.IsTouchingLayers(layerMask))
-        {
-            _overWater = true;
-        }
+        
     }
 
     private IEnumerator DisableDamageCollider()
@@ -165,18 +187,4 @@ public class EarthBarrierObject : SpellObject
         yield return new WaitForSeconds(0.3f);
         _damageCollider.enabled = false;
     }
-
-
-    //Redundant code for getting all the colliders overlapping with the objects collider
-    //List<Collider2D> results = new List<Collider2D>();
-    //ContactFilter2D filter = new ContactFilter2D
-    //{
-    //    useTriggers = true
-    //};
-    //_collider.Overlap(filter, results);
-
-    //foreach (Collider2D collider in results)
-    //{
-
-    //}
 }

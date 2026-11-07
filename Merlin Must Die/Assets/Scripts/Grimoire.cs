@@ -354,8 +354,9 @@ public class Grimoire : MonoBehaviour
 
             if (_preparedSpell != null)
             {
+                //(REMOVED to use spells hitting enemies instead)
                 //Charges Excalibur based on spell strength
-                _excalibur.IncreaseCharge(_preparedSpell.ExcaliburCharge);
+                //_excalibur.IncreaseCharge(_preparedSpell.ExcaliburCharge);
 
                 _player.SpellCast();
 
