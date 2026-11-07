@@ -146,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   maxHealth: 3
   invincibilityWindow: 1
-  maxSpeed: 4
+  maxSpeed: 6
   _targetDirection: {x: 0, y: 0}
   _targetVelocity: {x: 0, y: 0}
 --- !u!212 &771436654858557702
@@ -246,7 +246,7 @@ Animator:
   m_GameObject: {fileID: 7785584488539943500}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 42bb7d9e68fa95948ae14d84f2dd65b9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 90f1378fed8e0b845b7729e3eff3b0c5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

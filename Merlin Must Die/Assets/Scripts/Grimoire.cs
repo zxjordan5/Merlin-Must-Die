@@ -357,6 +357,8 @@ public class Grimoire : MonoBehaviour
                 //Charges Excalibur based on spell strength
                 _excalibur.IncreaseCharge(_preparedSpell.ExcaliburCharge);
 
+                _player.SpellCast();
+
                 _preparedSpell.Cast(_player);
                 _preparedSpell = null;
                 ResetInputSequence();

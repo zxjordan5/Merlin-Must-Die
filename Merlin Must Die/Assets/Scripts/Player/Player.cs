@@ -63,9 +63,9 @@ public class Player : MonoBehaviour
     private HitStop _hitStop;
     #endregion
 
-
-    //***** ANGLE PROPERTIES *****
-    #region AngleProperties
+    public enum Direction { Up = 0, Right = 1, Down = 2, Left = 3 }
+    //***** STATE PROPERTIES *****
+    #region StateProperties
     /// <summary>
     /// Returns the players aiming angle in degrees between 0 and 360.
     /// </summary>
@@ -81,8 +81,16 @@ public class Player : MonoBehaviour
         get{ return Globals.GetAngleInDegFromVec(_targetDirection); }
     }
 
+    public bool Moving
+    {
+        get { return _targetVelocity != Vector2.zero; }
+    }
 
-  
+    public bool HasGear
+    {
+        get; set;
+    } = false;
+
 
     /// <summary>
     /// Returns the direction the player is aiming as an enumerator
@@ -161,11 +169,6 @@ public class Player : MonoBehaviour
     } = false;
     #endregion
 
-
-
-
-    public enum Direction {Up = 0, Right = 1, Down = 2, Left = 3}
-
     private GameObject _crosshair;
     private Camera _cam;
     // We can remove "serialize" once we've settled on a speed
@@ -192,7 +195,8 @@ public class Player : MonoBehaviour
 
     private Animator _animator;
 
-#endregion
+    #endregion 
+    //*** END VARIABLES ***
 
     void Awake()
     {
@@ -211,9 +215,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Update animator controller with the players aim and movement direction, and if they are moving
-        _animator.SetBool("Moving", _targetVelocity != Vector2.zero);
-        _animator.SetInteger("AimDirection", (int)AimDirection);
-        _animator.SetInteger("MoveDirection", (int)MoveDirection);
+        _animator.SetBool("Moving", Moving);
+        _animator.SetBool("HasGear", HasGear);
+        _animator.SetFloat("AimDirection", (int)AimDirection);
+        _animator.SetFloat("MoveDirection", (int)MoveDirection);
 
         #region InvincibilityTimer
         if (_isInvincible)
@@ -293,6 +298,28 @@ public class Player : MonoBehaviour
         _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
     }
 
+    public void SpellCast()
+    {
+        _animator.SetBool("AbilityActive", true);
+        StartCoroutine("ResumeAnimation", 0.7f);
+
+        if (Moving)
+            _animator.Play("Moving (Cast)");
+        else
+            _animator.Play("Idling (Cast)");
+    }
+
+    public void ExcaliburActivated()
+    {
+        _animator.SetBool("AbilityActive", true);
+        StartCoroutine("ResumeAnimation", 0.7f);
+
+        if (Moving)
+            _animator.Play("Moving (Excalibur)");
+        else
+            _animator.Play("Idling (Excalibur)");
+    }
+
     // ***** INTERACTION METHODS *****
     #region Interaction
     public void Interact(InputAction.CallbackContext context)
@@ -366,7 +393,11 @@ public class Player : MonoBehaviour
     #endregion
 
     // ***** ANIMATION METHODS *****
-
+    private IEnumerator ResumeAnimation(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _animator.SetBool("AbilityActive", false);
+    }
 
     // ***** DAMAGE HANDLING METHODS *****
     #region DamageHandlers
