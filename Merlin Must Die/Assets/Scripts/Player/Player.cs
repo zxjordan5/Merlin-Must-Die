@@ -225,8 +225,6 @@ public class Player : MonoBehaviour
         if (_isInvincible)
         {
             _timeSinceDamageTaken += Time.deltaTime;
-            // TODO: Add flashing effect while invincible
-
 
             if (_timeSinceDamageTaken > invincibilityWindow)
             {
