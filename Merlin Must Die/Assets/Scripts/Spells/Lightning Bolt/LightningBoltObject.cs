@@ -2,7 +2,7 @@
 using Mono.Cecil.Cil;
 using UnityEngine;
 
-public class LightningBoltObject : DamageObject
+public class LightningBoltObject : SpellObject
 {
     // TODO: When animation is done playing, delete this object instead of having timer logic
     // We will need the animated sprite/particle effect first

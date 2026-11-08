@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LightningBoltSpell
   cooldown: 10
   spellCode: 0200000003000000010000000200000003000000i
-  spellIcon: {fileID: 8621462557137499494, guid: aacb444ae11f2d248a0ae6fb547732f5, type: 3}
+  spellIcon: {fileID: -26904320642333465, guid: 4c2e11cfed3c42d499e3c3ad1061d9d7, type: 3}
   spellColor: {r: 0.9688679, g: 1, b: 0.5330188, a: 0}
   spellObj: {fileID: 8141267592772806425, guid: e7e99069346bf5213831679f983aaa4e, type: 3}
   castSound: {fileID: 8300000, guid: 25ae93def1e85912f979d81c1327855c, type: 3}

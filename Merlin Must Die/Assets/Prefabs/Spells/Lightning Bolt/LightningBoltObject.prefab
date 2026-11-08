@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2351209783333140968}
   - component: {fileID: 8268148285009430340}
   - component: {fileID: 943791151009782990}
+  - component: {fileID: 1223371352798893467}
   m_Layer: 8
   m_Name: LightningBoltObject
   m_TagString: DamageSpell
@@ -130,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee8efae3ee725e72beddde5d1060bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightningBoltObject
-  damage: 5
+  excaliburChargePerHit: 30
 --- !u!50 &8268148285009430340
 Rigidbody2D:
   serializedVersion: 5
@@ -204,3 +205,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.56935644, y: 0.21848668}
   m_EdgeRadius: 0
+--- !u!114 &1223371352798893467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8141267592772806425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c117e0d5841a74a906b87b78a30200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageObject
+  damage: 5
