@@ -1,16 +1,19 @@
 using Unity.VisualScripting;
 using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// Fireball projectile that on collision with an enemy or destructible object will explode
 /// </summary>
-public class EarthBarrierObject : MonoBehaviour
+public class EarthBarrierObject : SpellObject
 {
     
     [SerializeField] protected AudioClip landSound;
     [SerializeField] protected ParticleSystem landingParticles;
-   
+    [SerializeField] protected AudioClip splashSound;
+    [SerializeField] protected ParticleSystem splashParticles;
+
 
     /// <summary>
     /// Reference to the collider to be disabled while the object is in the air
@@ -28,9 +31,13 @@ public class EarthBarrierObject : MonoBehaviour
     /// <summary>
     /// How long the object should stay in the air before it lands
     /// </summary>
-   [SerializeField] private float _airTime = 2.0f;
+    [SerializeField] private float _airTime = 2.0f;
     private float _airTimeCounter = 0;
     private bool _landed = false;
+
+    //Used to determine if the barrier should be sinking
+    private bool _overWater = false;
+    private bool _sinking = false;
 
     /// <summary>
     /// How far in front of other objects should the object be while it is in the air
@@ -42,8 +49,10 @@ public class EarthBarrierObject : MonoBehaviour
     /// </summary>
     private Vector3 _baseScale;
 
-    public void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         _baseScale = transform.localScale;
 
         _airTimeCounter = 0;
@@ -89,6 +98,38 @@ public class EarthBarrierObject : MonoBehaviour
         {
             Land();
         }
+
+        _sinking = _overWater && _landed;
+
+        if (_sinking)
+        {
+            Color newColor = _spriteRenderer.color;
+            newColor.a -= Time.deltaTime;
+            _spriteRenderer.color = newColor;
+
+            if(newColor.a <= 0)
+            {
+                Destroy(this);
+            }
+        }
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+
+        if (LayerMask.LayerToName(collision.gameObject.layer) == "Water"){
+            Debug.Log("yeah");
+            _overWater = true;
+        }
+    }
+
+    protected override void OnTriggerExit2D(Collider2D collision)
+    {
+        if (LayerMask.LayerToName(collision.gameObject.layer) == "Water")
+        {
+            _overWater = false;
+        }
     }
 
     /// <summary>
@@ -101,17 +142,44 @@ public class EarthBarrierObject : MonoBehaviour
         //Reset the object's forward transform above other objects
         transform.Translate(0.0f, 0.0f, _zIncrease);
 
-        _projectile.Velocity = 0;
+        _projectile.Velocity = 0; //Stop the earth barrier
 
-        _collider.enabled = true;
-        AudioSource.PlayClipAtPoint(landSound, transform.position);
-        Instantiate(landingParticles, transform.position, transform.rotation);
+        _collider.enabled = true; //Re-enable collision
 
+        List<Collider2D> results = new List<Collider2D>();
+        ContactFilter2D filter = new ContactFilter2D
+        {
+            useTriggers = true
+        };
+        _collider.Overlap(filter, results);
+
+        foreach (Collider2D collider in results)
+        {
+            if (LayerMask.LayerToName(collider.gameObject.layer) == "Water")
+            {
+                _overWater = true;
+                break;
+            }
+        }
+
+        if (!_overWater)
+        {
+            AudioSource.PlayClipAtPoint(landSound, transform.position);
+            Instantiate(landingParticles, transform.position, transform.rotation);
+        }
+        else
+        {
+            AudioSource.PlayClipAtPoint(splashSound, transform.position);
+            Instantiate(splashParticles, transform.position, transform.rotation);
+        }
+
+        //Enable damage collider to cause damage at impact
         _damageCollider.enabled = true;
         StartCoroutine("DisableDamageCollider");
 
         _spriteRenderer.enabled = true;
         _inAirSprite.enabled = false;
+        
     }
 
     private IEnumerator DisableDamageCollider()
@@ -119,5 +187,4 @@ public class EarthBarrierObject : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         _damageCollider.enabled = false;
     }
-
 }

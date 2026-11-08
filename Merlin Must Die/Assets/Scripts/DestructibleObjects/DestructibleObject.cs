@@ -51,7 +51,7 @@ public class DestructibleObject : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("DamageSpell"))
+        if(other.GetComponent<DamageObject>())
         {
             DamageObject dmgObj = other.GetComponent<DamageObject>();
             TakeDamage(dmgObj.Damage);

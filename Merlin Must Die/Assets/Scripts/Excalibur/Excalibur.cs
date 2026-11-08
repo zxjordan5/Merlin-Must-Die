@@ -10,6 +10,7 @@ using UnityEngine.UI;
 /// </summary>
 public class Excalibur : MonoBehaviour
 {
+    private Player _player;
 
     [SerializeField] private ExcaliburAbility _abilityOne;
     [SerializeField] private ExcaliburAbility _abilityTwo;
@@ -38,6 +39,11 @@ public class Excalibur : MonoBehaviour
         }
     }
 
+    public bool IsCharged
+    {
+        get { return _charge >= 100; }
+    }
+
     //Fields for charge decreasing
     [SerializeField] private float _timeToDecrease;
     [SerializeField] private float _decreaseRatePerSecond;
@@ -47,6 +53,7 @@ public class Excalibur : MonoBehaviour
     public void Awake()
     {
         _excaliburBar = transform.Find("ExcaliburBar").GetComponent<Image>();
+        _player = FindAnyObjectByType<Player>();
 
         if(_abilityOne != null )
             _abilityOneInstance = Instantiate(_abilityOne, new Vector2(0, 0), Quaternion.identity);
@@ -56,11 +63,10 @@ public class Excalibur : MonoBehaviour
 
     public void Update()
     {
-
         _decreaseTimer += Time.deltaTime;
 
         //Check if charge needs to decrease
-        if (_decreaseTimer > _timeToDecrease)
+        if (_decreaseTimer > _timeToDecrease && !IsCharged)
         {
             _decreasing = true;
         }
@@ -98,6 +104,7 @@ public class Excalibur : MonoBehaviour
     {
         if (Mathf.Approximately(Charge, 100.0f))
         {
+            _player.ExcaliburActivated();
             ResetCharge();
 
             switch (abilityNum)

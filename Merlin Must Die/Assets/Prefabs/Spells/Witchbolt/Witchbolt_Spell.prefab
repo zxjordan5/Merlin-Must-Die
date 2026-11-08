@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7770289365209919448}
   - component: {fileID: 201143550662159319}
+  - component: {fileID: -3525367745130068397}
   m_Layer: 0
   m_Name: Witchbolt_Spell
   m_TagString: Untagged
@@ -46,8 +47,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Witchbolt_Spell
   cooldown: 1
   spellCode: 020000000000000003000000i
-  spellIcon: {fileID: 8193288575119485115, guid: 42e77c0738411e3488ab59bd7e5965fb, type: 3}
+  spellIcon: {fileID: -3592990129298605783, guid: 86aeeb5aca42ddf48a3c2912f50bf03b, type: 3}
   spellColor: {r: 0.30373242, g: 0, b: 0.509434, a: 1}
   spellObj: {fileID: 5762526835167957530, guid: 25f76e8177b90fad6bdd693cbc07c695, type: 3}
   castSound: {fileID: 8300000, guid: 4903e46cf72dc7f4cb7b91c3bf009a33, type: 3}
   spellName: Witchbolt
+--- !u!114 &-3525367745130068397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387158888983837651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b17c5afcf63d9246a4329307fb2303f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PushEnemy
+  pushForce: 5

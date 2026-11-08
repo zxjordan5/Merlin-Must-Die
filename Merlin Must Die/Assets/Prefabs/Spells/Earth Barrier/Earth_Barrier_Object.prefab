@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 6845675332662316898}
   m_Layer: 8
   m_Name: DamageCollider
-  m_TagString: DamageSpell
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,7 +170,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.0040518, y: 0.82375705}
+  m_Size: {x: 1.34, y: 1.186281}
   m_EdgeRadius: 0
 --- !u!114 &6314530885763314978
 MonoBehaviour:
@@ -227,7 +227,8 @@ GameObject:
   - component: {fileID: 6279819081068796268}
   - component: {fileID: 8583702793992404299}
   - component: {fileID: 9035029394887282329}
-  m_Layer: 0
+  - component: {fileID: -1419051302094319118}
+  m_Layer: 12
   m_Name: Earth_Barrier_Object
   m_TagString: Destructible
   m_Icon: {fileID: 0}
@@ -345,7 +346,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.001622498, y: -0.09535462}
+  m_Offset: {x: 0.011457801, y: -0.12805474}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -355,7 +356,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.0101522, y: 0.8200375}
+  m_Size: {x: 1.34, y: 1.1862808}
   m_EdgeRadius: 0
 --- !u!114 &5005238322247012327
 MonoBehaviour:
@@ -400,8 +401,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef547acb25e2d7043be95d3c9c1e8697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EarthBarrierObject
+  excaliburChargePerHit: 40
   landSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
   landingParticles: {fileID: 8953315173316814783, guid: 4e554265b4fad774094f1eb64edaeea3, type: 3}
+  splashSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
+  splashParticles: {fileID: 6680657075183023858, guid: b72691690f94306419a82e7e30760eaf, type: 3}
   _damageCollider: {fileID: 3576223567441974729}
   _inAirSprite: {fileID: 6051816212874069956}
   _holeObject: {fileID: 7416419192005894515, guid: 27eb5cf3dc9a0a84e8a44b7d5387ef5a, type: 3}
@@ -420,4 +424,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   _initialVelocity: 3
   _maxVelocity: 6
+  _rotateSpell: 0
   _lifetime: 0
+--- !u!50 &-1419051302094319118
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6801440715899116504}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

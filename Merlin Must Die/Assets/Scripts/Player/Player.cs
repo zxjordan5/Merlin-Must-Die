@@ -1,7 +1,8 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -62,41 +63,34 @@ public class Player : MonoBehaviour
     private HitStop _hitStop;
     #endregion
 
-
-    //***** ANGLE PROPERTIES *****
-    #region AngleProperties
+    public enum Direction { Up = 0, Right = 1, Down = 2, Left = 3 }
+    //***** STATE PROPERTIES *****
+    #region StateProperties
     /// <summary>
     /// Returns the players aiming angle in degrees between 0 and 360.
     /// </summary>
     public float AimAngle
     {
-        get { return GetAngleInDegFromVec(_aimDirRaw); }
+        get { return Globals.GetAngleInDegFromVec(_aimDirRaw); }
     } 
     /// <summary>
     /// Returns the players movement angle in degrees between 0 and 360.
     /// </summary>
     public float MoveAngle
     {
-        get{ return GetAngleInDegFromVec(_targetDirection); }
+        get{ return Globals.GetAngleInDegFromVec(_targetDirection); }
     }
 
-
-    /// <summary>
-    /// Returns the angle in degrees a vector would be pointing in.
-    /// 
-    /// TODO? :
-    /// Make a global utility class for methods like this that are used in other files as well such as the dash particles
-    /// </summary>
-    private float GetAngleInDegFromVec(Vector2 vector)
+    public bool Moving
     {
-        float angle = (float)(Math.Atan2(vector.y, vector.x) * 57.295); //convert from radians to degrees
-        //Converts range from -180 to 180 to 0 to 360.
-        if (angle < 0)
-        {
-            angle = 180 + (180 + angle);
-        }
-        return angle;
+        get { return _targetVelocity != Vector2.zero; }
     }
+
+    public bool HasGear
+    {
+        get; set;
+    } = false;
+
 
     /// <summary>
     /// Returns the direction the player is aiming as an enumerator
@@ -153,18 +147,44 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    public enum Direction {Up = 0, Right = 1, Down = 2, Left = 3}
+    //***** INTERACTABLE PROPERTIES *****
+    #region InteractionProperties
+    CircleCollider2D _interactionCollider;
+    private List<Collider2D> _interactResults = new List<Collider2D>();
+
+    /// <summary>
+    /// True if an interactable object is found, false otherwise
+    /// </summary>
+    public bool CanInteract
+    {
+        get { return FindInteractable() != null; }
+    }
+
+    /// <summary>
+    /// Set in ShowDialogue script
+    /// </summary>
+    public bool ReadingDialogue
+    {
+        get; set;
+    } = false;
+    #endregion
 
     private GameObject _crosshair;
     private Camera _cam;
     // We can remove "serialize" once we've settled on a speed
-    [SerializeField] private float maxSpeed = 2f;
+    [SerializeField] private float maxSpeed = 5.0f;
     [SerializeField] private Vector2 _targetDirection;
     [SerializeField] private Vector2 _targetVelocity;
 
     public float Velocity
     {
         get { return RB.linearVelocity.magnitude; }
+    }
+
+    public float MaxSpeed
+    {
+        get => maxSpeed;
+        set => maxSpeed = value;
     }
 
     private float _speedMult = 1f; //Should be reset to 1 always
@@ -181,7 +201,8 @@ public class Player : MonoBehaviour
 
     private Animator _animator;
 
-#endregion
+    #endregion 
+    //*** END VARIABLES ***
 
     void Awake()
     {
@@ -189,6 +210,7 @@ public class Player : MonoBehaviour
         _hitStop = GetComponent<HitStop>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _interactionCollider = transform.Find("InteractionCollider").GetComponent<CircleCollider2D>();
         _crosshair = transform.Find("crosshair").gameObject;
         _crosshair.SetActive(true);
         _crosshair.transform.position = _rb.transform.position + new Vector3(0, 2, 0);
@@ -199,16 +221,15 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Update animator controller with the players aim and movement direction, and if they are moving
-        _animator.SetBool("Moving", _targetVelocity != Vector2.zero);
-        _animator.SetInteger("AimDirection", (int)AimDirection);
-        _animator.SetInteger("MoveDirection", (int)MoveDirection);
+        _animator.SetBool("Moving", Moving);
+        _animator.SetBool("HasGear", HasGear);
+        _animator.SetFloat("AimDirection", (int)AimDirection);
+        _animator.SetFloat("MoveDirection", (int)MoveDirection);
 
         #region InvincibilityTimer
         if (_isInvincible)
         {
             _timeSinceDamageTaken += Time.deltaTime;
-            // TODO: Add flashing effect while invincible
-
 
             if (_timeSinceDamageTaken > invincibilityWindow)
             {
@@ -220,7 +241,7 @@ public class Player : MonoBehaviour
 
     //Contains movement logic
     void FixedUpdate()
-    {  
+    {
         // Reset the target velocity so the player slows down
         _targetVelocity = new Vector2(0,0);
 
@@ -251,7 +272,7 @@ public class Player : MonoBehaviour
         // Kb/M movement
         else if (_kbMoving)
         {
-            _targetDirection = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
+            _targetDirection = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized;
             _targetVelocity = _targetDirection * maxSpeed;
             _rb.AddForce((_targetVelocity - _rb.linearVelocity) * 2);
         }
@@ -264,7 +285,7 @@ public class Player : MonoBehaviour
             _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
         }
         // Kb/M aiming
-        else if (_kbAiming && !_gpMoving)
+        else if (_kbAiming && InputManager.CurrentDevice == InputManager.ControlScheme.Keyboard)
         {
             _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
             _crosshair.transform.position = _rb.transform.position + _mousePos;
@@ -280,6 +301,56 @@ public class Player : MonoBehaviour
         // Keeps the camera centered on the player
         _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
     }
+
+    public void SpellCast()
+    {
+        _animator.SetBool("AbilityActive", true);
+        StartCoroutine("ResumeAnimation", 0.7f);
+
+        if (Moving)
+            _animator.Play("Moving (Cast)");
+        else
+            _animator.Play("Idling (Cast)");
+    }
+
+    public void ExcaliburActivated()
+    {
+        _animator.SetBool("AbilityActive", true);
+        StartCoroutine("ResumeAnimation", 0.7f);
+
+        if (Moving)
+            _animator.Play("Moving (Excalibur)");
+        else
+            _animator.Play("Idling (Excalibur)");
+    }
+
+    // ***** INTERACTION METHODS *****
+    #region Interaction
+    public void Interact(InputAction.CallbackContext context)
+    {
+        Interactable _currentTarget = FindInteractable();
+
+        if (_currentTarget == null)
+            return;
+
+        if(context.performed)
+            _currentTarget.OnInteract();
+    }
+
+    public Interactable FindInteractable()
+    {
+        Physics2D.OverlapCollider(_interactionCollider, _interactResults);
+
+        if (_interactResults.Count > 0)
+        {
+            return _interactResults[0].GetComponentInParent<Interactable>();
+        }
+        
+        _interactResults.Clear();
+        return null;
+    }
+
+    #endregion
 
     // ***** MOVEMENT METHODS *****
     #region Movement
@@ -326,7 +397,11 @@ public class Player : MonoBehaviour
     #endregion
 
     // ***** ANIMATION METHODS *****
-
+    private IEnumerator ResumeAnimation(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _animator.SetBool("AbilityActive", false);
+    }
 
     // ***** DAMAGE HANDLING METHODS *****
     #region DamageHandlers

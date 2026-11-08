@@ -2421,6 +2421,7 @@ GameObject:
   - component: {fileID: 2777308365291417773}
   - component: {fileID: 7942374459745988773}
   - component: {fileID: 7715545402414227706}
+  - component: {fileID: -3912734151530311599}
   m_Layer: 8
   m_Name: Fireball_Object
   m_TagString: DamageSpell
@@ -2516,7 +2517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c772746e69e3aee4bb4a9ce86e43b7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fireball_Object
-  damage: 1
+  excaliburChargePerHit: 10
   hitSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
   explosionParticles: {fileID: 8953315173316814783, guid: 215a9aeb6ce55df41b5d32a9eab99446, type: 3}
 --- !u!114 &2777308365291417773
@@ -2533,6 +2534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   _initialVelocity: 7
   _maxVelocity: 0
+  _rotateSpell: 0
   _lifetime: 0
 --- !u!58 &7942374459745988773
 CircleCollider2D:
@@ -2597,3 +2599,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &-3912734151530311599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440391782456400889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c117e0d5841a74a906b87b78a30200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageObject
+  damage: 1

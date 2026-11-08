@@ -165,25 +165,30 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected void TakeDamage(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("DamageSpell"))
+        if (collision.gameObject.GetComponent<DamageObject>())
         {
-            _health -= collision.gameObject.GetComponent<DamageObject>().Damage;
+            _health -= collision.gameObject.GetComponent<DamageObject>().Damage; 
         }
+
         if (_health <= 0)
         {
-            CurrentState = States.Dead;
-            _renderer = GetComponent<Renderer>();
-            GetComponent<Rigidbody2D>().simulated = false;
-            foreach (Collider2D collider in GetComponents<Collider2D>())
-            {
-                collider.enabled = false;
-            }
+            _dead = true;
+            Destroy(gameObject);
+
+            // TODO: Make a shader for enemy death or make it a destructible object
+            // DEPRECATED FADE OUT CODE
+            // _renderer = GetComponent<Renderer>();
+            // GetComponent<Rigidbody2D>().simulated = false;
+            // foreach (Collider2D collider in GetComponents<Collider2D>())
+            // {
+            //     collider.enabled = false;
+            // }
         }
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("DamageSpell"))
+        if (!collision.gameObject.GetComponent<DamageObject>())
         {
             return;
         }
@@ -196,11 +201,11 @@ public abstract class Wander_Enemy : MonoBehaviour
             _isTakingDamageOverTime = true;  
         }
     }
-
+    
     protected void OnTriggerStay2D(Collider2D collision)
     {
         // Damage over time effect
-        if (!collision.gameObject.CompareTag("DamageSpell"))
+        if (!collision.gameObject.GetComponent<DamageObject>())
         {
             return;
         }

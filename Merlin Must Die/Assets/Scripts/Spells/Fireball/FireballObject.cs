@@ -1,27 +1,25 @@
-using Unity.VisualScripting;
-using System.Collections;
 using UnityEngine;
 
 /// <summary>
 /// Fireball projectile that on collision with an enemy or destructible object will explode
 /// </summary>
-public class FireballObject : DamageObject
+public class FireballObject : SpellObject
 {
     [SerializeField] protected AudioClip hitSound;
     [SerializeField] protected ParticleSystem explosionParticles;
-
-
-    /// <summary>
-    /// Collision logic for the fireball
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter2D(Collider2D other)
+    
+    protected override void EnemyCollision(Collider2D other)
     {
-        // Will explode on collision objects in the environment, enemies, and destructible objects. Will not explode on collision with the player.
-        if (other.CompareTag("EnvironmentObject") ||other.CompareTag("Enemy") || other.CompareTag("Destructible"))
-        {
-            Explode();
-        }
+        base.EnemyCollision(other);
+
+        Explode();
+    }
+
+    protected override void ObjectCollision(Collider2D other)
+    {
+        base.ObjectCollision(other);
+
+        Explode();
     }
 
     /// <summary>
