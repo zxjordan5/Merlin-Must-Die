@@ -20,7 +20,6 @@ public class SanguineCommunionAbility : ExcaliburAbility
         // Instantiate SanguineCommunion object
         Quaternion objQuat = Quaternion.Euler(0, 0, _player.AimAngle);
         
-        // TODO: Make projectile move along rotated angle
         GameObject fbObj = Instantiate(_sanguineCommunionObjectRef, _player.transform.position, objQuat);
         Projectile fbProjectile = fbObj.GetComponent<Projectile>();
         fbProjectile.LaunchProjectile(Vector2.right);
