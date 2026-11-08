@@ -1579,10 +1579,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6228966056526433252, guid: d17833338738cce48921caa2f1a6c8e4, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2e2e5bf8fefb5a02292862fe3ee5ac0e, type: 2}
+    - target: {fileID: 4651359052435582871, guid: d17833338738cce48921caa2f1a6c8e4, type: 3}
+      propertyPath: flashDecaySpeed
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
