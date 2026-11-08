@@ -36,7 +36,7 @@ public class SpriteFlash : MonoBehaviour
     /// <summary>
     /// Value used to determine what color the sprite should be during the flash. Values are 0.0-1.0 (normal to fully white sprite)
     /// </summary>
-    private float _blinkFactor;
+    private float _flashFactor;
 
     private int _flashesRemaining;
 
@@ -44,29 +44,28 @@ public class SpriteFlash : MonoBehaviour
     {
         _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         _propertyBlock = new MaterialPropertyBlock();
-        Debug.Log(gameObject.name + " " + _spriteRenderers);
     }
 
     private void Update()
     {
         // Reset to flash again
-        if (_blinkFactor <= 0.0f)
+        if (_flashFactor <= 0.0f)
         {
             return;
         }
-        _blinkFactor = Mathf.Lerp(_blinkFactor, 0.0f, Time.deltaTime * flashDecaySpeed);
+        _flashFactor = Mathf.Lerp(_flashFactor, 0.0f, Time.deltaTime * flashDecaySpeed);
         
         // Epsilon value to prevent floating point errors
-        if (_blinkFactor <= 0.01f)
+        if (_flashFactor <= 0.01f)
         {
-            _blinkFactor = 0.0f;
+            _flashFactor = 0.0f;
             if (_flashesRemaining > 0)
             {
                 _flashesRemaining--;
-                _blinkFactor = 1.0f;
+                _flashFactor = 1.0f;
             }
         }
-        ApplyBlinkFactor();
+        ApplyFlashFactor();
     }
 
     public void Flash()
@@ -77,16 +76,16 @@ public class SpriteFlash : MonoBehaviour
         }
 
         _flashesRemaining = timesToFlash - 1;
-        _blinkFactor = 1.0f;
-        ApplyBlinkFactor();
+        _flashFactor = 1.0f;
+        ApplyFlashFactor();
     }
 
-    private void ApplyBlinkFactor()
+    private void ApplyFlashFactor()
     {
         foreach (SpriteRenderer renderer in _spriteRenderers)
         {
             renderer.GetPropertyBlock(_propertyBlock);
-            _propertyBlock.SetFloat("_BlinkFactor", _blinkFactor);
+            _propertyBlock.SetFloat("_FlashFactor", _flashFactor);
             renderer.SetPropertyBlock(_propertyBlock);
         }
     }
