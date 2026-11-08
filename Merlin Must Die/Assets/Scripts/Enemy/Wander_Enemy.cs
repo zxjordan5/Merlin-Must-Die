@@ -150,12 +150,16 @@ public abstract class Wander_Enemy : MonoBehaviour
         if (_health <= 0)
         {
             _dead = true;
-            _renderer = GetComponent<Renderer>();
-            GetComponent<Rigidbody2D>().simulated = false;
-            foreach (Collider2D collider in GetComponents<Collider2D>())
-            {
-                collider.enabled = false;
-            }
+            Destroy(gameObject);
+
+            // TODO: Make a shader for enemy death or make it a destructible object
+            // DEPRECATED FADE OUT CODE
+            // _renderer = GetComponent<Renderer>();
+            // GetComponent<Rigidbody2D>().simulated = false;
+            // foreach (Collider2D collider in GetComponents<Collider2D>())
+            // {
+            //     collider.enabled = false;
+            // }
         }
     }
 
@@ -174,7 +178,7 @@ public abstract class Wander_Enemy : MonoBehaviour
             _isTakingDamageOverTime = true;  
         }
     }
-
+    
     protected void OnTriggerStay2D(Collider2D collision)
     {
         // Damage over time effect
