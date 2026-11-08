@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class SpellObject : MonoBehaviour
+public class SpellObject : MonoBehaviour
 {
     [SerializeField] protected float excaliburChargePerHit;
 

@@ -1,9 +1,5 @@
-
-using NUnit.Framework;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -58,15 +54,26 @@ public class Grimoire : MonoBehaviour
     /// </summary>
     private Player _player;
 
+    //***** UI FIELDS *****
+    #region UI
     // The Spell Input GO with 4 cardinal direction arrow sprites as children
+    [SerializeField]
+    private HorizontalLayoutGroup spellIconArea;
     [SerializeField]
     private GameObject spellInputIcon;
     [SerializeField]
     private List<GameObject> arrowIcons;
     [SerializeField]
     private CooldownUI _cooldownUI;
+    [SerializeField]
+    private Image _preparedSpellIcon;
+    private bool _collapsingIcons;
+    private float _iconStartSpacing;
 
-    //Cooldown and Combo trackers
+
+    #endregion //UI END
+
+    //***** COMBO FIELDS *****
     private int _comboCounter;
     private float _comboTimer;
     private float _comboGapTime = 1.5f;
@@ -89,7 +96,8 @@ public class Grimoire : MonoBehaviour
 
         // The original spell input icon prefab is hidden; used for instantiating only
         spellInputIcon.SetActive(false);
-
+        //Get default spacing for future resets
+        _iconStartSpacing = spellIconArea.spacing;
 
         InstantiateSpells();
     }
@@ -102,6 +110,12 @@ public class Grimoire : MonoBehaviour
         for(int i = 0; i < _instantiatedActiveSpells.Count; i++)
         {
             _cooldownUI.UpdateSpellBar(i, _instantiatedActiveSpells[i].CooldownPercent);
+        }
+
+        //Collapse spell icons (when a spell is cast)
+        if (_collapsingIcons)
+        {
+            
         }
     }
 
@@ -235,7 +249,7 @@ public class Grimoire : MonoBehaviour
 
         _playerInputSequence.Add(input);
 
-        // Makes the input icons appear above the player's head
+        // Makes the input icons appear above the player's head when a spell is not prepared
         HandleSpellInputIcon(input);
 
         CheckForMatches();
@@ -252,10 +266,7 @@ public class Grimoire : MonoBehaviour
         {
             if (IsMatch(spell))
             {
-                //Debug.Log("match with spell");
-                // Do we want to block additional inputs until the spell is cast (do this through an event)
-                _preparedSpell = spell;
-                //ResetInputSequence();
+                PrepareSpell(spell);
                 break; // Exit the loop after preparing a spell
             }
             // if all spells on cooldown, reset input sequence
@@ -278,8 +289,8 @@ public class Grimoire : MonoBehaviour
     private bool IsMatch(Spell spell)
     {
         int codeLength = spell.spellCode.Count;
-        //Don't check if spell can be cast if the code is longer already or if the spell is on cooldown
-        if (_playerInputSequence.Count < codeLength || spell.OnCooldown)
+        //Don't check if spell can be cast if the code is longer already
+        if (_playerInputSequence.Count < codeLength)
         {
             return false;
         }
@@ -343,6 +354,14 @@ public class Grimoire : MonoBehaviour
 
     }
 
+    public void PrepareSpell(Spell spell)
+    {
+        _preparedSpell = spell;
+
+        _preparedSpellIcon.enabled = true;
+        _preparedSpellIcon.sprite = spell.spellIcon;
+    }
+
     /// <summary>
     /// Cast prepared spell and reset input sequence
     /// </summary>
@@ -352,7 +371,7 @@ public class Grimoire : MonoBehaviour
         {
             CheckForMatches();
 
-            if (_preparedSpell != null)
+            if (_preparedSpell != null && !_preparedSpell.OnCooldown)
             {
                 //(REMOVED to use spells hitting enemies instead)
                 //Charges Excalibur based on spell strength
@@ -362,6 +381,7 @@ public class Grimoire : MonoBehaviour
 
                 _preparedSpell.Cast(_player);
                 _preparedSpell = null;
+                _preparedSpellIcon.enabled = false;
                 ResetInputSequence();
                 UpdateCombos();
             }
@@ -425,6 +445,18 @@ public class Grimoire : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Effect that will remove the spacing of input icons before resetting them
+    /// To be used when a spell is prepared
+    /// </summary>
+    public IEnumerator CollapseInputIconsUI()
+    {
+        _collapsingIcons = true;
+        yield return new WaitForSeconds(0.5f);
+        ResetInputIconsUI();
+        _collapsingIcons = false;
+    }
+
 
     // =============
 
