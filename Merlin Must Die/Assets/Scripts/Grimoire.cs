@@ -70,8 +70,14 @@ public class Grimoire : MonoBehaviour
     private Image _preparedSpellIcon;
     [SerializeField]
     private Image _spellBlockedIcon;
+    [SerializeField]
+    private ParticleSystem _preparedSpellParticles;
+    private ParticleSystem _activeIndicatorParticles;
+
     private bool _collapsingIcons;
     private float _initialIconSpacing;
+
+    private List<GameObject> _createdSpellIcons = new List<GameObject>();
 
 
     #endregion //UI END
@@ -228,6 +234,8 @@ public class Grimoire : MonoBehaviour
                 if (j == 0)
                 {
                     grimoireSprite.sprite = activeSpells[i].spellIcon;
+                    iconSprite.name = activeSpells[i].SpellName + " Grimoire Icon"; //Change name for future particle check
+                    _createdSpellIcons.Add(iconSprite);
                 }
 
                 // All other icons (directional inputs)
@@ -378,10 +386,27 @@ public class Grimoire : MonoBehaviour
 
     /// <summary>
     /// Sets the prepared spell, plays the spell collapse animation, and updates the prepared spell icon
+    /// Instantiates particles for the prepared spell in the grimoire
     /// </summary>
     public void PrepareSpell(Spell spell)
     {
+        if (_activeIndicatorParticles)
+            Destroy(_activeIndicatorParticles);
+
         _preparedSpell = spell;
+
+        //Loop through the list of spell icons and check if they match the spell being prepared
+        //If they do, instantiate the prepared spell particles at that position
+        foreach (GameObject spellIcon in _createdSpellIcons)
+        {
+            if (spellIcon.name.Contains(spell.SpellName))
+            {
+                _activeIndicatorParticles = Instantiate(_preparedSpellParticles, spellIcon.transform);
+                ParticleSystem.MainModule main = _activeIndicatorParticles.main;
+                main.startColor = spell.spellColor; //Particles should match spell color
+                break;
+            }
+        }
 
         CollapseSpellIcons();
         _preparedSpellIcon.sprite = spell.spellIcon;
@@ -409,6 +434,10 @@ public class Grimoire : MonoBehaviour
                 _preparedSpell.Cast(_player);
                 _preparedSpell = null;
                 _preparedSpellIcon.enabled = false;
+
+                if(_activeIndicatorParticles)
+                    Destroy(_activeIndicatorParticles);
+
                 ResetInputSequence();
                 UpdateCombos();
             }

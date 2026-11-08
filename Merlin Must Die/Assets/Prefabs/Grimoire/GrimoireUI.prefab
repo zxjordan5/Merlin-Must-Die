@@ -1571,6 +1571,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 648103981386280524, guid: ae49c51f58821354aa0dfc83b2a0a35d, type: 3}
+      propertyPath: _preparedSpellParticles
+      value: 
+      objectReference: {fileID: 7819512501337514200, guid: ae46a6c50be5fc14b81b2bac1069eab2, type: 3}
+    - target: {fileID: 648103981386280524, guid: ae49c51f58821354aa0dfc83b2a0a35d, type: 3}
       propertyPath: activeSpells.Array.size
       value: 4
       objectReference: {fileID: 0}
