@@ -124,13 +124,6 @@ public abstract class Wander_Enemy : MonoBehaviour
             }
         }
 
-        // Temp death logic
-        if (CurrentState == States.Dead)
-        {
-            _renderer.material.color = new Color(_renderer.material.color.r, _renderer.material.color.g, _renderer.material.color.b, _renderer.material.color.a - 0.03f);
-        }
-
-
         // To make sure the sprite flips
         _previousPOS = transform.position;
         
@@ -152,7 +145,7 @@ public abstract class Wander_Enemy : MonoBehaviour
         CurrentState = States.Wandering;
     }
 
-    protected bool Detection()
+    protected virtual bool Detection()
     {
         // If the player's position overlaps with a point on the detection circle's collider or the enemy get hit, attack
         if (_detectionCircle.GetComponent<Collider2D>().OverlapPoint(_player.transform.position) ||
@@ -163,7 +156,7 @@ public abstract class Wander_Enemy : MonoBehaviour
         return false;
     }
 
-    protected void TakeDamage(Collider2D collision)
+    protected virtual void TakeDamage(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<DamageObject>())
         {
@@ -172,7 +165,7 @@ public abstract class Wander_Enemy : MonoBehaviour
 
         if (_health <= 0)
         {
-            _dead = true;
+            CurrentState = States.Dead;
             Destroy(gameObject);
 
             // TODO: Make a shader for enemy death or make it a destructible object
@@ -188,38 +181,44 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.GetComponent<DamageObject>())
-        {
-            return;
-        }
-        
-        // This check prevents repeated damage calls
-        if (!_isTakingDamageOverTime)
-        {
-            // Initial damage
-            TakeDamage(collision);
-            _isTakingDamageOverTime = true;  
-        }
+        //if (collision.name == "Collision")
+        //{
+            if (!collision.gameObject.GetComponent<DamageObject>())
+            {
+                return;
+            }
+
+            // This check prevents repeated damage calls
+            if (!_isTakingDamageOverTime)
+            {
+                // Initial damage
+                TakeDamage(collision);
+                _isTakingDamageOverTime = true;  
+            }
+        //}
     }
     
     protected void OnTriggerStay2D(Collider2D collision)
     {
-        // Damage over time effect
-        if (!collision.gameObject.GetComponent<DamageObject>())
-        {
-            return;
-        }
-        
-        if (_timeSinceDamageOverTimeTick >= damageOverTimeWindow)
-        {
-           //Debug.Log("Damage Over Time");
-           ResetDamageOverTimeTick();
-           TakeDamage(collision);
-           if (_flash != null)
-           {
-              _flash.SingleFlash();
-           }
-        }
+        //if (collision.name == "Collision")
+        //{
+            // Damage over time effect
+            if (!collision.gameObject.GetComponent<DamageObject>())
+            {
+                return;
+            }
+            
+            if (_timeSinceDamageOverTimeTick >= damageOverTimeWindow)
+            {
+               //Debug.Log("Damage Over Time");
+               ResetDamageOverTimeTick();
+               TakeDamage(collision);
+               if (_flash != null)
+               {
+                  _flash.SingleFlash();
+               }
+            }
+        //}
     }
     
     protected void OnTriggerExit2D(Collider2D other)

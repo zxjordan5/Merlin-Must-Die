@@ -43,6 +43,7 @@ public class Golemite : Wander_Enemy
 
         // Make the enemy's decection circle
         _detectionCircle = new GameObject("RockDetection");
+        //_detectionCircle.transform.SetParent(transform);
         _detectionCircle.transform.position = _rb.transform.position;
         CircleCollider2D _collider = _detectionCircle.AddComponent<CircleCollider2D>();
         _collider.radius = 3.5f;
@@ -63,6 +64,7 @@ public class Golemite : Wander_Enemy
         
         if (Detection() && CurrentState == State.Wandering)
         {
+            Debug.Log("Player Detected");
             CurrentState = State.Attacking;
             _rb.linearVelocity = new Vector2(0, 0);
         }
