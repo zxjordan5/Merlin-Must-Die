@@ -1,8 +1,10 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public abstract class SpellObject : MonoBehaviour
 {
     [SerializeField] protected float excaliburChargePerHit;
+    [SerializeField] protected ElementalType elementalType;
 
     protected Excalibur _excalibur;
 

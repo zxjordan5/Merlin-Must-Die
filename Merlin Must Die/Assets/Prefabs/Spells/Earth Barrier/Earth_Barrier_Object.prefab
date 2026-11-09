@@ -402,6 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EarthBarrierObject
   excaliburChargePerHit: 40
+  elementalType: 1
   landSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
   landingParticles: {fileID: 8953315173316814783, guid: 4e554265b4fad774094f1eb64edaeea3, type: 3}
   splashSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
