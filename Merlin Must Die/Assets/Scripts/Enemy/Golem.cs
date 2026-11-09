@@ -59,11 +59,11 @@ public class Golem : Wander_Enemy
         _rocks = new GameObject[5];
         _rockRB = new Rigidbody2D[5];
         _rockPOS = new Vector3[5];
-        _rockPOS[0] = new Vector3(-0.5f, 0.28f, 0.05f);
-        _rockPOS[1] = new Vector3(0.5f, 0.28f, 0.05f);
-        _rockPOS[2] = new Vector3(0, -0.34f, -0.05f);
-        _rockPOS[3] = new Vector3(-0.78f, -0.07f, -0.05f);
-        _rockPOS[4] = new Vector3(0.78f, -0.07f, -0.05f);
+        _rockPOS[0] = new Vector3(-0.35f, 0.29f, 0.05f);
+        _rockPOS[1] = new Vector3(0.35f, 0.29f, 0.05f);
+        _rockPOS[2] = new Vector3(0, -0.53f, -0.05f);
+        _rockPOS[3] = new Vector3(-0.61f, -0.2f, -0.05f);
+        _rockPOS[4] = new Vector3(0.61f, -0.2f, -0.05f);
     }
 
     protected void Update()
@@ -93,21 +93,44 @@ public class Golem : Wander_Enemy
                 _player.transform.position,
                 0.5f * Time.deltaTime);
         }
+
+        // The parent sprite flipping, also flips the rocks completely 
+        if(transform.localScale.x < 0)
+        {
+            // (this stops the flipping)
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
         
-        // Top Y bound = 0.455
-        // Bottom Y bound = -0.345
-        // Right X bound = 1.08
-        // Left X bound = -1.08
+        // Top Y bound = 0.48
+        // Bottom Y bound = -0.54
+        // Right X bound = 0.9
+        // Left X bound = -0.9
         // Rotate the rocks
-        if (_rockRB[0].linearVelocityX > 0)
+        /*
+        if (CurrentState != State.Sleeping)
         {
             for (int i = 0; i < _rocks.Length; i++)
             {
-                // Use rockRB[i].MovePosition(targetPOS)
+                if (_rocks[i].transform.localPosition.x >= 0 && _rocks[i].transform.localPosition.y < 0.053)
+                {
+                    Debug.Log("movin");
+                    _rockRB[i].MovePosition(new Vector2(0.015f + _rockRB[i].transform.position.x, 0.0093f + _rockRB[i].transform.position.y));
+                }
+                else if (_rocks[i].transform.localPosition.x >= 0 && _rocks[i].transform.localPosition.y > 0.053)
+                {
+                    _rockRB[i].MovePosition(new Vector2(-0.015f + _rockRB[i].transform.position.x, 0.0075f + _rockRB[i].transform.position.y));
+                }
+                else if (_rocks[i].transform.localPosition.x <= 0 && _rocks[i].transform.localPosition.y > 0.053)
+                {
+                    _rockRB[i].MovePosition(new Vector2(-0.015f + _rockRB[i].transform.position.x, -0.0075f + _rockRB[i].transform.position.y));
+                }
+                else if (_rocks[i].transform.localPosition.x <= 0 && _rocks[i].transform.localPosition.y < 0.053)
+                {
+                    _rockRB[i].MovePosition(new Vector2(0.015f + _rockRB[i].transform.position.x, -0.0093f + _rockRB[i].transform.position.y));
+                }
             }
         }
-
-        // Stop the rocks from flipping when the golem does
+        */
 
     }
 
@@ -135,6 +158,7 @@ public class Golem : Wander_Enemy
         if (_detectionCircle.GetComponent<CircleCollider2D>().OverlapPoint(_player.transform.position) ||
             _initialHealth != _health)  
         {
+            // Once the player is detected, create the rocks
             for (int i = 0; i < _rocks.Length; i++)
             {
                 if (_rocks[i] == null) // Should only be called once, but just in case
@@ -142,9 +166,18 @@ public class Golem : Wander_Enemy
                     _rocks[i] = Instantiate(_rockPrefab, transform.position + _rockPOS[i], Quaternion.identity);
                     _rocks[i].transform.SetParent(transform);
                     _rockRB[i] = _rocks[i].GetComponent<Rigidbody2D>();
+                    if (i == 0 || i == 1)
+                    {
+                        _rocks[i].transform.position = new Vector3(_rocks[i].transform.position.x, _rocks[i].transform.position.y, 0.12f);
+                    }
+                    else
+                    {
+                        _rocks[i].transform.position = new Vector3(_rocks[i].transform.position.x, _rocks[i].transform.position.y, 0.05f);
+                    }
+                    
                 }
             }
-            StartCoroutine("Waiting");
+            
             return true;
         }
         return false;
@@ -180,16 +213,6 @@ public class Golem : Wander_Enemy
         CurrentState = State.Attacking;
         _target = new Vector2(1,1);
         //_attackCooldownTimer = 0;
-    }
-
-    IEnumerator Waiting()
-    {
-        yield return new WaitForSeconds(1f);
-        _rockRB[0].AddForce(new Vector2(-1.08f, -0.405f));
-        _rockRB[1].AddForce(new Vector2(-1.08f, 0.405f));
-        _rockRB[2].AddForce(new Vector2(1.08f, 0.405f));
-        _rockRB[3].AddForce(new Vector2(1.08f, -0.405f));
-        _rockRB[4].AddForce(new Vector2(1.08f, 0.405f));
     }
 
 }
