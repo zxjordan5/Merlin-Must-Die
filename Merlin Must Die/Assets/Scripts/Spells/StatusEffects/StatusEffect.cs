@@ -21,7 +21,7 @@ public class StatusEffect : MonoBehaviour
     /// </summary>
     protected Rigidbody2D _rb;
 
-    private float elapsedTime = 0.0f;
+    private float _elapsedTime = 0.0f;
 
     protected virtual void Start()
     {
@@ -31,8 +31,8 @@ public class StatusEffect : MonoBehaviour
 
     protected virtual void Update()
     {
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime >= effectDuration)
+        _elapsedTime += Time.deltaTime;
+        if (_elapsedTime >= effectDuration)
         {
             Destroy(this);
         }
@@ -43,6 +43,6 @@ public class StatusEffect : MonoBehaviour
     /// </summary>
     public void ResetTimer()
     {
-        elapsedTime = 0.0f;
+        _elapsedTime = 0.0f;
     }
 }

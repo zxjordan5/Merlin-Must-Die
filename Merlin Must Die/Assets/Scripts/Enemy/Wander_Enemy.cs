@@ -206,12 +206,39 @@ public abstract class Wander_Enemy : MonoBehaviour
         {
             case ElementalType.Water:
                 #region WetLogic
-
+                Wet wetStatus = gameObject.GetComponent<Wet>(); 
+                if (wetStatus)
+                {
+                    // If the status effect is an existing component on this object, reset it
+                    // there are no additional prerequisites for applying this status effect
+                    wetStatus.ResetTimer();
+                }
+                else
+                {
+                    // Wet status doesn't exist, add the component to this game object
+                    gameObject.AddComponent<Wet>();
+                }
                 #endregion
                 break;
             case ElementalType.Lightning:
                 #region ShockedLogic
-
+                // To become Shocked, the enemy must have the Wet status effect first
+                
+                Shocked shockedStatus = gameObject.GetComponent<Shocked>(); 
+                if (gameObject.GetComponent<Wet>())
+                {
+                    if (shockedStatus)
+                    {
+                        // If the enemy is already Shocked AND the prerequisites for
+                        // being shocked are met (enemy is Wet), reset the timer of the
+                        // shocked status
+                        shockedStatus.ResetTimer();
+                    }
+                    else
+                    {
+                        gameObject.AddComponent<Shocked>();
+                    }
+                }
                 #endregion
                 break;
         }
@@ -219,16 +246,17 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.GetComponent<DamageObject>())
-        {
-            return;
-        }
-
         SpellObject spellObject = collision.gameObject.GetComponent<SpellObject>();
         if (spellObject)
         {
             // A spell has hit the object, we need to update the status effects of the enemy
             UpdateStatusEffects(spellObject);
+        }
+        
+        
+        if (!collision.gameObject.GetComponent<DamageObject>())
+        {
+            return;
         }
         
         // This check prevents repeated damage calls
