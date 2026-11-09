@@ -42,6 +42,10 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected float _pauseTime;
     protected GameObject _detectionCircle;
     protected Vector2 _target;
+    /// <summary>
+    /// Movement speed multiplier. Needed for status effects
+    /// </summary>
+    public float MovementSpeedMultiplier { get; private set; } = 1f;
     [SerializeField] protected int _health;
     protected int _initialHealth;
     private enum States { Wandering = 0, Attacking = 1, Paused = 2, Dead = 3 }
@@ -147,9 +151,14 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected virtual void Wander()
     {
-        _rb.linearVelocityX = (float)Random.Range(-100, 100)/25;
-        _rb.linearVelocityY = (float) Random.Range(-100, 100)/25;
+        _rb.linearVelocityX = (float)Random.Range(-100, 100) / 25 * MovementSpeedMultiplier;
+        _rb.linearVelocityY = (float)Random.Range(-100, 100) / 25 * MovementSpeedMultiplier;
         CurrentState = States.Wandering;
+    }
+
+    public void SetMovementSpeedMultiplier(float multiplier)
+    {
+        MovementSpeedMultiplier = Mathf.Max(0f, multiplier);
     }
 
     protected bool Detection()
@@ -172,7 +181,7 @@ public abstract class Wander_Enemy : MonoBehaviour
 
         if (_health <= 0)
         {
-            _dead = true;
+            //_dead = true;
             Destroy(gameObject);
 
             // TODO: Make a shader for enemy death or make it a destructible object
@@ -186,11 +195,40 @@ public abstract class Wander_Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the status effects of the enemy after they have been hit by a spell.
+    /// </summary>
+    /// <param name="spellObject"></param>
+    protected void UpdateStatusEffects(SpellObject spellObject)
+    {
+        ElementalType type = spellObject.ElementalType;
+        switch (type)
+        {
+            case ElementalType.Water:
+                #region WetLogic
+
+                #endregion
+                break;
+            case ElementalType.Lightning:
+                #region ShockedLogic
+
+                #endregion
+                break;
+        }
+    }
+
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.gameObject.GetComponent<DamageObject>())
         {
             return;
+        }
+
+        SpellObject spellObject = collision.gameObject.GetComponent<SpellObject>();
+        if (spellObject)
+        {
+            // A spell has hit the object, we need to update the status effects of the enemy
+            UpdateStatusEffects(spellObject);
         }
         
         // This check prevents repeated damage calls

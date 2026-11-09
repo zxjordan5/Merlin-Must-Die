@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class StatusEffect : MonoBehaviour
 {
+    // Behavioral fields. Since status effects are only created at runtime, these
+    // are only serialized for debugging in the editor.
     [SerializeField] protected float effectDuration;
     [SerializeField] protected ParticleSystem effectParticles;
     

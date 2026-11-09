@@ -8,6 +8,11 @@ public abstract class SpellObject : MonoBehaviour
 
     protected Excalibur _excalibur;
 
+    public ElementalType ElementalType
+    {
+        get => elementalType;
+    }
+    
     public virtual void Awake()
     {
         _excalibur = FindAnyObjectByType<Excalibur>();
