@@ -172,7 +172,7 @@ public abstract class Wander_Enemy : MonoBehaviour
 
         if (_health <= 0)
         {
-            _dead = true;
+            CurrentState = States.Dead;
             Destroy(gameObject);
 
             // TODO: Make a shader for enemy death or make it a destructible object
