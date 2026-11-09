@@ -38,7 +38,7 @@ public class InputManager : MonoBehaviour
 
     /// <summary>
     /// Apparently Unity doesn't unassign the input connections so without disconnecting the inputs
-    /// there will be memory leaks. This causes multiple input assignments AFTER closing the game previewer
+    /// there will be memory leaks. Without this it causes multiple input assignments after closing the In-Editor player
     /// </summary>
     private void OnDisable()
     {
@@ -46,7 +46,7 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Hard coded input connections!
     /// </summary>
     public void ConnectInputMap()
     {

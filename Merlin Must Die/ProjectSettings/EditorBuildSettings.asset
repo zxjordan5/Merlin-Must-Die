@@ -20,13 +20,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/TempGameOverScene.unity
     guid: b6bb6a7adeece094b9cb79e2698c03bf
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Playtests/pt-10-30.unity
     guid: 9aa8eace1fa57d44a9bdf5cd0b76faf7
   - enabled: 0
     path: Assets/Scenes/npc-test.unity
     guid: b18cc8fca9b85c547b37e9dd1d846901
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Spell Testing/tidal-wave.unity
     guid: fc5692acb1fbf92459aa92c494cef48f
   m_configObjects:
