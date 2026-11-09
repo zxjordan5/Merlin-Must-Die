@@ -352,7 +352,7 @@ public class Player : MonoBehaviour
     #region Movement
     public void OnKBM_AutoMove(InputAction.CallbackContext context)
     {
-        _kbMoving = context.started || context.performed;
+        _kbMoving = context.performed;
     }
     public void OnGP_Move(InputAction.CallbackContext context)
     {

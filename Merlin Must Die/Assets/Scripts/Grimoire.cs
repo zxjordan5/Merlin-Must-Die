@@ -130,20 +130,17 @@ public class Grimoire : MonoBehaviour
             if (_spellIconArea.spacing <= 0)
             {
                 _collapsingIcons = false;
+                if(_preparedSpell)
+                    _preparedSpellIcon.enabled = true;
                 _spellIconArea.spacing = _initialIconSpacing;
                 ResetInputIconsUI();
             }
         }
-        //Show the prepared spell if the icons are not collapsing and there is a prepared spell
-        if(!_collapsingIcons && _preparedSpell)
-        {
-            _preparedSpellIcon.enabled = true;
 
-            if (_preparedSpell.OnCooldown)
-                _spellBlockedIcon.enabled = true;
-            else
-                _spellBlockedIcon.enabled = false;
-        }
+        if (_preparedSpell && _preparedSpell.OnCooldown)
+            _spellBlockedIcon.enabled = true;
+        else
+            _spellBlockedIcon.enabled = false;
     }
 
     /// <summary>
@@ -419,8 +416,9 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
+           
             //Extra check for a prepared spell
-            if(!_preparedSpell)
+            if (!_preparedSpell)
                 CheckForMatches();
 
             if (_preparedSpell && !_preparedSpell.OnCooldown)
@@ -432,23 +430,29 @@ public class Grimoire : MonoBehaviour
                 _player.SpellCast();
 
                 _preparedSpell.Cast(_player);
-                _preparedSpell = null;
-                _preparedSpellIcon.enabled = false;
 
-                if(_activeIndicatorParticles)
-                    Destroy(_activeIndicatorParticles);
+                ClearPreparedSpell();
 
-                ResetInputSequence();
                 UpdateCombos();
             }
+            //Prepared spell exists but is on cooldown, clear spell
             else
             {
-                // LOGIC HERE FOR NO SPELL PREPARED
-                // could flash an X indicator
+                ClearPreparedSpell();
             }
+
+            ResetInputSequence();
         }
     }
     
+    public void ClearPreparedSpell()
+    {
+        _preparedSpell = null;
+        _preparedSpellIcon.enabled = false;
+        if (_activeIndicatorParticles)
+            Destroy(_activeIndicatorParticles);
+    }
+
     // === UI ===
 
     /// <summary>
