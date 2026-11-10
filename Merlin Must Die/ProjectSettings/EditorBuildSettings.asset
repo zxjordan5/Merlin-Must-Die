@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/npc-test.unity
     guid: b18cc8fca9b85c547b37e9dd1d846901
+  - enabled: 0
+    path: Assets/Scenes/Spell Testing/tidal-wave.unity
+    guid: fc5692acb1fbf92459aa92c494cef48f
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: ae23c344a838df2918b44d3c2ef54bc2, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 3a96d82f37145944ca801d67407d89e1, type: 2}

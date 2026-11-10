@@ -1,12 +1,9 @@
-
-using NUnit.Framework;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Grimoire Class
@@ -58,15 +55,34 @@ public class Grimoire : MonoBehaviour
     /// </summary>
     private Player _player;
 
+    //***** UI FIELDS *****
+    #region UI
     // The Spell Input GO with 4 cardinal direction arrow sprites as children
     [SerializeField]
-    private GameObject spellInputIcon;
+    private HorizontalLayoutGroup _spellIconArea;
     [SerializeField]
-    private List<GameObject> arrowIcons;
+    private GameObject _spellInputIcon;
+    [SerializeField]
+    private List<GameObject> _arrowIcons;
     [SerializeField]
     private CooldownUI _cooldownUI;
+    [SerializeField]
+    private Image _preparedSpellIcon;
+    [SerializeField]
+    private Image _spellBlockedIcon;
+    [SerializeField]
+    private ParticleSystem _preparedSpellParticles;
+    private ParticleSystem _activeIndicatorParticles;
 
-    //Cooldown and Combo trackers
+    private bool _collapsingIcons;
+    private float _initialIconSpacing;
+
+    private List<GameObject> _createdSpellIcons = new List<GameObject>();
+
+
+    #endregion //UI END
+
+    //***** COMBO FIELDS *****
     private int _comboCounter;
     private float _comboTimer;
     private float _comboGapTime = 1.5f;
@@ -88,8 +104,9 @@ public class Grimoire : MonoBehaviour
         GetGrimoireContents();
 
         // The original spell input icon prefab is hidden; used for instantiating only
-        spellInputIcon.SetActive(false);
-
+        _spellInputIcon.SetActive(false);
+        //Get default spacing for future resets
+        _initialIconSpacing = _spellIconArea.spacing;
 
         InstantiateSpells();
     }
@@ -103,6 +120,27 @@ public class Grimoire : MonoBehaviour
         {
             _cooldownUI.UpdateSpellBar(i, _instantiatedActiveSpells[i].CooldownPercent);
         }
+
+        //Collapse spell icons (when a spell is cast)
+        if (_collapsingIcons)
+        {
+            _spellIconArea.spacing -= Time.deltaTime * _initialIconSpacing * 10; //Should take 1/10th of a second
+            
+            //Once the spacing is zero, the icons are collapsed. Stop collapsing them and clear the icons.
+            if (_spellIconArea.spacing <= 0)
+            {
+                _collapsingIcons = false;
+                if(_preparedSpell)
+                    _preparedSpellIcon.enabled = true;
+                _spellIconArea.spacing = _initialIconSpacing;
+                ResetInputIconsUI();
+            }
+        }
+
+        if (_preparedSpell && _preparedSpell.OnCooldown)
+            _spellBlockedIcon.enabled = true;
+        else
+            _spellBlockedIcon.enabled = false;
     }
 
     /// <summary>
@@ -130,16 +168,16 @@ public class Grimoire : MonoBehaviour
                 switch (activeSpellCode[j])
                 {
                     case Direction.Up:
-                        spellSprites.Add(arrowIcons[0]);
+                        spellSprites.Add(_arrowIcons[0]);
                         break;
                     case Direction.Down:
-                        spellSprites.Add(arrowIcons[1]);
+                        spellSprites.Add(_arrowIcons[1]);
                         break;
                     case Direction.Left:
-                        spellSprites.Add(arrowIcons[2]);
+                        spellSprites.Add(_arrowIcons[2]);
                         break;
                     case Direction.Right:
-                        spellSprites.Add(arrowIcons[3]);
+                        spellSprites.Add(_arrowIcons[3]);
                         break;
                 }
             }
@@ -193,6 +231,8 @@ public class Grimoire : MonoBehaviour
                 if (j == 0)
                 {
                     grimoireSprite.sprite = activeSpells[i].spellIcon;
+                    iconSprite.name = activeSpells[i].SpellName + " Grimoire Icon"; //Change name for future particle check
+                    _createdSpellIcons.Add(iconSprite);
                 }
 
                 // All other icons (directional inputs)
@@ -233,10 +273,14 @@ public class Grimoire : MonoBehaviour
             ResetInputSequence();
         }
 
-        _playerInputSequence.Add(input);
+        //Will only read input if a spell is not prepared
+        if (!_preparedSpell)
+        {
+            // Makes the input icons appear above the player's head when a spell is not prepared
+            _playerInputSequence.Add(input);
 
-        // Makes the input icons appear above the player's head
-        HandleSpellInputIcon(input);
+            HandleSpellInputIcon(input);
+        }
 
         CheckForMatches();
     }
@@ -246,16 +290,11 @@ public class Grimoire : MonoBehaviour
         //Check if no spells match
         int spellMismatches = 0;
 
-        //Debug.Log("ActiveSpells size:" + instantiatedActiveSpells.Count);
-        //Debug.Log(instantiatedActiveSpells[0]);
         foreach (Spell spell in _instantiatedActiveSpells)
         {
             if (IsMatch(spell))
             {
-                //Debug.Log("match with spell");
-                // Do we want to block additional inputs until the spell is cast (do this through an event)
-                _preparedSpell = spell;
-                //ResetInputSequence();
+                PrepareSpell(spell);
                 break; // Exit the loop after preparing a spell
             }
             // if all spells on cooldown, reset input sequence
@@ -264,9 +303,9 @@ public class Grimoire : MonoBehaviour
                 spellMismatches++;
             }
         }
+        //Resets input when no spells match
         if (spellMismatches >= _instantiatedActiveSpells.Count)
         {
-            //Debug.Log("no spells match, resetting");
             ResetInputSequence();
         }
     }
@@ -278,8 +317,8 @@ public class Grimoire : MonoBehaviour
     private bool IsMatch(Spell spell)
     {
         int codeLength = spell.spellCode.Count;
-        //Don't check if spell can be cast if the code is longer already or if the spell is on cooldown
-        if (_playerInputSequence.Count < codeLength || spell.OnCooldown)
+        //Don't check if spell can be cast if the code is longer already
+        if (_playerInputSequence.Count < codeLength)
         {
             return false;
         }
@@ -340,7 +379,34 @@ public class Grimoire : MonoBehaviour
             output += input + ", ";
         }
         Debug.Log(output);
+    }
 
+    /// <summary>
+    /// Sets the prepared spell, plays the spell collapse animation, and updates the prepared spell icon
+    /// Instantiates particles for the prepared spell in the grimoire
+    /// </summary>
+    public void PrepareSpell(Spell spell)
+    {
+        if (_activeIndicatorParticles)
+            Destroy(_activeIndicatorParticles);
+
+        _preparedSpell = spell;
+
+        //Loop through the list of spell icons and check if they match the spell being prepared
+        //If they do, instantiate the prepared spell particles at that position
+        foreach (GameObject spellIcon in _createdSpellIcons)
+        {
+            if (spellIcon.name.Contains(spell.SpellName))
+            {
+                _activeIndicatorParticles = Instantiate(_preparedSpellParticles, spellIcon.transform);
+                ParticleSystem.MainModule main = _activeIndicatorParticles.main;
+                main.startColor = spell.spellColor; //Particles should match spell color
+                break;
+            }
+        }
+
+        CollapseSpellIcons();
+        _preparedSpellIcon.sprite = spell.spellIcon;
     }
 
     /// <summary>
@@ -350,9 +416,12 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
-            CheckForMatches();
+           
+            //Extra check for a prepared spell
+            if (!_preparedSpell)
+                CheckForMatches();
 
-            if (_preparedSpell != null)
+            if (_preparedSpell && !_preparedSpell.OnCooldown)
             {
                 //(REMOVED to use spells hitting enemies instead)
                 //Charges Excalibur based on spell strength
@@ -361,17 +430,29 @@ public class Grimoire : MonoBehaviour
                 _player.SpellCast();
 
                 _preparedSpell.Cast(_player);
-                _preparedSpell = null;
-                ResetInputSequence();
+
+                ClearPreparedSpell();
+
                 UpdateCombos();
             }
+            //Prepared spell exists but is on cooldown, clear spell
             else
             {
-                //Debug.Log("no spell prepared");
+                ClearPreparedSpell();
             }
+
+            ResetInputSequence();
         }
     }
     
+    public void ClearPreparedSpell()
+    {
+        _preparedSpell = null;
+        _preparedSpellIcon.enabled = false;
+        if (_activeIndicatorParticles)
+            Destroy(_activeIndicatorParticles);
+    }
+
     // === UI ===
 
     /// <summary>
@@ -380,32 +461,32 @@ public class Grimoire : MonoBehaviour
     /// <param name="input"></param>
     public void HandleSpellInputIcon(Direction input)
     {
-        if (spellInputIcon.transform.parent.childCount <= _maxSpellLength)
+        if (_spellInputIcon.transform.parent.childCount <= _maxSpellLength)
         {
             // Gets the parent SpellInput object
-            GameObject thisIcon = Instantiate(spellInputIcon, spellInputIcon.transform.parent.transform);
+            GameObject thisIcon = Instantiate(_spellInputIcon, _spellInputIcon.transform.parent.transform);
             thisIcon.SetActive(true);
 
             // Set arrow icons active false - invisible
-            for (int i = 0; i < arrowIcons.Count; i++)
+            for (int i = 0; i < _arrowIcons.Count; i++)
             {
-                arrowIcons[i] = thisIcon.transform.GetChild(i).gameObject;
-                arrowIcons[i].SetActive(false);
+                _arrowIcons[i] = thisIcon.transform.GetChild(i).gameObject;
+                _arrowIcons[i].SetActive(false);
             }
             // assuming these are in order -- check later
             switch (input)
             {
                 case Direction.Up:
-                    arrowIcons[0].SetActive(true);
+                    _arrowIcons[0].SetActive(true);
                     break;
                 case Direction.Down:
-                    arrowIcons[1].SetActive(true);
+                    _arrowIcons[1].SetActive(true);
                     break;
                 case Direction.Left:
-                    arrowIcons[2].SetActive(true);
+                    _arrowIcons[2].SetActive(true);
                     break;
                 case Direction.Right:
-                    arrowIcons[3].SetActive(true);
+                    _arrowIcons[3].SetActive(true);
                     break;
             }
         }
@@ -417,13 +498,21 @@ public class Grimoire : MonoBehaviour
     /// </summary>
     public void ResetInputIconsUI()
     {
-        for (int i = spellInputIcon.transform.parent.childCount - 1; i > 0; i--)
+        for (int i = _spellInputIcon.transform.parent.childCount - 1; i > 0; i--)
         {
-            if (spellInputIcon.transform.parent.GetChild(i) != null)
+            if (_spellInputIcon.transform.parent.GetChild(i) != null)
             {
-                Destroy(spellInputIcon.transform.parent.GetChild(i).gameObject);
+                Destroy(_spellInputIcon.transform.parent.GetChild(i).gameObject);
             }
         }
+    }
+
+    /// <summary>
+    /// Setting _collapsingIcons to true will lower the spacing of the icon area in Update()
+    /// </summary>
+    public void CollapseSpellIcons()
+    {
+        _collapsingIcons = true;
     }
 
     // =============
