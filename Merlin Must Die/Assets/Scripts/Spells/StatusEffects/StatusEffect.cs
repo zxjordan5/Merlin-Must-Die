@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -9,7 +10,9 @@ public class StatusEffect : MonoBehaviour
     // Behavioral fields. Since status effects are only created at runtime, these
     // are only serialized for debugging in the editor.
     [SerializeField] protected float effectDuration;
-    [SerializeField] protected ParticleSystem effectParticles;
+    [SerializeField] protected GameObject effectParticlesObj;
+    protected  GameObject _instantiatedParticleObjRef;
+    
     
     /// <summary>
     /// The enemy the script is attached to. Null if not attached to an enemy.
@@ -35,6 +38,7 @@ public class StatusEffect : MonoBehaviour
         if (_elapsedTime >= effectDuration)
         {
             Destroy(this);
+            Destroy(_instantiatedParticleObjRef);
         }
     }
 
@@ -44,5 +48,14 @@ public class StatusEffect : MonoBehaviour
     public void ResetTimer()
     {
         _elapsedTime = 0.0f;
+    }
+
+    /// <summary>
+    /// Loads the particle effect objects for the given status effect. Should always be overridden in child classes
+    /// </summary>
+    /// <returns></returns>
+    protected virtual IEnumerator LoadParticleEffects()
+    {
+        yield return null;
     }
 }
