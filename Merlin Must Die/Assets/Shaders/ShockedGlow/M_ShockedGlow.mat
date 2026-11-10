@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShockedGlowMaterial
+  m_Name: M_ShockedGlow
   m_Shader: {fileID: -6465566751694194690, guid: 1b87838d51a4842a7bd685119c3a9635, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
