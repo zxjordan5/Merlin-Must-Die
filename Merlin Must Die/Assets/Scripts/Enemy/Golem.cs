@@ -12,6 +12,13 @@ public class Golem : Wander_Enemy
     private Vector3[] _rockPOS;
     private Rigidbody2D[] _rockRB;
 
+    // ***** ROTATION FIELDS ***** //
+
+    /// <summary>
+    /// The orbit speed of the Golem's rocks in Degrees/Second
+    /// </summary>
+    private float _orbitSpeed = 45.0f;
+
     private Animator _animator;
 
     public enum State{ Sleeping = 0, Attacking = 1, Aiming = 2, Shooting = 3, Slaming = 4, Dead = 5 }
@@ -99,6 +106,12 @@ public class Golem : Wander_Enemy
         {
             // (this stops the flipping)
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
+
+        // TODO: Surround this with state check
+        foreach(Rigidbody2D rb in _rockRB)
+        {
+            rb.transform.RotateAround(transform.position, Vector3.up, _orbitSpeed * Time.deltaTime);
         }
         
         // Top Y bound = 0.48
