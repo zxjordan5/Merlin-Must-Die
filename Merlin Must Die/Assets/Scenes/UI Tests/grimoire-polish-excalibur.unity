@@ -83521,6 +83521,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrimoireWExcalibur
       objectReference: {fileID: 0}
+    - target: {fileID: 3911579517450656561, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6794381616087901991, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6794381616087901991, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 205
+      objectReference: {fileID: 0}
+    - target: {fileID: 6990938053451687951, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6990938053451687951, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6990938053451687951, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6990938053451687951, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
