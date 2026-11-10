@@ -60249,6 +60249,7 @@ MonoBehaviour:
   _reloadTime: 0
   _rockPrefab: {fileID: 7969273695205218493, guid: 2b2067618b522724297ee954aa35c9ea, type: 3}
   rockSplinePath: {fileID: 2103062903}
+  _orbitSpeed: 45
   _state: 0
 --- !u!50 &1259440726
 Rigidbody2D:
@@ -84228,13 +84229,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103062902}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: -0.258819, y: 0, z: 0, w: 0.9659259}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1259440729}
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
