@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Merlin Must Die/Assets/Assets/Sprites/Environment/level-1-foliage_7 1.asset.meta
+guid: 03a7cacd9ef7cff41a501a5a040db07a
+NativeFormatImporter:
+========
 guid: be9ad1a11a67cec4cae5304edd4ce440
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> main:Merlin Must Die/Assets/Shaders/WetStatusEffect.meta
   externalObjects: {}
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

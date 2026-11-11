@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Merlin Must Die/Assets/Logs/upm.log.meta
+guid: 8269355c485754a4e97b7a56dc3fcfa8
+========
 guid: 9deb41fade7aa9e4382d62519cad9277
 folderAsset: yes
+>>>>>>>> main:Merlin Must Die/Assets/Assets/Sprites/Environment/tilesets/ruins.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
