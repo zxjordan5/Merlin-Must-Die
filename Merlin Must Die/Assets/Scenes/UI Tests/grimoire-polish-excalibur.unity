@@ -83517,6 +83517,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2830736255965063500, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 24777131263586621, guid: 147a0e2f0f268e5418cc1946b1861ebb, type: 3}
+    - target: {fileID: 3415466137672999134, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5974067722159433262, guid: f874bbfbeb61a9245b11b1d37ddcf066, type: 3}
     - target: {fileID: 3889182929483472012, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
       propertyPath: m_Name
       value: GrimoireWExcalibur
@@ -83525,6 +83533,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 4628542466474164145, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2833488125433995445, guid: 2520460a7916a54428319d32d84f6fef, type: 3}
     - target: {fileID: 6794381616087901991, guid: 3d7e0ae45581b41409cc8381eb336e90, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 25

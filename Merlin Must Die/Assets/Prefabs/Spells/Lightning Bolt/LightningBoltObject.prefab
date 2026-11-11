@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightningBoltObject
   excaliburChargePerHit: 30
+  elementalType: 2
 --- !u!50 &8268148285009430340
 Rigidbody2D:
   serializedVersion: 5

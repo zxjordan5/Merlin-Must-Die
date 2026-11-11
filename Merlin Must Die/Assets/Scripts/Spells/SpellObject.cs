@@ -1,11 +1,18 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class SpellObject : MonoBehaviour
 {
     [SerializeField] protected float excaliburChargePerHit;
+    [SerializeField] protected ElementalType elementalType;
 
     protected Excalibur _excalibur;
 
+    public ElementalType ElementalType
+    {
+        get => elementalType;
+    }
+    
     public virtual void Awake()
     {
         _excalibur = FindAnyObjectByType<Excalibur>();
