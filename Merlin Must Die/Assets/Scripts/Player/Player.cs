@@ -470,8 +470,8 @@ public class Player : MonoBehaviour
     private void Death()
     {
         // Need a reference to the scriptable object that contains the scene paths
-        LevelScenePaths levelScenePaths = ScriptableObject.CreateInstance<LevelScenePaths>();
-        GlobalSceneManager.Instance.ChangeScene(levelScenePaths.GameOverScene);
+        //LevelScenePaths levelScenePaths = ScriptableObject.CreateInstance<LevelScenePaths>();
+        GlobalSceneManager.Instance.ChangeScene(LevelScenePaths.GameOverScene);
     }
 
     /// <summary>

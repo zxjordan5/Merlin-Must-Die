@@ -153,12 +153,12 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape:
-      - - {x: -3, y: -31}
+      - - {x: -2, y: -31}
         - {x: -1, y: -32}
         - {x: 2, y: -32}
-        - {x: 4, y: -31}
-        - {x: 4, y: -23}
-        - {x: -3, y: -23}
+        - {x: 3, y: -31}
+        - {x: 3, y: -23}
+        - {x: -2, y: -23}
       tessellationDetail: 0
       bones: []
       spriteID: 597d406e44e24e1e0800000000000000
@@ -181,12 +181,12 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape:
-      - - {x: -4, y: -31}
+      - - {x: -3, y: -31}
         - {x: -2, y: -32}
         - {x: 1, y: -32}
-        - {x: 3, y: -31}
-        - {x: 3, y: -23}
-        - {x: -4, y: -23}
+        - {x: 2, y: -31}
+        - {x: 2, y: -23}
+        - {x: -3, y: -23}
       tessellationDetail: 0
       bones: []
       spriteID: 4c0495baf351f4230800000000000000
@@ -381,6 +381,32 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: level-1-foliage_8
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 8, y: 8}
+        - {x: -8, y: 8}
+        - {x: -8, y: -8}
+        - {x: 8, y: -8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf3e2492a7b86e6439f33cbe1d412243
+      internalID: -1015467112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -403,6 +429,8 @@ TextureImporter:
       level-1-foliage_5: -1533275928
       level-1-foliage_6: -84493971
       level-1-foliage_7: -132162041
+      level-1-foliage_8: -1015467112
+      level-1-foliage_barrier: -1080095254
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
