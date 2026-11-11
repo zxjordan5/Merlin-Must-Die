@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GlobalSceneManager : MonoBehaviour
 {
     public static GlobalSceneManager Instance { get; private set; }
+    public string CurrentScene { get; private set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -13,6 +14,9 @@ public class GlobalSceneManager : MonoBehaviour
             Instance = this;
             return;
         }
+
+        CurrentScene = SceneManager.GetActiveScene().path;
+        Debug.Log(CurrentScene);
 
         Instance = this;
         DontDestroyOnLoad(gameObject); // Persist across scene changes
@@ -43,6 +47,7 @@ public class GlobalSceneManager : MonoBehaviour
     /// <param name="scenePath">Filepath to the scene to load</param>
     public void ChangeScene(string scenePath)
     {
+        CurrentScene = scenePath;
         SceneManager.LoadScene(scenePath);
     }
 }
