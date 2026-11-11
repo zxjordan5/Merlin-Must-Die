@@ -17,13 +17,16 @@ public class Golem : Wander_Enemy
     /// <summary>
     /// The orbit speed of the Golem's rocks around their rotation path.
     /// </summary>
-    [SerializeField] private float _orbitSpeed = 1.0f;
+    [SerializeField] private float _orbitSpeed = 0.1f;
     private float _splineLength = 0.0f;
+    private const int SplineSampleCount = 512;
+    private float[] _splineParameters;
+    private float[] _splineDistances;
 
 
     private GameObject[] _rocks;
-    private Vector3[] _rockPositions;
     private Rigidbody2D[] _rockRigidBodies;
+    private SplineObject[] _rockSplineObjects;
     private Animator _animator;
 
     public enum State{ Sleeping = 0, Attacking = 1, Aiming = 2, Shooting = 3, Slamming = 4, Dead = 5 }
@@ -67,14 +70,18 @@ public class Golem : Wander_Enemy
         // Set up variables for the golem's projectiles
         _rocks = new GameObject[5];
         _rockRigidBodies = new Rigidbody2D[5];
-        _rockPositions = new Vector3[5];
-        _rockPositions[0] = new Vector3(-0.35f, 0.29f, 0.05f);
-        _rockPositions[1] = new Vector3(0.35f, 0.29f, 0.05f);
-        _rockPositions[2] = new Vector3(0, -0.53f, -0.05f);
-        _rockPositions[3] = new Vector3(-0.61f, -0.2f, -0.05f);
-        _rockPositions[4] = new Vector3(0.61f, -0.2f, -0.05f);
+        _rockSplineObjects = new SplineObject[5];
+        CacheSplineArcLength();
+    }
 
-        _splineLength = rockSplinePath.Spline.GetLength();
+    protected void Start()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null && spriteRenderer.sprite != null)
+        {
+            // Forces the material to explicitly bind the texture to the URP stencil block
+            spriteRenderer.material.SetTexture("_MainTex", spriteRenderer.sprite.texture);
+        }
     }
 
     protected void Update()
@@ -117,111 +124,76 @@ public class Golem : Wander_Enemy
         {
             UpdateRockPositions();
         }
-
-        // TODO: Surround this with state check
-        //foreach(Rigidbody2D rb in _rockRB)
-        //{
-        //    rb.transform.RotateAround(transform.position, Vector3.up, _orbitSpeed * Time.deltaTime);
-        //}
-        
-        // Top Y bound = 0.48
-        // Bottom Y bound = -0.54
-        // Right X bound = 0.9
-        // Left X bound = -0.9
-        // Rotate the rocks
-        /*
-        if (CurrentState != State.Sleeping)
-        {
-            for (int i = 0; i < _rocks.Length; i++)
-            {
-                if (_rocks[i].transform.localPosition.x >= 0 && _rocks[i].transform.localPosition.y < 0.053)
-                {
-                    Debug.Log("movin");
-                    _rockRB[i].MovePosition(new Vector2(0.015f + _rockRB[i].transform.position.x, 0.0093f + _rockRB[i].transform.position.y));
-                }
-                else if (_rocks[i].transform.localPosition.x >= 0 && _rocks[i].transform.localPosition.y > 0.053)
-                {
-                    _rockRB[i].MovePosition(new Vector2(-0.015f + _rockRB[i].transform.position.x, 0.0075f + _rockRB[i].transform.position.y));
-                }
-                else if (_rocks[i].transform.localPosition.x <= 0 && _rocks[i].transform.localPosition.y > 0.053)
-                {
-                    _rockRB[i].MovePosition(new Vector2(-0.015f + _rockRB[i].transform.position.x, -0.0075f + _rockRB[i].transform.position.y));
-                }
-                else if (_rocks[i].transform.localPosition.x <= 0 && _rocks[i].transform.localPosition.y < 0.053)
-                {
-                    _rockRB[i].MovePosition(new Vector2(0.015f + _rockRB[i].transform.position.x, -0.0093f + _rockRB[i].transform.position.y));
-                }
-            }
-        }
-        */
     }
 
-    private void InitializeRockPositions()
+    private void CacheSplineArcLength()
     {
-        if (rockSplinePath == null) return;
-        for (int i = 0; i < _rockRigidBodies.Length; i++)
+        if (rockSplinePath == null)
         {
-            Rigidbody2D rb = _rockRigidBodies[i];
-            if (rb == null) continue;
-            SplineObject splineObj = rb.GetComponentInParent<SplineObject>();
-            if (splineObj == null)
-            {
-                Debug.LogError("SplineObject component not found on parent of Rigidbody2D");
-                continue;
-            }
-            // Set initial distance along the spline based on the rock's index
-            splineObj.DistanceAlongSpline = (i / (float)_rockRigidBodies.Length) * _splineLength;
-
-            // Convert linear distance (0 to splineLength) to a 0-1 parameter t
-            float t = splineObj.DistanceAlongSpline / _splineLength;
-
-            // Evaluate position and tangent (forward direction) on the 2D spline (XY plane)
-            rockSplinePath.Evaluate(t, out float3 localPosition, out float3 localTangent, out float3 localUp);
-
-            // Convert evaluated values to local space
-            Vector2 targetPosition2D = new Vector2(localPosition.x, localPosition.y);
-
-            // Move the kinematic Rigidbody2D safely for physics
-            rb.MovePosition(targetPosition2D);
-            //_rockPositions[i] = targetPosition2D;
+            Debug.LogError("Rock spline path is not assigned.", this);
+            return;
         }
+
+        _splineParameters = new float[SplineSampleCount + 1];
+        _splineDistances = new float[SplineSampleCount + 1];
+
+        rockSplinePath.Evaluate(0f, out float3 previousPosition, out _, out _);
+        for (int i = 1; i <= SplineSampleCount; i++)
+        {
+            float t = i / (float)SplineSampleCount;
+            rockSplinePath.Evaluate(t, out float3 position, out _, out _);
+            Vector3 previous = new Vector3(previousPosition.x, previousPosition.y, previousPosition.z);
+            Vector3 current = new Vector3(position.x, position.y, position.z);
+            _splineDistances[i] = _splineDistances[i - 1] + Vector3.Distance(previous, current);
+            _splineParameters[i] = t;
+            previousPosition = position;
+        }
+
+        _splineLength = _splineDistances[SplineSampleCount];
     }
 
     private void UpdateRockPositions()
     {
-        if (rockSplinePath == null) return;
+        if (!rockSplinePath || _splineLength <= 0f) return;
 
-        foreach (Rigidbody2D rb in _rockRigidBodies)
+        for (int i = 0; i < _rockRigidBodies.Length; i++)
         {
-            SplineObject splineObj = rb.GetComponentInParent<SplineObject>();
-            if (splineObj == null)
-            {
-                Debug.LogError("SplineObject component not found on parent of Rigidbody2D");
-                continue;
-            }
+            Rigidbody2D rb = _rockRigidBodies[i];
+            SplineObject splineObj = _rockSplineObjects[i];
+            if (rb == null || splineObj == null) continue;
 
-            // Advance the distance along the spline
             splineObj.DistanceAlongSpline += _orbitSpeed * Time.fixedDeltaTime;
             splineObj.DistanceAlongSpline = Mathf.Repeat(splineObj.DistanceAlongSpline, _splineLength);
 
-            // Convert linear distance (0 to splineLength) to a 0-1 parameter t
-            float t = splineObj.DistanceAlongSpline / _splineLength;
-
-            // Evaluate position and tangent (forward direction) on the 2D spline (XY plane)
-            // Using float 3s here because splines need them I guess? They're basically the same as Vector
-            rockSplinePath.Evaluate(t, out float3 localPosition, out float3 localTangent, out float3 localUp);
-
-            // Convert evaluated values to local space
-            Vector2 targetPosition2D = new Vector2(localPosition.x, localPosition.y);
-            Vector3 targetPosition3D = new Vector3(localPosition.x, localPosition.y, localPosition.z);
-
-            //Vector3 worldTangent = rockSplinePath.transform.TransformDirection(localTangent);
-            //float angle = Mathf.Atan2(worldTangent.y, worldTangent.x) * Mathf.Rad2Deg;
-
-            // Move and rotate the kinematic Rigidbody2D safely for physics
-            rb.MovePosition(targetPosition3D);
-            //rb.MoveRotation(angle);
+            rb.MovePosition(EvaluateSplinePosition(splineObj.DistanceAlongSpline));
         }
+    }
+
+    private Vector2 EvaluateSplinePosition(float distance)
+    {
+        float targetDistance = Mathf.Repeat(distance, _splineLength);
+        int low = 0;
+        int high = _splineDistances.Length - 1;
+        while (low < high)
+        {
+            int middle = (low + high) / 2;
+            if (_splineDistances[middle] < targetDistance)
+                low = middle + 1;
+            else
+                high = middle;
+        }
+
+        int upperIndex = Mathf.Clamp(low, 1, _splineDistances.Length - 1);
+        float lowerDistance = _splineDistances[upperIndex - 1];
+        float upperDistance = _splineDistances[upperIndex];
+        float segmentLength = upperDistance - lowerDistance;
+        float fraction = segmentLength > 0f
+            ? (targetDistance - lowerDistance) / segmentLength
+            : 0f;
+        float t = Mathf.Lerp(_splineParameters[upperIndex - 1], _splineParameters[upperIndex], fraction);
+
+        rockSplinePath.Evaluate(t, out float3 position, out _, out _);
+        return new Vector3(position.x, position.y, position.z);
     }
 
     protected override void Attack()
@@ -247,17 +219,33 @@ public class Golem : Wander_Enemy
         // If the player's position overlaps with a point on the detection circle's collider or the enemy gets hit, attack
         if (_detectionCircle.GetComponent<CircleCollider2D>().OverlapPoint(_player.transform.position) || _initialHealth != _health)  
         {
+            if (rockSplinePath == null || _splineLength <= 0f || _rockPrefab == null)
+                return false;
+
             // Once the player is detected, create the rocks
             for (int i = 0; i < _rocks.Length; i++)
             {
-                if (_rocks[i] == null) // Should only be called once, but just in case
+                if (!_rocks[i]) // Should only be called once, but just in case
                 {
-                    Debug.Log("Instantiated");
-                    _rocks[i] = Instantiate(_rockPrefab, transform, false);
-                    _rockRigidBodies[i] = _rocks[i].GetComponent<Rigidbody2D>();     
+                    float distance = (i / (float)_rocks.Length) * _splineLength;
+                    Vector2 position = EvaluateSplinePosition(distance);
+                    GameObject rock = Instantiate(_rockPrefab, position, Quaternion.identity);
+                    Rigidbody2D rb = rock.GetComponent<Rigidbody2D>();
+                    SplineObject splineObject = rock.GetComponent<SplineObject>();
+                    if (!rb || !splineObject)
+                    {
+                        // If either the rigidbody or spline object is null
+                        Debug.LogError("Each rock prefab must have a Rigidbody2D and SplineObject component.", rock);
+                        continue;
+                    }
+
+                    _rocks[i] = rock;
+                    _rockRigidBodies[i] = rb;
+                    _rockSplineObjects[i] = splineObject;
+                    splineObject.DistanceAlongSpline = distance;
+                    rb.position = position;
                 }
             }
-            InitializeRockPositions();
             return true;
         }
         return false;
@@ -356,4 +344,3 @@ public class Golem : Wander_Enemy
 //        rb.MoveRotation(angle);
 //    }
 //}
-

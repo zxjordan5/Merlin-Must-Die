@@ -8,9 +8,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1085648007987290237, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085648007987290237, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 5005238322247012327, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6279819081068796268, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_Enabled
@@ -22,23 +30,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7782549254964497721, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5249008
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7782549254964497721, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5249008
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7782549254964497721, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.41992065
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7782549254964497721, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.4876244
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7782549254964497721, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.131263
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7782549254964497721, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -80,7 +88,8 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6279819081068796268, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -105,3 +114,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6406055e3b4ebf24db598db8db5d63ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  distanceAlongSpline: 0
