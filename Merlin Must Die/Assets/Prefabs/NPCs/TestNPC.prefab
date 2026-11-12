@@ -106,9 +106,9 @@ GameObject:
   - component: {fileID: 5369046250991024405}
   - component: {fileID: 7657844789712751630}
   - component: {fileID: 3140056995855483781}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: TestNPC
-  m_TagString: EnvironmentObject
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
