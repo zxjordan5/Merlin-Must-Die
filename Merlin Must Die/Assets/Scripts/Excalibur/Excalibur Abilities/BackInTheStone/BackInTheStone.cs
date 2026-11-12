@@ -29,6 +29,7 @@ public class BackInTheStone : ExcaliburAbility
     private float _damageFieldTimer = 0.0f;
 
     private Animator _initialAoeAnimator;
+    private Animator _damageFieldAnimator;
 
     private void Start()
     {
@@ -51,6 +52,7 @@ public class BackInTheStone : ExcaliburAbility
             {
                 // Animation is done playing, time to spawn damage over time field
                 _damageFieldInstance = Instantiate(_damageFieldObjRef, _initialAoeInstance.transform.position, Quaternion.identity);
+                _damageFieldAnimator =  _damageFieldInstance.GetComponent<Animator>();
                 Destroy(_initialAoeInstance.gameObject);
                 _initialAoeInstance = null;
             }
@@ -58,6 +60,14 @@ public class BackInTheStone : ExcaliburAbility
 
         if (_damageFieldInstance != null)
         {
+            // Ensure animation is playing
+            AnimatorStateInfo stateInfo = _damageFieldAnimator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName("BackInTheStoneIdle"))
+            {
+                // Lightning bolt animation is not playing, play it
+                _initialAoeAnimator.Play("BackInTheStoneIdle");
+            }
+            
             _damageFieldTimer += Time.deltaTime;
             if (_damageFieldTimer >= damageFieldDuration)
             {
