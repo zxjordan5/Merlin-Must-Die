@@ -5791,7 +5791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractAfterDialogue
   _interactionObj: {fileID: 1988655378}
-  _activateAtDialogueCount: -1
+  _activateAtDialogueCount: 8
 --- !u!1001 &546707459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71410,7 +71410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2355151895835167610, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2424619544789041361, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x

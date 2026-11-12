@@ -9,6 +9,9 @@ public class DialogueAsset : ScriptableObject
     [TextArea]
     public string[] dialogue;
 
+    [TextArea]
+    public string[] tags = new string[10];
+
     public int DialogueCount
     {
         get { return dialogue.Length; }
