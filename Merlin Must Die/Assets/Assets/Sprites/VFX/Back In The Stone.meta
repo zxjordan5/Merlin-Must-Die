@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Merlin Must Die/Assets/Assets/Sprites/VFX/Back In The Stone.meta
 guid: 3bf948bd9a873d54d818757799c004a8
+========
+guid: 405736aff721c1c4498b71dd46693686
+>>>>>>>> main:Merlin Must Die/Assets/Resources/Sprites/UI.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
