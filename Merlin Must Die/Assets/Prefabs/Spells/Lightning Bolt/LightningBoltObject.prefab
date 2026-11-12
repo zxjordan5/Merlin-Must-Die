@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee8efae3ee725e72beddde5d1060bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightningBoltObject
-  excaliburChargePerHit: 30
+  excaliburChargePerHit: 40
   elementalType: 2
 --- !u!50 &8268148285009430340
 Rigidbody2D:
