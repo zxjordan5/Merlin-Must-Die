@@ -7,6 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public abstract class Interactable : MonoBehaviour
 {
+    [SerializeField] protected GameObject _interactionObj;
     protected List<Interaction> activeInteractions = new List<Interaction>();
 
     protected Collider2D interactionArea;
@@ -16,12 +17,13 @@ public abstract class Interactable : MonoBehaviour
         interactionArea = transform.Find("InteractionCollider").GetComponent<Collider2D>();
 
         //Get the reference to all attached interactions
-        foreach (Interaction interaction in GetComponents<Interaction>()) {
+        foreach (Interaction interaction in _interactionObj.GetComponents<Interaction>()) 
+        {
             activeInteractions.Add(interaction);
         }
     }
 
-    public abstract void OnInteract();
+    public virtual void OnInteract() { }
 
     /// <summary>
     /// Runs the interaction behavior for each attached interactable

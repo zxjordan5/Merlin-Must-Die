@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: FIshermanDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueAsset
   dialogue:
-  - this is the fisherman
-  - they have multiple lines of dialogue
+  - Glad you're moving again
+  - You were in a pretty rough shape when I found you
+  - Am I correct in assuming this sword and book are yours?
+  - 'They seem  '

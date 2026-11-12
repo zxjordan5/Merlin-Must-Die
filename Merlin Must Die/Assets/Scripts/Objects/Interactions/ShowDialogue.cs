@@ -16,6 +16,7 @@ public class ShowDialogue : Interaction
     private Player _player;
 
     private int _dialogueCounter = 0;
+    public int DialogueSeen { get { return _dialogueCounter; } }
     private bool _allDialogueSeen = false;
     public bool AllDialogueSeen { get { return _allDialogueSeen; } }
     private static float _dialogueDisplayTime = 8f;

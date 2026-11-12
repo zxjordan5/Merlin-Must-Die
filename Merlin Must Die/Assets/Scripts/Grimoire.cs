@@ -547,7 +547,7 @@ public class Grimoire : MonoBehaviour
     #region Input Methods
     public void OnPrepareSpellUp(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _player.HasGear)
         {
             ProcessInput(Direction.Up);
         }
@@ -555,7 +555,7 @@ public class Grimoire : MonoBehaviour
 
     public void OnPrepareSpellDown(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _player.HasGear)
         {
             ProcessInput(Direction.Down);
         }
@@ -563,7 +563,7 @@ public class Grimoire : MonoBehaviour
 
     public void OnPrepareSpellLeft(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _player.HasGear)
         {
             ProcessInput(Direction.Left);
         }
@@ -571,7 +571,7 @@ public class Grimoire : MonoBehaviour
 
     public void OnPrepareSpellRight(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _player.HasGear)
         {
             ProcessInput(Direction.Right);
         }

@@ -86,11 +86,11 @@ public class Player : MonoBehaviour
         get { return _targetVelocity != Vector2.zero; }
     }
 
-    public bool HasGear
-    {
-        get; set;
-    } = false;
+    [SerializeField] private bool _hasGear = true;
+    public bool HasGear { get { return _hasGear; } set { _hasGear = value; } }
 
+    [SerializeField] private bool _canMove = true;
+    public bool CanMove { get { return _canMove; } set { _canMove = value; } }
 
     /// <summary>
     /// Returns the direction the player is aiming as an enumerator
@@ -245,30 +245,43 @@ public class Player : MonoBehaviour
         // Reset the target velocity so the player slows down
         _targetVelocity = new Vector2(0,0);
 
-        // Dashing movement
-        // Move the player towards the dash target, which is the crosshair
-        // Add the players current position to the crosshair so the target continually gets further.
-        //if (_dashing)
-        //{
-        //    _rb.transform.position = Vector2.MoveTowards(
-        //        _rb.transform.position,
-        //        (Vector2)_rb.transform.position + _dashTarget,
-        //        maxSpeed * _speedMult * Time.deltaTime);
-        //}
-       
         // GP movement
+        if (_canMove)
+        {
+            CalculateMovement();      
+        }
+
+        // GP aiming
+        CalculateAim();
+
+        // Slows player movement when not actively moving
+        if (!_kbMoving && !_gpMoving && !_dashing)
+        {
+            _rb.linearVelocity *= new Vector2(0.8f,0.8f);
+        }
+
+        // Keeps the camera centered on the player
+        _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
+    }
+
+    /// <summary>
+    /// Called every frame in fixed update, moves rigidbody.
+    /// </summary>
+    private void CalculateMovement()
+    {
         if (_gpMoving)
-        {   
+        {
             _targetDirection = Gamepad.current.leftStick.value;
             _targetVelocity = _targetDirection * maxSpeed;
-            _rb.AddForce((_targetVelocity - _rb.linearVelocity)*2);
+            _rb.AddForce((_targetVelocity - _rb.linearVelocity) * 2);
 
-            if (!_gpAiming) {
+            if (!_gpAiming)
+            {
                 _gpPos = new Vector3(Gamepad.current.leftStick.value.x, Gamepad.current.leftStick.value.y, 0).normalized * 2;
-            _crosshair.transform.position = _rb.transform.position + _gpPos;
-            _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
+                _crosshair.transform.position = _rb.transform.position + _gpPos;
+                _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
             }
-        } 
+        }
         // Kb/M movement
         else if (_kbMoving)
         {
@@ -276,8 +289,13 @@ public class Player : MonoBehaviour
             _targetVelocity = _targetDirection * maxSpeed;
             _rb.AddForce((_targetVelocity - _rb.linearVelocity) * 2);
         }
+    }
 
-        // GP aiming
+    /// <summary>
+    /// Called every frame in fixed update
+    /// </summary>
+    private void CalculateAim()
+    {
         if (_gpAiming)
         {
             _gpPos = new Vector3(Gamepad.current.rightStick.value.x, Gamepad.current.rightStick.value.y, 0).normalized * 2;
@@ -291,15 +309,6 @@ public class Player : MonoBehaviour
             _crosshair.transform.position = _rb.transform.position + _mousePos;
             _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
         }
-
-        // Slows player movement when not actively moving
-        if (!_kbMoving && !_gpMoving && !_dashing)
-        {
-            _rb.linearVelocity *= new Vector2(0.8f,0.8f);
-        }
-
-        // Keeps the camera centered on the player
-        _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
     }
 
     public void SpellCast()
