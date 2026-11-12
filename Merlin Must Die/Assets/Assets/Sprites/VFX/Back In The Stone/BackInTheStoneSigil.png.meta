@@ -1,0 +1,1338 @@
+fileFormatVersion: 2
+guid: 64b341e1b5aac5847b2563dfda8385df
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7845758670528843117
+    second: BackInTheStoneSigil_0
+  - first:
+      213: 6898653578071900007
+    second: BackInTheStoneSigil_1
+  - first:
+      213: -5089508933699975927
+    second: BackInTheStoneSigil_2
+  - first:
+      213: 5218348368855035532
+    second: BackInTheStoneSigil_3
+  - first:
+      213: -1476814645804371942
+    second: BackInTheStoneSigil_4
+  - first:
+      213: 4489862261653737825
+    second: BackInTheStoneSigil_5
+  - first:
+      213: -4506431605144834109
+    second: BackInTheStoneSigil_6
+  - first:
+      213: 5753104685298930149
+    second: BackInTheStoneSigil_7
+  - first:
+      213: -422106235337676033
+    second: BackInTheStoneSigil_8
+  - first:
+      213: 7380812382102374752
+    second: BackInTheStoneSigil_9
+  - first:
+      213: 5886093413403797402
+    second: BackInTheStoneSigil_10
+  - first:
+      213: -7572237835280906440
+    second: BackInTheStoneSigil_11
+  - first:
+      213: 6603782335809157451
+    second: BackInTheStoneSigil_12
+  - first:
+      213: -5273443700373824309
+    second: BackInTheStoneSigil_13
+  - first:
+      213: 4511677371844791430
+    second: BackInTheStoneSigil_14
+  - first:
+      213: -8293162555888867199
+    second: BackInTheStoneSigil_15
+  - first:
+      213: 3243042181914252236
+    second: BackInTheStoneSigil_16
+  - first:
+      213: 5579938197470388495
+    second: BackInTheStoneSigil_17
+  - first:
+      213: -2490724638168769731
+    second: BackInTheStoneSigil_18
+  - first:
+      213: -7858691680524181610
+    second: BackInTheStoneSigil_19
+  - first:
+      213: 3475510762890179208
+    second: BackInTheStoneSigil_20
+  - first:
+      213: -3451756714389123597
+    second: BackInTheStoneSigil_21
+  - first:
+      213: -1024847470760323296
+    second: BackInTheStoneSigil_22
+  - first:
+      213: -6624285207129230110
+    second: BackInTheStoneSigil_23
+  - first:
+      213: -6835867714689873785
+    second: BackInTheStoneSigil_24
+  - first:
+      213: 5860659565232166196
+    second: BackInTheStoneSigil_25
+  - first:
+      213: -486602543080455305
+    second: BackInTheStoneSigil_26
+  - first:
+      213: 3569693395248043067
+    second: BackInTheStoneSigil_27
+  - first:
+      213: 7156159696119695623
+    second: BackInTheStoneSigil_28
+  - first:
+      213: -2890105844941123403
+    second: BackInTheStoneSigil_29
+  - first:
+      213: -1928946565327584245
+    second: BackInTheStoneSigil_30
+  - first:
+      213: 6113901012575422175
+    second: BackInTheStoneSigil_31
+  - first:
+      213: 3842433212619417684
+    second: BackInTheStoneSigil_32
+  - first:
+      213: 2181610003540253564
+    second: BackInTheStoneSigil_33
+  - first:
+      213: -239223752883247756
+    second: BackInTheStoneSigil_34
+  - first:
+      213: 8802870817816035997
+    second: BackInTheStoneSigil_35
+  - first:
+      213: -6716874928304434807
+    second: BackInTheStoneSigil_36
+  - first:
+      213: 2349630452213391259
+    second: BackInTheStoneSigil_37
+  - first:
+      213: -7277437909962879621
+    second: BackInTheStoneSigil_38
+  - first:
+      213: -5142446057428721705
+    second: BackInTheStoneSigil_39
+  - first:
+      213: 3119290284757338819
+    second: BackInTheStoneSigil_40
+  - first:
+      213: -5649917079688745265
+    second: BackInTheStoneSigil_41
+  - first:
+      213: 4421047708374591626
+    second: BackInTheStoneSigil_42
+  - first:
+      213: 6889451216444513373
+    second: BackInTheStoneSigil_43
+  - first:
+      213: 7600075649601830925
+    second: BackInTheStoneSigil_44
+  - first:
+      213: -3508668034416863766
+    second: BackInTheStoneSigil_45
+  - first:
+      213: 12711847189160177
+    second: BackInTheStoneSigil_46
+  - first:
+      213: -8086691238889850519
+    second: BackInTheStoneSigil_47
+  - first:
+      213: 5245864005960500119
+    second: BackInTheStoneSigil_48
+  - first:
+      213: -5671289730005213768
+    second: BackInTheStoneSigil_49
+  - first:
+      213: 8198032282711876859
+    second: BackInTheStoneSigil_50
+  - first:
+      213: 8349083858512018329
+    second: BackInTheStoneSigil_51
+  - first:
+      213: -1707137684739824660
+    second: BackInTheStoneSigil_52
+  - first:
+      213: 405026894548744937
+    second: BackInTheStoneSigil_53
+  - first:
+      213: 6272831892708233505
+    second: BackInTheStoneSigil_54
+  - first:
+      213: -2121946360525069225
+    second: BackInTheStoneSigil_55
+  - first:
+      213: 4483201378497354612
+    second: BackInTheStoneSigil_56
+  - first:
+      213: 8438696057489785146
+    second: BackInTheStoneSigil_57
+  - first:
+      213: 6665170567771229122
+    second: BackInTheStoneSigil_58
+  - first:
+      213: -2567113337956275882
+    second: BackInTheStoneSigil_59
+  - first:
+      213: 2274317121424863293
+    second: BackInTheStoneSigil_60
+  - first:
+      213: 7867451853818623970
+    second: BackInTheStoneSigil_61
+  - first:
+      213: 2080508369273733617
+    second: BackInTheStoneSigil_62
+  - first:
+      213: 4124394439685977797
+    second: BackInTheStoneSigil_63
+  - first:
+      213: 2484879058612216110
+    second: BackInTheStoneSigil_64
+  - first:
+      213: 3985979982541763516
+    second: BackInTheStoneSigil_65
+  - first:
+      213: 1897567549011150354
+    second: BackInTheStoneSigil_66
+  - first:
+      213: 1768106255700149326
+    second: BackInTheStoneSigil_67
+  - first:
+      213: 3163792253183461641
+    second: BackInTheStoneSigil_68
+  - first:
+      213: -2573816632302424622
+    second: BackInTheStoneSigil_69
+  - first:
+      213: 1703528183067856862
+    second: BackInTheStoneSigil_70
+  - first:
+      213: 7808620358161098950
+    second: BackInTheStoneSigil_71
+  - first:
+      213: 549129625169575983
+    second: BackInTheStoneSigil_72
+  - first:
+      213: 8595677812333769452
+    second: BackInTheStoneSigil_73
+  - first:
+      213: 740165919705624537
+    second: BackInTheStoneSigil_74
+  - first:
+      213: 6051207363883509533
+    second: BackInTheStoneSigil_75
+  - first:
+      213: 1886767117476736955
+    second: BackInTheStoneSigil_76
+  - first:
+      213: -2074843059586033389
+    second: BackInTheStoneSigil_77
+  - first:
+      213: 6564231310247920844
+    second: BackInTheStoneSigil_78
+  - first:
+      213: -7336563139473244822
+    second: BackInTheStoneSigil_79
+  - first:
+      213: -4547074302928167327
+    second: BackInTheStoneSigil_80
+  - first:
+      213: 5406148355207579518
+    second: BackInTheStoneSigil_81
+  - first:
+      213: -8593616830896814342
+    second: BackInTheStoneSigil_82
+  - first:
+      213: -6793536057987947685
+    second: BackInTheStoneSigil_83
+  - first:
+      213: -3771801543291196650
+    second: BackInTheStoneSigil_84
+  - first:
+      213: 3933761369294254261
+    second: BackInTheStoneSigil_85
+  - first:
+      213: 2176361611849972918
+    second: BackInTheStoneSigil_86
+  - first:
+      213: -5310934905586564055
+    second: BackInTheStoneSigil_87
+  - first:
+      213: 5369240280894804175
+    second: BackInTheStoneSigil_88
+  - first:
+      213: -531155429536792536
+    second: BackInTheStoneSigil_89
+  - first:
+      213: -2788339157220904147
+    second: BackInTheStoneSigil_90
+  - first:
+      213: -942644420841133037
+    second: BackInTheStoneSigil_91
+  - first:
+      213: -338989388266073278
+    second: BackInTheStoneSigil_92
+  - first:
+      213: -5376826517022275609
+    second: BackInTheStoneSigil_93
+  - first:
+      213: 720902757276038924
+    second: BackInTheStoneSigil_94
+  - first:
+      213: 6806255402677310873
+    second: BackInTheStoneSigil_95
+  - first:
+      213: -3759642340374742541
+    second: BackInTheStoneSigil_96
+  - first:
+      213: 3297834384958573861
+    second: BackInTheStoneSigil_97
+  - first:
+      213: -2425569686588035094
+    second: BackInTheStoneSigil_98
+  - first:
+      213: -1015292489676795435
+    second: BackInTheStoneSigil_99
+  - first:
+      213: 1367814013922491111
+    second: BackInTheStoneSigil_100
+  - first:
+      213: -2684802226843517487
+    second: BackInTheStoneSigil_101
+  - first:
+      213: -1691415972260904468
+    second: BackInTheStoneSigil_102
+  - first:
+      213: 4781081187935657782
+    second: BackInTheStoneSigil_103
+  - first:
+      213: 3777947192997806560
+    second: BackInTheStoneSigil_104
+  - first:
+      213: -7965548017441522465
+    second: BackInTheStoneSigil_105
+  - first:
+      213: 5507639569226224904
+    second: BackInTheStoneSigil_106
+  - first:
+      213: 5022710494048718669
+    second: BackInTheStoneSigil_107
+  - first:
+      213: -7015087911172387908
+    second: BackInTheStoneSigil_108
+  - first:
+      213: -6210901726256036991
+    second: BackInTheStoneSigil_109
+  - first:
+      213: 7130248107345683058
+    second: BackInTheStoneSigil_110
+  - first:
+      213: 7351913292467691572
+    second: BackInTheStoneSigil_111
+  - first:
+      213: -6447537554424762563
+    second: BackInTheStoneSigil_112
+  - first:
+      213: -5603396244832412817
+    second: BackInTheStoneSigil_113
+  - first:
+      213: -2532909002692377682
+    second: BackInTheStoneSigil_114
+  - first:
+      213: 2226300334863561786
+    second: BackInTheStoneSigil_115
+  - first:
+      213: 1250962098455832148
+    second: BackInTheStoneSigil_116
+  - first:
+      213: -4752838934314156779
+    second: BackInTheStoneSigil_117
+  - first:
+      213: 2879290909932002292
+    second: BackInTheStoneSigil_118
+  - first:
+      213: 449034281643299121
+    second: BackInTheStoneSigil_119
+  - first:
+      213: -3821447365575560546
+    second: BackInTheStoneSigil_120
+  - first:
+      213: 8664535135140611426
+    second: BackInTheStoneSigil_121
+  - first:
+      213: 4618594589352816201
+    second: BackInTheStoneSigil_122
+  - first:
+      213: 8906344880941985685
+    second: BackInTheStoneSigil_123
+  - first:
+      213: -936652849443777320
+    second: BackInTheStoneSigil_124
+  - first:
+      213: -8287241624334564154
+    second: BackInTheStoneSigil_125
+  - first:
+      213: 75495023525644288
+    second: BackInTheStoneSigil_126
+  - first:
+      213: 8748663431921329617
+    second: BackInTheStoneSigil_127
+  - first:
+      213: -8297770509157381202
+    second: BackInTheStoneSigil_128
+  - first:
+      213: 6795393356190713712
+    second: BackInTheStoneSigil_129
+  - first:
+      213: -8609748030877354662
+    second: BackInTheStoneSigil_130
+  - first:
+      213: 3014417632919735676
+    second: BackInTheStoneSigil_131
+  - first:
+      213: 3063758373457434360
+    second: BackInTheStoneSigil_132
+  - first:
+      213: 8296760787371104764
+    second: BackInTheStoneSigil_133
+  - first:
+      213: -8762814362016964331
+    second: BackInTheStoneSigil_134
+  - first:
+      213: 4672307938528625567
+    second: BackInTheStoneSigil_135
+  - first:
+      213: 383473783641085565
+    second: BackInTheStoneSigil_136
+  - first:
+      213: 4027470880923588454
+    second: BackInTheStoneSigil_137
+  - first:
+      213: -108833572719192431
+    second: BackInTheStoneSigil_138
+  - first:
+      213: 5649093970076109942
+    second: BackInTheStoneSigil_139
+  - first:
+      213: 4318482884790409756
+    second: BackInTheStoneSigil_140
+  - first:
+      213: -5204235008700292932
+    second: BackInTheStoneSigil_141
+  - first:
+      213: 8130486849006720063
+    second: BackInTheStoneSigil_142
+  - first:
+      213: 744517537845049334
+    second: BackInTheStoneSigil_143
+  - first:
+      213: -1867905439391331574
+    second: BackInTheStoneSigil_144
+  - first:
+      213: 6871872906148315490
+    second: BackInTheStoneSigil_145
+  - first:
+      213: 4097362530181842070
+    second: BackInTheStoneSigil_146
+  - first:
+      213: -808766383795407608
+    second: BackInTheStoneSigil_147
+  - first:
+      213: -2864661272872584294
+    second: BackInTheStoneSigil_148
+  - first:
+      213: -7720304542215949921
+    second: BackInTheStoneSigil_149
+  - first:
+      213: -1779846735648741536
+    second: BackInTheStoneSigil_150
+  - first:
+      213: -5416485432575078621
+    second: BackInTheStoneSigil_151
+  - first:
+      213: 590735247957135400
+    second: BackInTheStoneSigil_152
+  - first:
+      213: 5332369810319376113
+    second: BackInTheStoneSigil_153
+  - first:
+      213: 7013867324630696537
+    second: BackInTheStoneSigil_154
+  - first:
+      213: 1812342225510813853
+    second: BackInTheStoneSigil_155
+  - first:
+      213: -8785115778568248370
+    second: BackInTheStoneSigil_156
+  - first:
+      213: -6636922994092851071
+    second: BackInTheStoneSigil_157
+  - first:
+      213: -684205302799509318
+    second: BackInTheStoneSigil_158
+  - first:
+      213: -7598132370707152055
+    second: BackInTheStoneSigil_159
+  - first:
+      213: -9026020580409036907
+    second: BackInTheStoneSigil_160
+  - first:
+      213: -5567584121214711025
+    second: BackInTheStoneSigil_161
+  - first:
+      213: 6493302365088862276
+    second: BackInTheStoneSigil_162
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 3
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6d005631fbb1ec60800000000000000
+      internalID: 7845758670528843117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_1
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76ff37de0e0fcbf50800000000000000
+      internalID: 6898653578071900007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_2
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 905c2a5179e6e59b0800000000000000
+      internalID: -5089508933699975927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_3
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8ee7d7813c4b6840800000000000000
+      internalID: 5218348368855035532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_4
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a107cb577ec418be0800000000000000
+      internalID: -1476814645804371942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_5
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1619d4c40f13f4e30800000000000000
+      internalID: 4489862261653737825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_6
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cfafbac450f571c0800000000000000
+      internalID: -4506431605144834109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_7
+      rect:
+        serializedVersion: 2
+        x: 3584
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e1d0e2ea3227df40800000000000000
+      internalID: 5753104685298930149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_8
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffa68398d90642af0800000000000000
+      internalID: -422106235337676033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_9
+      rect:
+        serializedVersion: 2
+        x: 4608
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 069440d91c9ed6660800000000000000
+      internalID: 7380812382102374752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_10
+      rect:
+        serializedVersion: 2
+        x: 5120
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9723bc06ca9fa150800000000000000
+      internalID: 5886093413403797402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_11
+      rect:
+        serializedVersion: 2
+        x: 5632
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8370f49eec10ae690800000000000000
+      internalID: -7572237835280906440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_12
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4977ebcb0955ab50800000000000000
+      internalID: 6603782335809157451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_13
+      rect:
+        serializedVersion: 2
+        x: 6656
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcc5238f4e6f0d6b0800000000000000
+      internalID: -5273443700373824309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_14
+      rect:
+        serializedVersion: 2
+        x: 7168
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68c0af17aa2bc9e30800000000000000
+      internalID: 4511677371844791430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_15
+      rect:
+        serializedVersion: 2
+        x: 7680
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1886caf2894c8ec80800000000000000
+      internalID: -8293162555888867199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_16
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc35b9c9ea9910d20800000000000000
+      internalID: 3243042181914252236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_17
+      rect:
+        serializedVersion: 2
+        x: 8704
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f012bd01a3cef6d40800000000000000
+      internalID: 5579938197470388495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_18
+      rect:
+        serializedVersion: 2
+        x: 9216
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3b13a4532b2f6dd0800000000000000
+      internalID: -2490724638168769731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_19
+      rect:
+        serializedVersion: 2
+        x: 9728
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69fd90fbd8150f290800000000000000
+      internalID: -7858691680524181610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_20
+      rect:
+        serializedVersion: 2
+        x: 10240
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 882bd13ff9e7b3030800000000000000
+      internalID: 3475510762890179208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_21
+      rect:
+        serializedVersion: 2
+        x: 10752
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fd44c37e85e810d0800000000000000
+      internalID: -3451756714389123597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_22
+      rect:
+        serializedVersion: 2
+        x: 11264
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0279f5cb7a207c1f0800000000000000
+      internalID: -1024847470760323296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_23
+      rect:
+        serializedVersion: 2
+        x: 11776
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e4ff2a73bfc114a0800000000000000
+      internalID: -6624285207129230110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_24
+      rect:
+        serializedVersion: 2
+        x: 12288
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 788495e088e1221a0800000000000000
+      internalID: -6835867714689873785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_25
+      rect:
+        serializedVersion: 2
+        x: 12800
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 435982fc2de355150800000000000000
+      internalID: 5860659565232166196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_26
+      rect:
+        serializedVersion: 2
+        x: 13312
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77343e0b09d3f39f0800000000000000
+      internalID: -486602543080455305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_27
+      rect:
+        serializedVersion: 2
+        x: 13824
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3451dcda391a8130800000000000000
+      internalID: 3569693395248043067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_28
+      rect:
+        serializedVersion: 2
+        x: 14336
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7098e232459cf4360800000000000000
+      internalID: 7156159696119695623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_29
+      rect:
+        serializedVersion: 2
+        x: 14848
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b01105eb0844e7d0800000000000000
+      internalID: -2890105844941123403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackInTheStoneSigil_30
+      rect:
+        serializedVersion: 2
+        x: 15360
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0480fe91510b35e0800000000000000
+      internalID: -1928946565327584245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 88a45b886b56ded41a646b50efa28da9
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures:
+    - texture: {fileID: 2800000, guid: cfb51c348533d8f4492e6a9a60cf9491, type: 3}
+      name: _Emission
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":512.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      BackInTheStoneSigil_0: 7845758670528843117
+      BackInTheStoneSigil_1: 6898653578071900007
+      BackInTheStoneSigil_10: 5886093413403797402
+      BackInTheStoneSigil_11: -7572237835280906440
+      BackInTheStoneSigil_12: 6603782335809157451
+      BackInTheStoneSigil_13: -5273443700373824309
+      BackInTheStoneSigil_14: 4511677371844791430
+      BackInTheStoneSigil_15: -8293162555888867199
+      BackInTheStoneSigil_16: 3243042181914252236
+      BackInTheStoneSigil_17: 5579938197470388495
+      BackInTheStoneSigil_18: -2490724638168769731
+      BackInTheStoneSigil_19: -7858691680524181610
+      BackInTheStoneSigil_2: -5089508933699975927
+      BackInTheStoneSigil_20: 3475510762890179208
+      BackInTheStoneSigil_21: -3451756714389123597
+      BackInTheStoneSigil_22: -1024847470760323296
+      BackInTheStoneSigil_23: -6624285207129230110
+      BackInTheStoneSigil_24: -6835867714689873785
+      BackInTheStoneSigil_25: 5860659565232166196
+      BackInTheStoneSigil_26: -486602543080455305
+      BackInTheStoneSigil_27: 3569693395248043067
+      BackInTheStoneSigil_28: 7156159696119695623
+      BackInTheStoneSigil_29: -2890105844941123403
+      BackInTheStoneSigil_3: 5218348368855035532
+      BackInTheStoneSigil_30: -1928946565327584245
+      BackInTheStoneSigil_4: -1476814645804371942
+      BackInTheStoneSigil_5: 4489862261653737825
+      BackInTheStoneSigil_6: -4506431605144834109
+      BackInTheStoneSigil_7: 5753104685298930149
+      BackInTheStoneSigil_8: -422106235337676033
+      BackInTheStoneSigil_9: 7380812382102374752
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
