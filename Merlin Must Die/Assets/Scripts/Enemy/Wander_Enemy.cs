@@ -2,6 +2,7 @@ using System;
 using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
@@ -54,6 +55,12 @@ public abstract class Wander_Enemy : MonoBehaviour
     
     #endregion
 
+
+    /// <summary>
+    /// Event that is invoked when an enemy dies.
+    /// </summary>
+    public event Action<Wander_Enemy> OnEnemyDeath;
+    
     protected virtual void Awake()
     {
         _flash = GetComponent<Flash>();
@@ -183,7 +190,12 @@ public abstract class Wander_Enemy : MonoBehaviour
         {
             //_dead = true;
             CurrentState = States.Dead;
-            Destroy(gameObject);
+
+            // Enemy death event is invoked. Do not destroy the enemy here.
+            // Instead, pass it to the LevelManager so the event dependencies can
+            // be undone, and then destroy the gameobject there
+            OnEnemyDeath?.Invoke(this);
+            gameObject.SetActive(false);
 
             // TODO: Make a shader for enemy death or make it a destructible object
             // DEPRECATED FADE OUT CODE

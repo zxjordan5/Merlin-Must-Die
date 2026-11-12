@@ -5961,7 +5961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f60dcc9d53169843a66fc1b1d702772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level_Manager
-  EnemyParent: {fileID: 898217895}
+  enemyParent: {fileID: 898217895}
 --- !u!61 &617491174
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -71410,7 +71410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2355151895835167610, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2424619544789041361, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x

@@ -1,19 +1,57 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Serialization;
 
 public class Level_Manager : MonoBehaviour
 {
-    [SerializeField] public GameObject EnemyParent;
+    [SerializeField] public GameObject enemyParent;
     //[SerializeField] public GameObject LevelEndBox;
 
-    private void Update()
+    private GameObject _grimoireUi;
+    private GameObject _proceedTextPrefab;
+    private GameObject _proceedText;
+    
+    // ***** EVENT SETUP ***** // 
+    private void OnEnable()
     {
+        // Set up enemy death event listeners
+        if (enemyParent)
+        {
+            Wander_Enemy[] enemies = enemyParent.GetComponentsInChildren<Wander_Enemy>();
+            foreach (Wander_Enemy enemy in enemies)
+            {
+                enemy.OnEnemyDeath += EnemyDeath;
+            }
+        }
         
+        _grimoireUi = GameObject.Find("GrimoireUI");
+        if (!_grimoireUi) { Debug.LogError("GrimoireUI not found!"); }
+        
+        StartCoroutine(LoadUIComponents());
+    }
+
+    /// <summary>
+    /// Event that is called when an enemy dies
+    /// </summary>
+    private void EnemyDeath(Wander_Enemy enemy)
+    {
+        // Reset event dependency (needed to prevent errors when replaying levels)
+        enemy.OnEnemyDeath -= EnemyDeath;
+        Destroy(enemy.gameObject);
+        
+        StartCoroutine(CheckRemainingChildren());
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         // Checks if all enemys are dead before moving onto the next level
-        if (EnemyParent.transform.childCount == 0)
+        if (enemyParent.transform.childCount == 0)
         {
             GlobalSceneManager.Instance.ChangeScene(LevelScenePaths.WinScene);
         }
@@ -35,6 +73,37 @@ public class Level_Manager : MonoBehaviour
                 break;
         }
         
+    }
+
+    IEnumerator CheckRemainingChildren()
+    {
+        // We need to wait for the end of the frame after the child has
+        // been deleted because unity caches childCount until the next frame
+        yield return new WaitForEndOfFrame();
+        
+        if (enemyParent.transform.childCount == 0)
+        {
+            // Enemies are all defeated
+            _proceedText = Instantiate(_proceedTextPrefab, _grimoireUi.transform, false);
+            StartCoroutine(DestroyTextAfterWait(5.0f));
+        }
+    }
+
+    IEnumerator LoadUIComponents()
+    {
+        AsyncOperationHandle<GameObject> handleProceedText = Addressables.LoadAssetAsync<GameObject>("ProceedTextPopup");
+        yield return handleProceedText;
+        if(handleProceedText.Status == AsyncOperationStatus.Succeeded)
+        {
+            _proceedTextPrefab = handleProceedText.Result.gameObject;
+        }
+    }
+    
+    IEnumerator DestroyTextAfterWait(float delayInSeconds)
+    {
+        // Pauses the coroutine for the specified number of seconds
+        yield return new WaitForSeconds(delayInSeconds);
+        Destroy(_proceedText);
     }
 }
 
