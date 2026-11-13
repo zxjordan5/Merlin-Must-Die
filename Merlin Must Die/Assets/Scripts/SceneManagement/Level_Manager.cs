@@ -53,7 +53,17 @@ public class Level_Manager : MonoBehaviour
         // Checks if all enemys are dead before moving onto the next level
         if (enemyParent.transform.childCount == 0)
         {
-            GlobalSceneManager.Instance.ChangeScene(LevelScenePaths.WinScene);
+            switch (GlobalSceneManager.Instance.CurrentScene)
+            {
+                // 2nd level is the default
+                default:
+                    GlobalSceneManager.Instance.ChangeScene(LevelScenePaths.LevelTwo);
+                    break;
+                // 2nd level should lead to the win screen
+                case LevelScenePaths.LevelTwo:
+                    GlobalSceneManager.Instance.ChangeScene(LevelScenePaths.WinScene);
+                    break;
+            }
         }
 
     }

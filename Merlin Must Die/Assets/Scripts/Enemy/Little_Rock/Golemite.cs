@@ -7,8 +7,7 @@ public class Golemite : Wander_Enemy
     [SerializeField] private float _chargeTime;
     [SerializeField] private float _rollTime;
 
-    [SerializeField] private float _attackCooldown;
-    [SerializeField] private float _attackCooldownTimer;
+    [SerializeField] private bool _hiding;
 
     private Animator _animator;
 
@@ -114,10 +113,13 @@ public class Golemite : Wander_Enemy
 
     protected override void Wander()
     {
-        _wanderTime = (float)Random.Range(25, 50) / 50; 
-        _pauseTime = (float)Random.Range(10, 25) / 50; 
+        if (!_hiding)
+        {
+            _wanderTime = (float)Random.Range(25, 50) / 50;
+            _pauseTime = (float)Random.Range(10, 25) / 50;
 
-        base.Wander();
+            base.Wander();
+        }
     }
 
     IEnumerator RollTimer()
