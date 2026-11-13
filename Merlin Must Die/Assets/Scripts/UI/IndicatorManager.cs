@@ -1,14 +1,15 @@
 using UnityEngine;
 using TMPro;
 
-
-public class InteractionIndicator : MonoBehaviour
+public class IndicatorManager : MonoBehaviour
 {
     //Player used to find interactions
     [SerializeField] private Player _player;
     //Object used to show the interactions
     [SerializeField] private GameObject _interactionIndicator;
+    [SerializeField] private GameObject _nextDialogueIndicator;
     private TMP_Text _interactionText;
+    private TMP_Text _nextDialogueText;
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class InteractionIndicator : MonoBehaviour
             _interactionIndicator = GameObject.Find("InteractionIndicator");
 
         _interactionText = _interactionIndicator.GetComponentInChildren<TMP_Text>();
+        _nextDialogueText = _nextDialogueIndicator.GetComponentInChildren<TMP_Text>();
 
     }
 
@@ -46,11 +48,13 @@ public class InteractionIndicator : MonoBehaviour
         //Update the interaction prompt to match the control scheme
         if(InputManager.CurrentDevice == InputManager.ControlScheme.Controller)
         {
-            _interactionText.text = "[LB] Interact";
+            _interactionText.text = "[LT] Interact";
+            _nextDialogueText.text = "[LT] Next";
         }
         else
         {
             _interactionText.text = "[F] Interact";
+            _nextDialogueText.text = "[F] Next";
         }
     }
 }
