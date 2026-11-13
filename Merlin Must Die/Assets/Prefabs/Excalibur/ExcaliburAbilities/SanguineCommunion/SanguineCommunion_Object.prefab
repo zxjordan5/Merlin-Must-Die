@@ -162,7 +162,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.086349845, y: -0.6467793}
+  m_Offset: {x: 0.41498423, y: -0.041273117}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -172,7 +172,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.6197555, y: 3.2177854}
+  m_Size: {x: 0.47651768, y: 3.0485039}
   m_EdgeRadius: 0
 --- !u!50 &-7752263350092683140
 Rigidbody2D:
@@ -214,20 +214,12 @@ PrefabInstance:
       value: SanguineCommunionParticles 1
       objectReference: {fileID: 0}
     - target: {fileID: 7895071686148988425, guid: 551c031be85e21e96a419d47c9802c11, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7895071686148988425, guid: 551c031be85e21e96a419d47c9802c11, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7895071686148988425, guid: 551c031be85e21e96a419d47c9802c11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.38942862
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7895071686148988425, guid: 551c031be85e21e96a419d47c9802c11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.69680375
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7895071686148988425, guid: 551c031be85e21e96a419d47c9802c11, type: 3}
       propertyPath: m_LocalPosition.z
