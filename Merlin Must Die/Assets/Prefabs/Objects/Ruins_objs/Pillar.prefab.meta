@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Merlin Must Die/Assets/Prefabs/Objects/Ruins_objs/Pillar.prefab.meta
 guid: f4830fdb2a02efd478238c6a75392761
 PrefabImporter:
+========
+guid: 1a0409bbf19268f0d933734d532b946a
+NativeFormatImporter:
+>>>>>>>> main:Merlin Must Die/Assets/Shaders/BackInTheStone/M_BackInTheStoneIdle.mat.meta
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

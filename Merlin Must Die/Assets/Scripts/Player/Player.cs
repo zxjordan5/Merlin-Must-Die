@@ -87,7 +87,10 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] private bool _hasGear = true;
-    public bool HasGear { get { return _hasGear; } set { _hasGear = value; } }
+    public bool HasGear { 
+        get { return _hasGear; }
+        set { _hasGear = value; } 
+    }
 
     [SerializeField] private bool _canMove = true;
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }

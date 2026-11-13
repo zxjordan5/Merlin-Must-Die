@@ -226,6 +226,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6506627732577412676}
     m_Modifications:
+    - target: {fileID: 1295539823794745572, guid: 89361d35116add9408efd9091e4c58fc, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1680332881099536851, guid: 89361d35116add9408efd9091e4c58fc, type: 3}
       propertyPath: CollisionModule.type
       value: 1

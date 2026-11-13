@@ -24,14 +24,12 @@ public class BackInTheStone : ExcaliburAbility
     [SerializeField] private float damageFieldDuration = 4.0f;
 
     /// <summary>
-    /// How long the initial AOE effect has been active in the scene
-    /// </summary>
-    private float _initialAoeTimer = 0.0f;
-    
-    /// <summary>
     /// How long the damage field has been active in the scene
     /// </summary>
     private float _damageFieldTimer = 0.0f;
+
+    private Animator _initialAoeAnimator;
+    private Animator _damageFieldAnimator;
 
     private void Start()
     {
@@ -44,12 +42,17 @@ public class BackInTheStone : ExcaliburAbility
         // TODO: If the GO instances aren't null, delete them after a time
         if (_initialAoeInstance != null)
         {
-            _initialAoeTimer += Time.deltaTime;
-            if (_initialAoeTimer >= initialAoeDuration)
+            AnimatorStateInfo stateInfo = _initialAoeAnimator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName("BackInTheStone_InitialAoe"))
             {
-                // Time to spawn the damage over time field
+                // Lightning bolt animation is not playing, play it
+                _initialAoeAnimator.Play("BackInTheStone_InitialAoe");
+            }
+            else if (stateInfo.normalizedTime >= 1.0f)
+            {
+                // Animation is done playing, time to spawn damage over time field
                 _damageFieldInstance = Instantiate(_damageFieldObjRef, _initialAoeInstance.transform.position, Quaternion.identity);
-                _initialAoeTimer = 0.0f;
+                _damageFieldAnimator =  _damageFieldInstance.GetComponent<Animator>();
                 Destroy(_initialAoeInstance.gameObject);
                 _initialAoeInstance = null;
             }
@@ -57,6 +60,14 @@ public class BackInTheStone : ExcaliburAbility
 
         if (_damageFieldInstance != null)
         {
+            // Ensure animation is playing
+            AnimatorStateInfo stateInfo = _damageFieldAnimator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName("BackInTheStoneIdle"))
+            {
+                // Lightning bolt animation is not playing, play it
+                _initialAoeAnimator.Play("BackInTheStoneIdle");
+            }
+            
             _damageFieldTimer += Time.deltaTime;
             if (_damageFieldTimer >= damageFieldDuration)
             {
@@ -73,8 +84,7 @@ public class BackInTheStone : ExcaliburAbility
         // Spawn initial AOE then delete, then spawn damage field in the same location as the AOE
         // (Additional spawning logic handled in Update())
         _initialAoeInstance = Instantiate(_initialAoeObjRef, _player.transform.position, Quaternion.identity);
-
-        // TODO: In the future, we will most likely want to lock Morgana's movement until the animation is done playing
+        _initialAoeAnimator = _initialAoeInstance.GetComponent<Animator>();
     }
 
     IEnumerator LoadDamageObjects()
@@ -88,11 +98,6 @@ public class BackInTheStone : ExcaliburAbility
             
             _damageFieldObjRef = handleDamageField.Result.gameObject;
         }
-        // UNCOMMENT IF DEBUGGING IS NEEDED
-        // else
-        // {
-        //     Debug.LogError("ERROR: Damage field could not be loaded!");
-        // }
         
         AsyncOperationHandle<GameObject> handleInitialAoe = Addressables.LoadAssetAsync<GameObject>("BackInTheStone_InitialAOE");
         yield return handleInitialAoe;
@@ -100,9 +105,5 @@ public class BackInTheStone : ExcaliburAbility
         {
             _initialAoeObjRef = handleInitialAoe.Result.gameObject;
         }
-        // else
-        // {
-        //     Debug.LogError("ERROR: Initial AOE could not be loaded!");
-        // }
     }
 }

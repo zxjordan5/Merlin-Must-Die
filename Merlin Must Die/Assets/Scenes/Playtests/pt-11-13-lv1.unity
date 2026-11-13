@@ -5791,7 +5791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractAfterDialogue
   _interactionObj: {fileID: 1988655378}
-  _activateAtDialogueCount: -1
+  _activateAtDialogueCount: 8
 --- !u!1001 &546707459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7364,6 +7364,38 @@ PrefabInstance:
     - target: {fileID: 962002133169240459, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
       propertyPath: m_Name
       value: WorldUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4622652208916226847, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+    - target: {fileID: 4622652208916226847, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6565306968712683340, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+    - target: {fileID: 4622652208916226847, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923337795837748279, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
+      propertyPath: m_fontSize
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923337795837748279, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+    - target: {fileID: 4923337795837748279, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923337795837748279, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6565306968712683340, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+    - target: {fileID: 4923337795837748279, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5116077317269391434, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
       propertyPath: m_Pivot.x
@@ -72283,7 +72315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2355151895835167610, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2424619544789041361, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x

@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Merlin Must Die/Assets/Prefabs/Objects/Ruins_objs.meta
 guid: 4afcf39064622014b8feba028455b805
 folderAsset: yes
 DefaultImporter:
+========
+guid: 44bc2210cf947f245b9427436cb0c1b0
+PrefabImporter:
+>>>>>>>> main:Merlin Must Die/Assets/Prefabs/Particles/SanguineCommunionParticles.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

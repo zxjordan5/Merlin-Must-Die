@@ -8,6 +8,8 @@ public class ShowDialogue : Interaction
     [SerializeField] DialogueAsset mainText;
     [SerializeField] DialogueAsset finishedText;
 
+    private Sprite _grimoireTextBG;
+
 
     private GameObject _npcTextArea;
     private Image _moreTextIndicator;
@@ -27,6 +29,8 @@ public class ShowDialogue : Interaction
         _npcTextArea = GameObject.Find("NPCTextArea");
         _moreTextIndicator = _npcTextArea.transform.Find("Indicator").GetComponent<Image>();
         _npcText = _npcTextArea.GetComponentInChildren<TMP_Text>();
+
+        _grimoireTextBG = Resources.Load<Sprite>("Sprites/UI/Grimoire-Background");
     }
 
     /// <summary>
@@ -57,12 +61,12 @@ public class ShowDialogue : Interaction
         //If all dialogue has been seen and there is repeated dialogue at the end, play that
         if (_allDialogueSeen && finishedText)
         {
-            _npcText.text = finishedText.dialogue[0];
+            LoadDialogue(finishedText, 0);
         }
         //Otherwise display text in order
         else
         {
-            _npcText.text = mainText.dialogue[_dialogueCounter];
+            LoadDialogue(mainText, _dialogueCounter);
         }
 
         _dialogueCounter++;
@@ -88,6 +92,24 @@ public class ShowDialogue : Interaction
             StartCoroutine("ClearAfterTime", .6f);
     }
 
+    public void LoadDialogue(DialogueAsset asset, int count)
+    {
+        string text = asset.dialogue[count];
+
+        Image textBG = _npcTextArea.GetComponent<Image>();
+        textBG.sprite = null;
+        textBG.color = new Color(0, 0, 0, 0.325f);
+        _npcText.color = Color.white;
+
+        if (asset.tags[count].Contains("#grimoire"))
+        {
+            textBG.sprite = _grimoireTextBG;
+            textBG.color = new Color(1f, 1f, 1f, 1f);
+            _npcText.color = Color.black;
+        }
+
+        _npcText.text = text;
+    }
     IEnumerator ClearAfterTime(float clearTime)
     {
         yield return new WaitForSeconds(clearTime);
