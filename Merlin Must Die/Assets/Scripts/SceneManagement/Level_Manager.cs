@@ -16,10 +16,12 @@ public class Level_Manager : MonoBehaviour
     private GameObject _grimoireUi;
     private GameObject _proceedTextPrefab;
     private GameObject _proceedText;
+    private int _levelNum;
     
     // ***** EVENT SETUP ***** // 
     private void OnEnable()
     {
+        _levelNum = 0;
         // Set up enemy death event listeners
         if (enemyParent)
         {
@@ -53,16 +55,19 @@ public class Level_Manager : MonoBehaviour
         // Checks if all enemys are dead before moving onto the next level
         if (enemyParent.transform.childCount == 0)
         {
-            switch (GlobalSceneManager.Instance.CurrentScene)
+            switch (_levelNum)
             {
-                // 2nd level is the default
-                default:
-                    GlobalSceneManager.Instance.ChangeScene(LevelScenePaths.LevelTwo);
-                    break;
                 // 2nd level should lead to the win screen
-                case LevelScenePaths.LevelTwo:
+                case 2:
+                    Debug.Log("loading win + " + _levelNum);
                     GlobalSceneManager.Instance.ChangeScene(LevelScenePaths.WinScene);
                     break;
+                // 2nd level is the default
+                default:
+                    Debug.Log("loading lv2 + " + _levelNum);
+                    GlobalSceneManager.Instance.ChangeScene(LevelScenePaths.LevelTwo);
+                    break;
+                // This function is apparently called twice :)
             }
         }
 
@@ -73,7 +78,9 @@ public class Level_Manager : MonoBehaviour
         switch (GlobalSceneManager.Instance.CurrentScene)
         {
             // Main menu is the default
-            default: 
+            default:
+                Debug.Log("loading lv1 " + _levelNum);
+                _levelNum = 0;
                 GlobalSceneManager.Instance.ChangeScene(LevelScenePaths.LevelOne); //_levelScenePathsInstance.LevelOne
                 break;
             // GameOver & Win screens both lead to the Main menu
@@ -95,6 +102,7 @@ public class Level_Manager : MonoBehaviour
         {
             // Enemies are all defeated
             _proceedText = Instantiate(_proceedTextPrefab, _grimoireUi.transform, false);
+            _levelNum++;
             StartCoroutine(DestroyTextAfterWait(5.0f));
         }
     }
@@ -114,6 +122,12 @@ public class Level_Manager : MonoBehaviour
         // Pauses the coroutine for the specified number of seconds
         yield return new WaitForSeconds(delayInSeconds);
         Destroy(_proceedText);
+    }
+
+    IEnumerator Wait(float delayInSeconds)
+    {
+        // Pauses the coroutine for the specified number of seconds
+        yield return new WaitForSeconds(delayInSeconds);
     }
 }
 

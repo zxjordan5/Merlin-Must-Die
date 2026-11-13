@@ -8437,7 +8437,7 @@ GameObject:
   - component: {fileID: 1094698995}
   - component: {fileID: 1094698994}
   m_Layer: 0
-  m_Name: Tiles
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72490,7 +72490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2355151895835167610, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2424619544789041361, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x
@@ -108869,7 +108869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1364531118401711441, guid: 2a6fb7400f08b93ff965403ab17e53e3, type: 3}
       propertyPath: _hasGear
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5909014972022603232, guid: 2a6fb7400f08b93ff965403ab17e53e3, type: 3}
       propertyPath: m_Size.x
@@ -109267,7 +109267,7 @@ SceneRoots:
   - {fileID: 194249490}
   - {fileID: 898217896}
   - {fileID: 2090212373}
-  - {fileID: 1094698995}
   - {fileID: 617491172}
+  - {fileID: 1094698995}
   - {fileID: 1848836510}
   - {fileID: 978753522}
