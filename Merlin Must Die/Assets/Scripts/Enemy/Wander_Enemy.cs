@@ -161,7 +161,7 @@ public abstract class Wander_Enemy : MonoBehaviour
         MovementSpeedMultiplier = Mathf.Max(0f, multiplier);
     }
 
-    protected bool Detection()
+    protected virtual bool Detection()
     {
         // If the player's position overlaps with a point on the detection circle's collider or the enemy get hit, attack
         if (_detectionCircle.GetComponent<Collider2D>().OverlapPoint(_player.transform.position) ||

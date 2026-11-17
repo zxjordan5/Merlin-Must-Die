@@ -4,6 +4,8 @@ using System.Collections;
 using UnityEngine.UIElements;
 using UnityEngine.U2D;
 using Unity.Mathematics;
+using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 public class Golem : Wander_Enemy
 {
@@ -13,6 +15,8 @@ public class Golem : Wander_Enemy
     [SerializeField] private GameObject _rockPrefab;
 
     [SerializeField] private SplineContainer rockSplinePath;
+
+    [SerializeField] private int initialRockAmount = 5;
 
     /// <summary>
     /// The orbit speed of the Golem's rocks around their rotation path.
@@ -24,10 +28,15 @@ public class Golem : Wander_Enemy
     private float[] _splineDistances;
 
 
-    private GameObject[] _rocks;
-    private Rigidbody2D[] _rockRigidBodies;
-    private SplineObject[] _rockSplineObjects;
+    private List<GameObject> _rocks;
+    private List<Rigidbody2D> _rockRigidBodies;
+    private List<SplineObject> _rockSplineObjects;
     private Animator _animator;
+
+    /// <summary>
+    /// Simple state check to see if the initial set of rocks have been spawned
+    /// </summary>
+    private bool _initialRocksSpawned = false;
 
     public enum State{ Sleeping = 0, Attacking = 1, Aiming = 2, Shooting = 3, Slamming = 4, Dead = 5 }
     public State CurrentState { get; private set; } = State.Sleeping;
@@ -56,9 +65,8 @@ public class Golem : Wander_Enemy
         _animator = GetComponent<Animator>();
         _target = new Vector2(1,1);
 
-        // Make the enemy's decection circle
+        // Make the enemy's detection circle
         _detectionCircle = new GameObject("RockDetection");
-        //_detectionCircle.transform.SetParent(transform);
         _detectionCircle.transform.position = _rb.transform.position;
         CircleCollider2D _collider = _detectionCircle.AddComponent<CircleCollider2D>();
         _collider.radius = 5f;
@@ -68,9 +76,9 @@ public class Golem : Wander_Enemy
         _health = _initialHealth;
 
         // Set up variables for the golem's projectiles
-        _rocks = new GameObject[5];
-        _rockRigidBodies = new Rigidbody2D[5];
-        _rockSplineObjects = new SplineObject[5];
+        _rocks = new List<GameObject>(initialRockAmount);
+        _rockRigidBodies = new List<Rigidbody2D>(initialRockAmount);
+        _rockSplineObjects = new List<SplineObject>(initialRockAmount);
         CacheSplineArcLength();
     }
 
@@ -86,13 +94,9 @@ public class Golem : Wander_Enemy
 
     protected void Update()
     {
-        //_animator.SetInteger("State", (int)MoveState);
-        
         if (Detection() && CurrentState == State.Sleeping)
         {
-            Debug.Log("Player Detected");
             CurrentState = State.Attacking;
-            
         }
 
         _state = (int)CurrentState;
@@ -156,7 +160,7 @@ public class Golem : Wander_Enemy
     {
         if (!rockSplinePath || _splineLength <= 0f) return;
 
-        for (int i = 0; i < _rockRigidBodies.Length; i++)
+        for (int i = 0; i < _rockRigidBodies.Count; i++)
         {
             Rigidbody2D rb = _rockRigidBodies[i];
             SplineObject splineObj = _rockSplineObjects[i];
@@ -210,7 +214,7 @@ public class Golem : Wander_Enemy
         {
             _rb.linearVelocity = new Vector2(0,0);
             _target = _player.transform.position;
-            StartCoroutine("AimTimer");
+            StartCoroutine("AimAndLaunchRock");
         }
     }
 
@@ -223,32 +227,41 @@ public class Golem : Wander_Enemy
                 return false;
 
             // Once the player is detected, create the rocks
-            for (int i = 0; i < _rocks.Length; i++)
+            if(!_initialRocksSpawned)
             {
-                if (!_rocks[i]) // Should only be called once, but just in case
-                {
-                    float distance = (i / (float)_rocks.Length) * _splineLength;
-                    Vector2 position = EvaluateSplinePosition(distance);
-                    GameObject rock = Instantiate(_rockPrefab, position, Quaternion.identity);
-                    Rigidbody2D rb = rock.GetComponent<Rigidbody2D>();
-                    SplineObject splineObject = rock.GetComponent<SplineObject>();
-                    if (!rb || !splineObject)
-                    {
-                        // If either the rigidbody or spline object is null
-                        Debug.LogError("Each rock prefab must have a Rigidbody2D and SplineObject component.", rock);
-                        continue;
-                    }
-
-                    _rocks[i] = rock;
-                    _rockRigidBodies[i] = rb;
-                    _rockSplineObjects[i] = splineObject;
-                    splineObject.DistanceAlongSpline = distance;
-                    rb.position = position;
-                }
+                CreateRocks();
+                _initialRocksSpawned = true;
             }
             return true;
         }
         return false;
+    }
+
+    private void CreateRocks()
+    {
+        for (int i = 0; i < initialRockAmount; i++)
+        {
+            //if (!_rocks[i]) // Should only be called once, but just in case
+            //{
+                float distance = (i / (float)initialRockAmount) * _splineLength;
+                Vector2 position = EvaluateSplinePosition(distance);
+                GameObject rock = Instantiate(_rockPrefab, position, Quaternion.identity);
+                Rigidbody2D rb = rock.GetComponent<Rigidbody2D>();
+                SplineObject splineObject = rock.GetComponent<SplineObject>();
+                if (!rb || !splineObject)
+                {
+                    // If either the rigidbody or spline object is null
+                    Debug.LogError("Each rock prefab must have a Rigidbody2D and SplineObject component.", rock);
+                    continue;
+                }
+
+                _rocks.Add(rock);
+                _rockRigidBodies.Add(rb);
+                _rockSplineObjects.Add(splineObject);
+                splineObject.DistanceAlongSpline = distance;
+                rb.position = position;
+            //}
+        }
     }
 
     protected override void TakeDamage(Collider2D collision)
@@ -271,76 +284,44 @@ public class Golem : Wander_Enemy
         _rb.linearVelocity = new Vector2(0,0);
     }
 
-    IEnumerator AimTimer()
+    IEnumerator AimAndLaunchRock()
     {
         CurrentState = State.Aiming;
         yield return new WaitForSeconds(_aimTime);
         _target = _player.transform.position + (_player.transform.position - _rb.transform.position)*2;
         CurrentState = State.Shooting;
+
+        LaunchRock();
+
         yield return new WaitForSeconds(_reloadTime);
         CurrentState = State.Attacking;
         _target = new Vector2(1,1);
         //_attackCooldownTimer = 0;
     }
 
+    private void LaunchRock()
+    {
+        // No rocks left to launch
+        if(_rocks.Count <= 0)
+        {
+            return;
+        }
+
+        GameObject rockToLaunch = _rocks[0];
+        Debug.Log(rockToLaunch);
+        Projectile rockProj = rockToLaunch.GetComponent<Projectile>();
+
+        // Remove game object from rock list
+        _rocks.RemoveAt(0);
+        _rockRigidBodies.RemoveAt(0);
+        _rockSplineObjects.RemoveAt(0);
+
+        // Enable scripts on the rock projectile
+
+
+
+        // Launch rock projectile
+        rockProj.LaunchProjectile(_target);
+    }
+
 }
-
-
-//using UnityEngine;
-//using UnityEngine.Splines; // Requires the Unity Splines package
-
-//[RequireComponent(typeof(Rigidbody2D))]
-//public class KinematicSplineMover2D : MonoBehaviour
-//{
-//    [SerializeField] private SplineContainer splineContainer;
-//    [SerializeField] private float moveSpeed = 5f; // Units per second
-//    [SerializeField] private bool loop = true;
-
-//    private Rigidbody2D rb;
-//    private float distanceAlongSpline = 0f;
-//    private float splineLength = 0f;
-
-//    void Awake()
-//    {
-//        rb = GetComponent<Rigidbody2D>();
-
-//        if (splineContainer != null)
-//        {
-//            splineLength = splineContainer.Spline.GetLength();
-//        }
-//    }
-
-//    void FixedUpdate()
-//    {
-//        if (splineContainer == null || splineLength <= 0f) return;
-
-//        // Advance distance based on speed and fixed time
-//        distanceAlongSpline += moveSpeed * Time.fixedDeltaTime;
-
-//        if (loop)
-//        {
-//            distanceAlongSpline = Mathf.Repeat(distanceAlongSpline, splineLength);
-//        }
-//        else
-//        {
-//            distanceAlongSpline = Mathf.Clamp(distanceAlongSpline, 0f, splineLength);
-//        }
-
-//        // Convert linear distance (0 to splineLength) to a 0-1 parameter t
-//        float t = distanceAlongSpline / splineLength;
-
-//        // Evaluate position and tangent (forward direction) on the 2D spline (XY plane)
-//        splineContainer.Evaluate(t, out Vector3 localPosition, out Vector3 localTangent, out Vector3 localUp);
-
-//        // Convert local spline position/tangent to world space
-//        Vector3 worldPosition = splineContainer.transform.TransformPoint(localPosition);
-//        Vector2 targetPosition2D = new Vector2(worldPosition.x, worldPosition.y);
-
-//        Vector3 worldTangent = splineContainer.transform.TransformDirection(localTangent);
-//        float angle = Mathf.Atan2(worldTangent.y, worldTangent.x) * Mathf.Rad2Deg;
-
-//        // Move and rotate the kinematic Rigidbody2D safely for physics
-//        rb.MovePosition(targetPosition2D);
-//        rb.MoveRotation(angle);
-//    }
-//}

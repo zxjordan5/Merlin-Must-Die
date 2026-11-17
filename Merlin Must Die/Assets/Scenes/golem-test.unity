@@ -59921,11 +59921,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Golem
   _rb: {fileID: 1259440726}
   damageOverTimeWindow: 1
-  _health: 0
-  _aimTime: 0
-  _reloadTime: 0
+  _health: 4
+  _aimTime: 2
+  _reloadTime: 2
   _rockPrefab: {fileID: 7969273695205218493, guid: 2b2067618b522724297ee954aa35c9ea, type: 3}
   rockSplinePath: {fileID: 2103062903}
+  initialRockAmount: 5
   _orbitSpeed: 1
   _state: 0
 --- !u!50 &1259440726
@@ -60508,6 +60509,22 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4107392942981532779, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107392942981532779, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107392942981532779, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107392942981532779, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4457158587545325343, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -60564,6 +60581,22 @@ PrefabInstance:
       propertyPath: _abilityTwo
       value: 
       objectReference: {fileID: 7424621119415971575, guid: 331f8396966fce094bc0c8b9a25d4a8a, type: 3}
+    - target: {fileID: 7663928985044554792, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7663928985044554792, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7663928985044554792, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7663928985044554792, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8120425356521571722, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
