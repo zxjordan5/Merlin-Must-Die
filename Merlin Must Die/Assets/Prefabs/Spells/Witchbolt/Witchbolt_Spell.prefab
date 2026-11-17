@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e11ba564b8d9a42925de46dc8606b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Witchbolt_Spell
-  cooldown: 1
+  cooldown: 1.2
   spellCode: 020000000000000003000000i
   spellIcon: {fileID: -3592990129298605783, guid: 86aeeb5aca42ddf48a3c2912f50bf03b, type: 3}
   spellColor: {r: 0.30373242, g: 0, b: 0.509434, a: 1}

@@ -10,11 +10,6 @@ public class Healthbar : MonoBehaviour
     public static Healthbar Instance { get; private set; }
 
     /// <summary>
-    /// Spawn location for the first chunk of the healthbar. All other chunks are spawned based off this location
-    /// </summary>
-    private Vector2 _chunk1SpawnLocation = new Vector2(900.0f, -425.0f);
-
-    /// <summary>
     /// All active chunks in the scene
     /// </summary>
     private List<Image> _activeChunks = new List<Image>();
@@ -51,9 +46,9 @@ public class Healthbar : MonoBehaviour
         }
         for (int i = 0; i < numChunksToSpawn; i++)
         {
-            Vector2 spawnLocation = _chunk1SpawnLocation + new Vector2(0.0f, _healthChunk.rectTransform.rect.height * i); // Adjust the offset as needed
-            Image newChunk = Instantiate(_healthChunk, spawnLocation, Quaternion.identity);
-            newChunk.transform.SetParent(GetComponentInParent<Canvas>().transform, false); // Set the parent to the Canvas to ensure proper rendering
+            Image newChunk = Instantiate(_healthChunk, transform);
+            newChunk.transform.Translate(new Vector3(0f, -i, 0f));
+            
             _activeChunks.Add(newChunk);
         }
     }

@@ -3,7 +3,7 @@ using System;
 using UnityEngine.InputSystem;
 public static class Globals
 {
-    
+
     /// <summary>
     /// Returns the angle in degrees a vector would be pointing in.
     /// </summary>

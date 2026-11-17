@@ -1,5 +1,3 @@
-
-using Mono.Cecil.Cil;
 using UnityEngine;
 
 public class LightningBoltObject : SpellObject

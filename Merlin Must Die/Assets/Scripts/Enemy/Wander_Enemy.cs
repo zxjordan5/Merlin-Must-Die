@@ -2,6 +2,7 @@ using System;
 using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
@@ -42,6 +43,10 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected float _pauseTime;
     protected GameObject _detectionCircle;
     protected Vector2 _target;
+    /// <summary>
+    /// Movement speed multiplier. Needed for status effects
+    /// </summary>
+    public float MovementSpeedMultiplier { get; private set; } = 1f;
     [SerializeField] protected int _health;
     protected int _initialHealth;
     private enum States { Wandering = 0, Attacking = 1, Paused = 2, Dead = 3 }
@@ -50,6 +55,12 @@ public abstract class Wander_Enemy : MonoBehaviour
     
     #endregion
 
+
+    /// <summary>
+    /// Event that is invoked when an enemy dies.
+    /// </summary>
+    public event Action<Wander_Enemy> OnEnemyDeath;
+    
     protected virtual void Awake()
     {
         _flash = GetComponent<Flash>();
@@ -140,12 +151,17 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected virtual void Wander()
     {
-        _rb.linearVelocityX = (float)Random.Range(-100, 100)/25;
-        _rb.linearVelocityY = (float) Random.Range(-100, 100)/25;
+        _rb.linearVelocityX = (float)Random.Range(-100, 100) / 25 * MovementSpeedMultiplier;
+        _rb.linearVelocityY = (float)Random.Range(-100, 100) / 25 * MovementSpeedMultiplier;
         CurrentState = States.Wandering;
     }
 
-    protected virtual bool Detection()
+    public void SetMovementSpeedMultiplier(float multiplier)
+    {
+        MovementSpeedMultiplier = Mathf.Max(0f, multiplier);
+    }
+
+    protected bool Detection()
     {
         // If the player's position overlaps with a point on the detection circle's collider or the enemy get hit, attack
         if (_detectionCircle.GetComponent<Collider2D>().OverlapPoint(_player.transform.position) ||
@@ -165,8 +181,14 @@ public abstract class Wander_Enemy : MonoBehaviour
 
         if (_health <= 0)
         {
+            //_dead = true;
             CurrentState = States.Dead;
-            Destroy(gameObject);
+
+            // Enemy death event is invoked. Do not destroy the enemy here.
+            // Instead, pass it to the LevelManager so the event dependencies can
+            // be undone, and then destroy the gameobject there
+            OnEnemyDeath?.Invoke(this);
+            gameObject.SetActive(false);
 
             // TODO: Make a shader for enemy death or make it a destructible object
             // DEPRECATED FADE OUT CODE
@@ -179,23 +201,77 @@ public abstract class Wander_Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the status effects of the enemy after they have been hit by a spell.
+    /// </summary>
+    /// <param name="spellObject"></param>
+    protected void UpdateStatusEffects(SpellObject spellObject)
+    {
+        ElementalType type = spellObject.ElementalType;
+        switch (type)
+        {
+            case ElementalType.Water:
+                #region WetLogic
+                Wet wetStatus = gameObject.GetComponent<Wet>(); 
+                if (wetStatus)
+                {
+                    // If the status effect is an existing component on this object, reset it
+                    // there are no additional prerequisites for applying this status effect
+                    wetStatus.ResetTimer();
+                }
+                else
+                {
+                    // Wet status doesn't exist, add the component to this game object
+                    gameObject.AddComponent<Wet>();
+                }
+                #endregion
+                break;
+            case ElementalType.Lightning:
+                #region ShockedLogic
+                // To become Shocked, the enemy must have the Wet status effect first
+                
+                Shocked shockedStatus = gameObject.GetComponent<Shocked>(); 
+                if (gameObject.GetComponent<Wet>())
+                {
+                    if (shockedStatus)
+                    {
+                        // If the enemy is already Shocked AND the prerequisites for
+                        // being shocked are met (enemy is Wet), reset the timer of the
+                        // shocked status
+                        shockedStatus.ResetTimer();
+                    }
+                    else
+                    {
+                        gameObject.AddComponent<Shocked>();
+                    }
+                }
+                #endregion
+                break;
+        }
+    }
+
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.name == "Collision")
-        //{
-            if (!collision.gameObject.GetComponent<DamageObject>())
-            {
-                return;
-            }
-
-            // This check prevents repeated damage calls
-            if (!_isTakingDamageOverTime)
-            {
-                // Initial damage
-                TakeDamage(collision);
-                _isTakingDamageOverTime = true;  
-            }
-        //}
+        SpellObject spellObject = collision.gameObject.GetComponent<SpellObject>();
+        if (spellObject)
+        {
+            // A spell has hit the object, we need to update the status effects of the enemy
+            UpdateStatusEffects(spellObject);
+        }
+        
+        
+        if (!collision.gameObject.GetComponent<DamageObject>())
+        {
+            return;
+        }
+        
+        // This check prevents repeated damage calls
+        if (!_isTakingDamageOverTime)
+        {
+            // Initial damage
+            TakeDamage(collision);
+            _isTakingDamageOverTime = true;  
+        }
     }
     
     protected void OnTriggerStay2D(Collider2D collision)

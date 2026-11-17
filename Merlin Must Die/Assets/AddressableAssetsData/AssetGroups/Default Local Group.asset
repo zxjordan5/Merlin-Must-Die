@@ -15,8 +15,18 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 28c07b7a9998b7702ba37ac618ea6938
   m_SerializeEntries:
+  - m_GUID: 0179ac35d2ddbf547bf1d8edbd7a4a92
+    m_Address: ProceedTextPopup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1e253ae5302673a97a3cd4a0606b370e
     m_Address: SanguineCommunion_Object
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f91f43fca9ed844aac937b796d4ac28
+    m_Address: WetParticles
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -27,6 +37,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dfc9e1588b8f21a058a5232ca809f375
     m_Address: BackInTheStone_InitialAOE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e36a3567c161fce37b3c8ff242f8d47f
+    m_Address: ShockedParticles
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -7,8 +7,7 @@ public class Golemite : Wander_Enemy
     [SerializeField] private float _chargeTime;
     [SerializeField] private float _rollTime;
 
-    [SerializeField] private float _attackCooldown;
-    [SerializeField] private float _attackCooldownTimer;
+    [SerializeField] private bool _hiding;
 
     private Animator _animator;
 
@@ -90,7 +89,7 @@ public class Golemite : Wander_Enemy
             _rb.transform.position = Vector2.MoveTowards(
                 _rb.transform.position,
                 _player.transform.position,
-                1.5f * Time.deltaTime);
+                1.5f * MovementSpeedMultiplier * Time.deltaTime);
         }
 
         if (CurrentState == State.Rolling)
@@ -98,7 +97,7 @@ public class Golemite : Wander_Enemy
             _rb.transform.position = Vector2.MoveTowards(
                 _rb.transform.position,
                 _target,
-                5 * Time.deltaTime);
+                5 * MovementSpeedMultiplier * Time.deltaTime);
         }
         
     }
@@ -108,7 +107,7 @@ public class Golemite : Wander_Enemy
         // If the player gets close enough, the rock stops, rolls for a sec, then dashes towards the players POS
         if (Vector2.Distance(_player.transform.position, _rb.transform.position) < 2)
         {
-            _rb.linearVelocity = new Vector2(1,1);
+            _rb.linearVelocity = new Vector2(1, 1) * MovementSpeedMultiplier;
             _target = _player.transform.position;
             StartCoroutine("RollTimer");
         }
@@ -116,10 +115,13 @@ public class Golemite : Wander_Enemy
 
     protected override void Wander()
     {
-        _wanderTime = (float)Random.Range(25, 50) / 50; 
-        _pauseTime = (float)Random.Range(10, 25) / 50; 
+        if (!_hiding)
+        {
+            _wanderTime = (float)Random.Range(25, 50) / 50;
+            _pauseTime = (float)Random.Range(10, 25) / 50;
 
-        base.Wander();
+            base.Wander();
+        }
     }
 
     IEnumerator RollTimer()
