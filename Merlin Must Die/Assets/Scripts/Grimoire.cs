@@ -192,13 +192,12 @@ public class Grimoire : MonoBehaviour
             int index = sprites[i].Count;
 
             GameObject spellUI = new GameObject(activeSpells[i].SpellName + "UI");
-            UnityEngine.UI.LayoutElement spellUILayout = spellUI.AddComponent<UnityEngine.UI.LayoutElement>();
+            UnityEngine.UI.HorizontalLayoutGroup spellUILayout = spellUI.AddComponent<UnityEngine.UI.HorizontalLayoutGroup>();
 
-            spellUI.transform.SetParent(grimoireContents.transform, false); 
-            //spellUILayout.preferredWidth = 45;
-            //spellUILayout.preferredHeight = 45;
-            spellUILayout.minHeight = 45;
-            //spellUILayout.minWidth = 45;
+            spellUI.transform.SetParent(grimoireContents.transform, false);
+            spellUILayout.childAlignment = TextAnchor.MiddleLeft;
+            spellUILayout.childControlWidth = false;
+            spellUILayout.padding.left = 20;
 
             // Spell List contains all icons within a spell (name icon + directions)
             //GameObject spellBlock = new GameObject("SpellUI" + i, typeof()
@@ -222,7 +221,7 @@ public class Grimoire : MonoBehaviour
                 iconSprite.transform.SetParent(spellList.transform);
                 Image grimoireSprite = iconSprite.AddComponent<Image>();
                 UnityEngine.UI.LayoutElement layout = iconSprite.AddComponent<UnityEngine.UI.LayoutElement>();
-                layout.preferredWidth = 45;
+                //layout.preferredWidth = 45;
                 layout.preferredHeight = 45;
                 layout.minHeight = 45;
                 layout.minWidth = 45;
