@@ -49,5 +49,5 @@ MonoBehaviour:
   spellIcon: {fileID: -7442450115601157933, guid: 68a037cfba0930845bc795a657b064a2, type: 3}
   spellColor: {r: 0.335849, g: 0.28004995, b: 0.1818654, a: 1}
   spellObj: {fileID: 6801440715899116504, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
-  castSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
+  castSound: {fileID: 1718156743097409630, guid: 0ca6ab82e9060a449b1ff859c6aa5316, type: 3}
   spellName: Earth Barrier

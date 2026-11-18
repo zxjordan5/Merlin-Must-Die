@@ -15,6 +15,13 @@ public class FireballSpell : Spell
     {
         base.Cast(player);
 
+        if (castSound == null)
+        {
+            GameObject audio = GameObject.Find("Audio/Fireball");
+            castSound = audio.GetComponent<AudioSource>();
+        }
+        castSound.Play();
+
         GameObject fbObj = Instantiate(spellObj, player.transform.position, player.transform.rotation);
         Projectile fbProjectile = fbObj.GetComponent<Projectile>();
         fbProjectile.LaunchProjectile(player.AimDirNorm);

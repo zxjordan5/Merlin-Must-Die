@@ -24,6 +24,8 @@ public abstract class Spell : MonoBehaviour
         }
     }
 
+    [SerializeField] protected string[] audioPaths;
+
     /// <summary>
     /// How much the spell should charge excalibur when cast
     /// Could be changed here to be based on the complexity of the input
@@ -44,7 +46,7 @@ public abstract class Spell : MonoBehaviour
 
     [SerializeField] public GameObject spellObj;
 
-    [SerializeField] public AudioClip castSound;
+    [SerializeField] public AudioSource castSound;
 
     [SerializeField]
     protected string spellName = "";
@@ -79,7 +81,7 @@ public abstract class Spell : MonoBehaviour
     {
         ResetCooldown();
 
-        AudioSource.PlayClipAtPoint(castSound, player.transform.position);
+        //AudioSource.PlayClipAtPoint(castSound, player.transform.position);
     }
 
     public void ReduceCooldownPercent(float percentage)

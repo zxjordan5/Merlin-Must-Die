@@ -50,7 +50,7 @@ MonoBehaviour:
   spellIcon: {fileID: -3592990129298605783, guid: 86aeeb5aca42ddf48a3c2912f50bf03b, type: 3}
   spellColor: {r: 0.30373242, g: 0, b: 0.509434, a: 1}
   spellObj: {fileID: 5762526835167957530, guid: 25f76e8177b90fad6bdd693cbc07c695, type: 3}
-  castSound: {fileID: 8300000, guid: 4903e46cf72dc7f4cb7b91c3bf009a33, type: 3}
+  castSound: {fileID: 8595345442467161907, guid: 6e18dcfb0996cae40985ad6a71e2d167, type: 3}
   spellName: Witchbolt
 --- !u!114 &-3525367745130068397
 MonoBehaviour:

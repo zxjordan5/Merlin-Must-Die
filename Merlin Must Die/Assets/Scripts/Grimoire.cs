@@ -74,6 +74,12 @@ public class Grimoire : MonoBehaviour
     private ParticleSystem _preparedSpellParticles;
     private ParticleSystem _activeIndicatorParticles;
 
+    // Spell FX
+    [SerializeField]
+    private AudioSource _spellInputFX;
+    [SerializeField]
+    private AudioSource _spellCancelFX;
+
     private bool _collapsingIcons;
     private float _initialIconSpacing;
 
@@ -279,6 +285,9 @@ public class Grimoire : MonoBehaviour
             // Makes the input icons appear above the player's head when a spell is not prepared
             _playerInputSequence.Add(input);
 
+            // Plays a short writing FX when a spell is input
+            _spellInputFX.Play();
+
             HandleSpellInputIcon(input);
         }
 
@@ -366,6 +375,9 @@ public class Grimoire : MonoBehaviour
     {
         _playerInputSequence.Clear();
         ResetInputIconsUI();
+
+        // Whenever a spell is reset, play the cancel FX
+            _spellCancelFX.Play();
     }
 
     /// <summary>

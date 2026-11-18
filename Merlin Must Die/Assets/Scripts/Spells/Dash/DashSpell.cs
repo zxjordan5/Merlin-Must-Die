@@ -20,6 +20,13 @@ public class DashSpell : Spell
     {
         base.Cast(player);
 
+        if (castSound == null)
+        {
+            GameObject audio = GameObject.Find("Audio/Dash");
+            castSound = audio.GetComponent<AudioSource>();
+        }
+        castSound.Play();
+
         GameObject dashObj = Instantiate(spellObj, player.transform);
         ParticleSystem dashParticles = dashObj.GetComponentInChildren<ParticleSystem>();
         ParticleSystem.MainModule main = dashParticles.main;
