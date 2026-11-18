@@ -10,7 +10,7 @@ public class CooldownUI : MonoBehaviour
     /// Vertical layout group that will contain the spellbar UI elements
     /// </summary>
     [SerializeField]
-    private VerticalLayoutGroup _cooldownUIArea;
+    private GridLayoutGroup _cooldownUIArea;
 
     [SerializeField]
     Vector2 _cooldownBarOffset;
@@ -58,7 +58,7 @@ public class CooldownUI : MonoBehaviour
         newBar.transform.SetAsFirstSibling();
         RectTransform barRect = newBar.GetComponent<RectTransform>();
         barRect.anchoredPosition = _cooldownBarOffset;
-        barRect.sizeDelta = new Vector2(_cooldownUIArea.GetComponent<RectTransform>().rect.width * 0.9f, barRect.sizeDelta.y);
+        barRect.sizeDelta = new Vector2((_cooldownUIArea.GetComponent<RectTransform>().rect.width * 0.9f) / 2.0f, barRect.sizeDelta.y);
     }
 
     /// <summary>
