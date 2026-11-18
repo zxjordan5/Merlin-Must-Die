@@ -72648,6 +72648,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6920772874779044808, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: _cooldownUIArea
+      value: 
+      objectReference: {fileID: 1691491437}
+    - target: {fileID: 6920772874779044808, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: _cooldownBarOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6920772874779044808, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: _cooldownBarOffset.y
+      value: -7.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7094835403580863143, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -72815,6 +72827,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3846197141364795040, guid: d17833338738cce48921caa2f1a6c8e4, type: 3}
   m_PrefabInstance: {fileID: 1673051584}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1691491437 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4976568382556071633, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+  m_PrefabInstance: {fileID: 1518480854}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
 --- !u!1001 &1829877712
 PrefabInstance:
   m_ObjectHideFlags: 0

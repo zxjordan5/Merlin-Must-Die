@@ -192,12 +192,10 @@ public class Grimoire : MonoBehaviour
             int index = sprites[i].Count;
 
             GameObject spellUI = new GameObject(activeSpells[i].SpellName + "UI");
-            UnityEngine.UI.HorizontalLayoutGroup spellUILayout = spellUI.AddComponent<UnityEngine.UI.HorizontalLayoutGroup>();
+            UnityEngine.UI.LayoutElement spellUILayout = spellUI.AddComponent<UnityEngine.UI.LayoutElement>();
 
             spellUI.transform.SetParent(grimoireContents.transform, false);
-            spellUILayout.childAlignment = TextAnchor.MiddleLeft;
-            spellUILayout.childControlWidth = false;
-            spellUILayout.padding.left = 20;
+            spellUILayout.minHeight = 45;
 
             // Spell List contains all icons within a spell (name icon + directions)
             //GameObject spellBlock = new GameObject("SpellUI" + i, typeof()
@@ -210,6 +208,14 @@ public class Grimoire : MonoBehaviour
             xLayout.childForceExpandWidth = false;
             xLayout.childForceExpandHeight = false;
             xLayout.spacing = 20;
+
+            // Centering icons on cooldown bars
+            RectTransform spellListRect = spellList.GetComponent<RectTransform>();
+            spellListRect.anchorMin = new Vector2(0, 0.5f);
+            spellListRect.anchorMax = new Vector2(0, 0.5f);
+            spellListRect.pivot = new Vector2(0, 0.5f);
+            xLayout.padding.left = 30;
+
             spellList.transform.SetParent(spellUI.transform, false);
 
             // Puts all icons in the spell list component

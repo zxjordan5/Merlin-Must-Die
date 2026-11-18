@@ -2226,12 +2226,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4391941805921581739, guid: 3e4bf7f86853f1c4fac9b6810e1a1a35, type: 3}
     - target: {fileID: -8016463996252371875, guid: ebf04f7a33078e045bfccf055e0d21ed, type: 3}
+      propertyPath: _cooldownUIArea
+      value: 
+      objectReference: {fileID: 4976568382556071633}
+    - target: {fileID: -8016463996252371875, guid: ebf04f7a33078e045bfccf055e0d21ed, type: 3}
       propertyPath: _cooldownBarOffset.x
-      value: -60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8016463996252371875, guid: ebf04f7a33078e045bfccf055e0d21ed, type: 3}
       propertyPath: _cooldownBarOffset.y
-      value: 5
+      value: -7.5
       objectReference: {fileID: 0}
     - target: {fileID: 242488252005089599, guid: ebf04f7a33078e045bfccf055e0d21ed, type: 3}
       propertyPath: m_Name
