@@ -6,13 +6,18 @@ using UnityEngine.U2D;
 using Unity.Mathematics;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class Golem : Wander_Enemy
 {
-    [SerializeField] private float _aimTime = 1.0f;
-    [SerializeField] private float _reloadTime = 2.0f;
+    [SerializeField] private float aimTime = 1.0f;
+    [SerializeField] private float reloadTime = 2.0f;
+    [SerializeField] private float slamColliderRadius = 1.0f;
+    [SerializeField] private float slamTriggerRadius = 2.0f;
+    [SerializeField] private float slamCooldown = 2.0f;
 
-    [SerializeField] private GameObject _rockPrefab;
+    [SerializeField] private GameObject rockPrefab;
+    [SerializeField] private ParticleSystem slamParticles;
 
     [SerializeField] private SplineContainer rockSplinePath;
 
@@ -31,6 +36,7 @@ public class Golem : Wander_Enemy
     private List<GameObject> _rocks;
     private List<Rigidbody2D> _rockRigidBodies;
     private List<SplineObject> _rockSplineObjects;
+    private CircleCollider2D _slamCollider;
     private Animator _animator;
 
     /// <summary>
@@ -69,17 +75,23 @@ public class Golem : Wander_Enemy
         _detectionCircle = new GameObject("RockDetection");
         _detectionCircle.transform.position = _rb.transform.position;
         CircleCollider2D _collider = _detectionCircle.AddComponent<CircleCollider2D>();
-        _collider.radius = 5f;
+        _collider.radius = detectionRadius;
         _collider.isTrigger = true;
 
         _initialHealth = 4;
         _health = _initialHealth;
 
-        // Set up variables for the golem's projectiles
+        // Set up fields for the golem's projectiles
         _rocks = new List<GameObject>(initialRockAmount);
         _rockRigidBodies = new List<Rigidbody2D>(initialRockAmount);
         _rockSplineObjects = new List<SplineObject>(initialRockAmount);
         CacheSplineArcLength();
+
+        // Set up fields for slam attacks
+        _slamCollider = this.AddComponent<CircleCollider2D>();
+        _slamCollider.radius = slamColliderRadius;
+        _slamCollider.isTrigger = true;
+        _slamCollider.enabled = false;
     }
 
     protected void Start()
@@ -106,7 +118,7 @@ public class Golem : Wander_Enemy
     {
         base.FixedUpdate();
 
-        // Once the player is detected, the enemy allways goes towards their location to attack
+        // Once the player is detected, the enemy always goes towards their location to attack
         if (CurrentState == State.Attacking && _target == new Vector2(1,1))
         {
             Attack();
@@ -202,20 +214,35 @@ public class Golem : Wander_Enemy
 
     protected override void Attack()
     {
-        // If the player gets too close, the golem stomps
-        if (Vector2.Distance(_player.transform.position, _rb.transform.position) < 2)
+        // Golem default behavior (has rocks)
+        if(_rocks.Count > 0)
         {
-            CurrentState = State.Slamming;
-            _target = _player.transform.position;
-        }
+            // If the player gets too close, the golem stomps
+            if (Vector2.Distance(_player.transform.position, _rb.transform.position) < slamTriggerRadius)
+            {
+                _target = _player.transform.position;
+                StartCoroutine("Slam");
+            }
 
-        // If the player gets close enough, the golem stops, aims for a sec, then fires a rock towards the players POS
-        else if (Vector2.Distance(_player.transform.position, _rb.transform.position) < 4)
-        {
-            _rb.linearVelocity = new Vector2(0,0);
-            _target = _player.transform.position;
-            StartCoroutine("AimAndLaunchRock");
+            // If the player gets close enough, the golem stops, aims for a sec, then fires a rock towards the players POS
+            else if (Vector2.Distance(_player.transform.position, _rb.transform.position) < 4)
+            {
+                _rb.linearVelocity = new Vector2(0, 0);
+                StartCoroutine("AimAndLaunchRock");
+            }
         }
+        else
+        {
+            // If the golem is out of rocks, just check to see if it's close enough to slam
+            // Desired behavior is for the golem to chase the player until they can hit them
+            // If the player gets too close, the golem stomps
+            if (Vector2.Distance(_player.transform.position, _rb.transform.position) < slamTriggerRadius)
+            {
+                _target = _player.transform.position;
+                StartCoroutine("Slam");
+            }
+        }
+        
     }
 
     protected override bool Detection()
@@ -223,7 +250,7 @@ public class Golem : Wander_Enemy
         // If the player's position overlaps with a point on the detection circle's collider or the enemy gets hit, attack
         if (_detectionCircle.GetComponent<CircleCollider2D>().OverlapPoint(_player.transform.position) || _initialHealth != _health)  
         {
-            if (rockSplinePath == null || _splineLength <= 0f || _rockPrefab == null)
+            if (rockSplinePath == null || _splineLength <= 0f || rockPrefab == null)
                 return false;
 
             // Once the player is detected, create the rocks
@@ -241,34 +268,48 @@ public class Golem : Wander_Enemy
     {
         for (int i = 0; i < initialRockAmount; i++)
         {
-            //if (!_rocks[i]) // Should only be called once, but just in case
-            //{
-                float distance = (i / (float)initialRockAmount) * _splineLength;
-                Vector2 position = EvaluateSplinePosition(distance);
-                GameObject rock = Instantiate(_rockPrefab, position, Quaternion.identity);
-                Rigidbody2D rb = rock.GetComponent<Rigidbody2D>();
-                SplineObject splineObject = rock.GetComponent<SplineObject>();
-                if (!rb || !splineObject)
-                {
-                    // If either the rigidbody or spline object is null
-                    Debug.LogError("Each rock prefab must have a Rigidbody2D and SplineObject component.", rock);
-                    continue;
-                }
+            float distance = (i / (float)initialRockAmount) * _splineLength;
+            Vector2 position = EvaluateSplinePosition(distance);
+            GameObject rock = Instantiate(rockPrefab, position, Quaternion.identity);
+            Rigidbody2D rb = rock.GetComponent<Rigidbody2D>();
+            SplineObject splineObject = rock.GetComponent<SplineObject>();
+            if (!rb || !splineObject)
+            {
+                // If either the rigidbody or spline object is null
+                Debug.LogError("Each rock prefab must have a Rigidbody2D and SplineObject component.", rock);
+                continue;
+            }
 
-                _rocks.Add(rock);
-                _rockRigidBodies.Add(rb);
-                _rockSplineObjects.Add(splineObject);
-                splineObject.DistanceAlongSpline = distance;
-                rb.position = position;
-            //}
+            _rocks.Add(rock);
+            _rockRigidBodies.Add(rb);
+            _rockSplineObjects.Add(splineObject);
+            splineObject.DistanceAlongSpline = distance;
+            rb.position = position;
         }
     }
 
     protected override void TakeDamage(Collider2D collision)
-    {
-        if (collision.gameObject.GetComponent<DamageObject>() && CurrentState != State.Sleeping)
+    { 
+        if (!collision.gameObject.GetComponent<DamageObject>() || CurrentState == State.Sleeping)
         {
-            _health -= collision.gameObject.GetComponent<DamageObject>().Damage; 
+            // Not a damage object or we're sleeping, don't do anything
+            return;
+        }
+
+        // If the golem has rocks still, destroy one of the rocks
+        if (_rocks.Count > 0)
+        {
+            DestructibleObject destroyedRock = _rocks[_rocks.Count - 1].GetComponent<DestructibleObject>();
+            if(destroyedRock)
+            {
+                ClearRockAtIndex(_rocks.Count - 1);
+                destroyedRock.DestroyObject();
+            }
+        }
+        else
+        {
+            // If the golem has no rocks, it takes damage
+            _health -= collision.gameObject.GetComponent<DamageObject>().Damage;
         }
 
         if (_health <= 0)
@@ -284,16 +325,16 @@ public class Golem : Wander_Enemy
         _rb.linearVelocity = new Vector2(0,0);
     }
 
+    #region RockLaunchingMethods
     IEnumerator AimAndLaunchRock()
     {
         CurrentState = State.Aiming;
-        yield return new WaitForSeconds(_aimTime);
-        _target = _player.transform.position + (_player.transform.position - _rb.transform.position)*2;
+        yield return new WaitForSeconds(aimTime);
         CurrentState = State.Shooting;
 
         LaunchRock();
 
-        yield return new WaitForSeconds(_reloadTime);
+        yield return new WaitForSeconds(reloadTime);
         CurrentState = State.Attacking;
         _target = new Vector2(1,1);
         //_attackCooldownTimer = 0;
@@ -307,21 +348,57 @@ public class Golem : Wander_Enemy
             return;
         }
 
-        GameObject rockToLaunch = _rocks[0];
-        Debug.Log(rockToLaunch);
+        GameObject rockToLaunch = _rocks[_rocks.Count-1];
+        _target = _player.transform.position - rockToLaunch.transform.position;
         Projectile rockProj = rockToLaunch.GetComponent<Projectile>();
+        EarthBarrierObject rockEBO = rockToLaunch.GetComponent<EarthBarrierObject>();
 
         // Remove game object from rock list
-        _rocks.RemoveAt(0);
-        _rockRigidBodies.RemoveAt(0);
-        _rockSplineObjects.RemoveAt(0);
+        ClearRockAtIndex(_rocks.Count - 1);
 
         // Enable scripts on the rock projectile
-
-
+        rockProj.enabled = true;
+        rockEBO.enabled = true;
 
         // Launch rock projectile
         rockProj.LaunchProjectile(_target);
+        CurrentState = State.Attacking;
     }
 
+    private void ClearRockAtIndex(int index)
+    {
+        _rocks.RemoveAt(index);
+        _rockRigidBodies.RemoveAt(index);
+        _rockSplineObjects.RemoveAt(index);
+    }
+    #endregion
+
+    private IEnumerator Slam()
+    {
+        CurrentState = State.Slamming;
+        // Prevent slams while this coroutine is running
+        //_canSlam = false;
+
+        // TODO: We will want to have functionality to play the slam
+        // animation. When the startup is done and the golem slams,
+        // enable the collider and play the particle effects and all that stuff.
+        // For now, we are going to spawn the particle effects and enable the collider
+        _rb.linearVelocity = Vector2.zero;
+        _slamCollider.enabled = true;
+        ParticleSystem p = Instantiate(slamParticles, transform.position, transform.rotation);
+        // Make sure the size of the particles scales dynamically to the collider size
+        p.transform.localScale *= slamColliderRadius;
+
+        // Wait until particle effect is finished
+        while (p != null && p.IsAlive())
+        {
+            yield return null;
+        }
+
+        _slamCollider.enabled = false;
+
+        yield return new WaitForSeconds(slamCooldown);
+        CurrentState = State.Attacking;
+        _target = new Vector2(1, 1);
+    }
 }

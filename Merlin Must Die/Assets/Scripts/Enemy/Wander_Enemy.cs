@@ -51,7 +51,8 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected int _initialHealth;
     private enum States { Wandering = 0, Attacking = 1, Paused = 2, Dead = 3 }
     private States CurrentState = States.Wandering;
-    
+
+    [SerializeField] protected float detectionRadius;
     
     #endregion
 
@@ -147,6 +148,8 @@ public abstract class Wander_Enemy : MonoBehaviour
         }
 
         #endregion
+
+        // If the player is out of aggro range, go back to wandering
     }
 
     protected virtual void Wander()

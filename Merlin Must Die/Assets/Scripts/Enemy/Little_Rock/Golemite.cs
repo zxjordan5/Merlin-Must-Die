@@ -45,7 +45,7 @@ public class Golemite : Wander_Enemy
         //_detectionCircle.transform.SetParent(transform);
         _detectionCircle.transform.position = _rb.transform.position;
         CircleCollider2D _collider = _detectionCircle.AddComponent<CircleCollider2D>();
-        _collider.radius = 3.5f;
+        _collider.radius = detectionRadius;
         _collider.isTrigger = true;
 
         _initialHealth = 2;

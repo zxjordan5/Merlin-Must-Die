@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpellObject
   excaliburChargePerHit: 10
+  elementalType: 0
 --- !u!1 &6801440715899116504
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +239,6 @@ GameObject:
   - component: {fileID: 1085648007987290237}
   - component: {fileID: 2202154530678162189}
   - component: {fileID: 5005238322247012327}
-  - component: {fileID: 6279819081068796268}
   - component: {fileID: 8583702793992404299}
   - component: {fileID: 9035029394887282329}
   - component: {fileID: -1419051302094319118}
@@ -389,20 +389,6 @@ MonoBehaviour:
   particleExplosionRef: {fileID: 500345726442012828, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
   fullHealthSprite: {fileID: 2949406587819106843, guid: 5d0e51b86fab75d46afe78c8a2624284, type: 3}
   damagedSprite: {fileID: -436615413, guid: 5d0e51b86fab75d46afe78c8a2624284, type: 3}
---- !u!114 &6279819081068796268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6801440715899116504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fbdf6d5e4969ac4b8ffd9b0f5a12381, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FlashAndShakeOnHit
-  shakeAmount: 0.1
-  flashDuration: 0.2
 --- !u!114 &8583702793992404299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,7 +403,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EarthBarrierObject
   excaliburChargePerHit: 40
   elementalType: 1
-  excaliburChargePerHit: 30
   landSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}
   landingParticles: {fileID: 8953315173316814783, guid: 4e554265b4fad774094f1eb64edaeea3, type: 3}
   splashSound: {fileID: 8300000, guid: 850cfdc0712deea479f43d33210549ff, type: 3}

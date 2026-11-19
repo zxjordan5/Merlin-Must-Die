@@ -16,9 +16,25 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+    - target: {fileID: 2202154530678162189, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5005238322247012327, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005238322247012327, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+      propertyPath: particleExplosionRef
+      value: 
+      objectReference: {fileID: 318946748000259595, guid: e7517549c8d22094896810f61de15311, type: 3}
+    - target: {fileID: 6051816212874069956, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6236794540819461459, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6279819081068796268, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_Enabled
@@ -84,12 +100,19 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8583702793992404299, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+      propertyPath: excaliburChargePerHit
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9035029394887282329, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6279819081068796268, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+    - target: {fileID: 9035029394887282329, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+      propertyPath: _initialVelocity
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
