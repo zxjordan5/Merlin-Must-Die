@@ -148,7 +148,7 @@ MonoBehaviour:
   invincibilityWindow: 2
   _hasGear: 1
   _canMove: 1
-  maxSpeed: 6
+  maxSpeed: 4
   _targetDirection: {x: 0, y: 0}
   _targetVelocity: {x: 0, y: 0}
 --- !u!212 &771436654858557702

@@ -214,6 +214,14 @@ public class Grimoire : MonoBehaviour
             xLayout.childForceExpandWidth = false;
             xLayout.childForceExpandHeight = false;
             xLayout.spacing = 20;
+
+            // Centering icons on cooldown bars
+            RectTransform spellListRect = spellList.GetComponent<RectTransform>();
+            spellListRect.anchorMin = new Vector2(0, 0.5f);
+            spellListRect.anchorMax = new Vector2(0, 0.5f);
+            spellListRect.pivot = new Vector2(0, 0.5f);
+            xLayout.padding.left = 30;
+
             spellList.transform.SetParent(spellUI.transform, false);
 
             // Puts all icons in the spell list component
@@ -225,7 +233,7 @@ public class Grimoire : MonoBehaviour
                 iconSprite.transform.SetParent(spellList.transform);
                 Image grimoireSprite = iconSprite.AddComponent<Image>();
                 UnityEngine.UI.LayoutElement layout = iconSprite.AddComponent<UnityEngine.UI.LayoutElement>();
-                layout.preferredWidth = 45;
+                //layout.preferredWidth = 45;
                 layout.preferredHeight = 45;
                 layout.minHeight = 45;
                 layout.minWidth = 45;

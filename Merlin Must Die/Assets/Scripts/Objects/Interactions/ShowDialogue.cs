@@ -85,13 +85,22 @@ public class ShowDialogue : Interaction
 
         _player.ReadingDialogue = false;
     }
-
+    
+    /// <summary>
+    /// Clears the dialogue in half a second after leaving the dialogue radius
+    /// </summary>
     public override void Release()
     {
         if(isActiveAndEnabled)
             StartCoroutine("ClearAfterTime", .6f);
     }
 
+    /// <summary>
+    /// Loads a line of dialogue from a DialogueAsset, updating the text display
+    /// Searches tags on the dialogue for special formatting properties
+    /// </summary>
+    /// <param name="asset">DialogueAsset to load</param>
+    /// <param name="count">Which dialogue line to load</param>
     public void LoadDialogue(DialogueAsset asset, int count)
     {
         string text = asset.dialogue[count];
@@ -101,6 +110,7 @@ public class ShowDialogue : Interaction
         textBG.color = new Color(0, 0, 0, 0.325f);
         _npcText.color = Color.white;
 
+        //Grimoire tag - change background to be the grimoire
         if (asset.tags[count].Contains("#grimoire"))
         {
             textBG.sprite = _grimoireTextBG;
