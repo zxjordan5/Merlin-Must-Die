@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 
 /// <summary>
 /// Grimoire Class
@@ -62,6 +63,9 @@ public class Grimoire : MonoBehaviour
     private HorizontalLayoutGroup _spellIconArea;
     [SerializeField]
     private GameObject _spellInputIcon;
+
+    // 4 icons that refer to the 4 cardinal direction arrows.
+    // Used to instantiate arrow icons in the grimoire according to spell codes.
     [SerializeField]
     private List<GameObject> _arrowIcons;
     [SerializeField]
@@ -116,10 +120,11 @@ public class Grimoire : MonoBehaviour
         UpdateComboTimer();
 
         //Update cooldown bar UI
-        for(int i = 0; i < _instantiatedActiveSpells.Count; i++)
+        for (int i = 0; i < _instantiatedActiveSpells.Count; i++)
         {
             _cooldownUI.UpdateSpellBar(i, _instantiatedActiveSpells[i].CooldownPercent);
         }
+        GrimoireArrowCooldown();
 
         //Collapse spell icons (when a spell is cast)
         if (_collapsingIcons)
@@ -138,7 +143,10 @@ public class Grimoire : MonoBehaviour
         }
 
         if (_preparedSpell && _preparedSpell.OnCooldown)
+        {
             _spellBlockedIcon.enabled = true;
+        }
+            
         else
             _spellBlockedIcon.enabled = false;
     }
@@ -195,14 +203,9 @@ public class Grimoire : MonoBehaviour
             UnityEngine.UI.LayoutElement spellUILayout = spellUI.AddComponent<UnityEngine.UI.LayoutElement>();
 
             spellUI.transform.SetParent(grimoireContents.transform, false); 
-            //spellUILayout.preferredWidth = 45;
-            //spellUILayout.preferredHeight = 45;
             spellUILayout.minHeight = 45;
-            //spellUILayout.minWidth = 45;
 
             // Spell List contains all icons within a spell (name icon + directions)
-            //GameObject spellBlock = new GameObject("SpellUI" + i, typeof()
-
             GameObject spellList = new GameObject("SpellList" + i, typeof(UnityEngine.UI.HorizontalLayoutGroup));
             UnityEngine.UI.HorizontalLayoutGroup xLayout = spellList.GetComponent<UnityEngine.UI.HorizontalLayoutGroup>();
             xLayout.childAlignment = TextAnchor.MiddleLeft;
@@ -234,7 +237,6 @@ public class Grimoire : MonoBehaviour
                     iconSprite.name = activeSpells[i].SpellName + " Grimoire Icon"; //Change name for future particle check
                     _createdSpellIcons.Add(iconSprite);
                 }
-
                 // All other icons (directional inputs)
                 else
                 {
@@ -489,6 +491,52 @@ public class Grimoire : MonoBehaviour
                     _arrowIcons[3].SetActive(true);
                     break;
             }
+        }
+    }
+
+    /// <summary>
+    /// Gets the grimoire arrows for the prepared spell
+    /// </summary>
+    public List<GameObject> GetCooldownArrows()
+    {
+        // Get all spells currently on cooldown
+        List<Spell> spellsOnCooldown = new List<Spell>();
+        for (int i = 0; i < activeSpells.Count; i++)
+        {
+            if (activeSpells[i].CooldownPercent >= 100)
+            {
+                spellsOnCooldown.Add(activeSpells[i]);
+            }
+        }
+
+        List<GameObject> spellCooldownIcons = new List<GameObject>();
+        for (int i = 0; i < spellsOnCooldown.Count; i++)
+        {
+            GameObject spellCooldownUI = grimoireContents.transform.
+                Find(spellsOnCooldown[i].SpellName + "UI").GetChild(1).gameObject;
+            int preparedSpellChildCount = spellCooldownUI.transform.childCount;
+
+            // ***skips*** the first icon because it's a spell icon not the arrows
+            for (int j = 1; j < preparedSpellChildCount; j++)
+            {
+                // gets each arrow icon and adds to list
+                spellCooldownIcons.Add(spellCooldownUI.transform.GetChild(j).gameObject);
+            }
+            
+        }
+        return spellCooldownIcons;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void GrimoireArrowCooldown()
+    {
+        List<GameObject> cooldownArrows = GetCooldownArrows();
+        for (int i = 0; i < cooldownArrows.Count; i++)
+        {
+            cooldownArrows[i].GetComponent<Image>().color =
+                new Color(0.6001088f, 0.563325f, 0.6679245f);
         }
     }
 
