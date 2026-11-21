@@ -117,6 +117,7 @@ public class Grimoire : MonoBehaviour
 
     void Update()
     {
+        GrimoireArrowCooldown();
         UpdateComboTimer();
 
         //Update cooldown bar UI
@@ -124,7 +125,6 @@ public class Grimoire : MonoBehaviour
         {
             _cooldownUI.UpdateSpellBar(i, _instantiatedActiveSpells[i].CooldownPercent);
         }
-        GrimoireArrowCooldown();
 
         //Collapse spell icons (when a spell is cast)
         if (_collapsingIcons)
@@ -501,11 +501,19 @@ public class Grimoire : MonoBehaviour
     {
         // Get all spells currently on cooldown
         List<Spell> spellsOnCooldown = new List<Spell>();
-        for (int i = 0; i < activeSpells.Count; i++)
+        for (int i = 0; i < _instantiatedActiveSpells.Count; i++)
         {
-            if (activeSpells[i].CooldownPercent >= 100)
+            Debug.Log(_instantiatedActiveSpells[i].OnCooldown);
+
+            // Darken the arrows for spells on cooldown, and reset arrow icons
+            // for those that aren't on cooldown
+            if (_instantiatedActiveSpells[i].OnCooldown)
             {
-                spellsOnCooldown.Add(activeSpells[i]);
+                spellsOnCooldown.Add(_instantiatedActiveSpells[i]);
+            }
+            else
+            {
+                ResetArrowCooldowns(_instantiatedActiveSpells[i]);
             }
         }
 
@@ -514,10 +522,10 @@ public class Grimoire : MonoBehaviour
         {
             GameObject spellCooldownUI = grimoireContents.transform.
                 Find(spellsOnCooldown[i].SpellName + "UI").GetChild(1).gameObject;
-            int preparedSpellChildCount = spellCooldownUI.transform.childCount;
+            int spellChildCount = spellCooldownUI.transform.childCount;
 
             // ***skips*** the first icon because it's a spell icon not the arrows
-            for (int j = 1; j < preparedSpellChildCount; j++)
+            for (int j = 1; j < spellChildCount; j++)
             {
                 // gets each arrow icon and adds to list
                 spellCooldownIcons.Add(spellCooldownUI.transform.GetChild(j).gameObject);
@@ -528,7 +536,7 @@ public class Grimoire : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Darkens all of the arrow icons for spells on cooldown in the grimoire
     /// </summary>
     public void GrimoireArrowCooldown()
     {
@@ -537,6 +545,24 @@ public class Grimoire : MonoBehaviour
         {
             cooldownArrows[i].GetComponent<Image>().color =
                 new Color(0.6001088f, 0.563325f, 0.6679245f);
+        }
+    }
+
+    /// <summary>
+    /// Resets the grimoire UI for the arrow icons when they are *not* on cooldown
+    /// </summary>
+    /// <param name="spellToReset">The spell found in the grimoire to reset</param>
+    public void ResetArrowCooldowns(Spell spellToReset)
+    {
+        GameObject spellCooldownUI = grimoireContents.transform.
+                Find(spellToReset.SpellName + "UI").GetChild(1).gameObject;
+        int spellChildCount = spellCooldownUI.transform.childCount;
+
+        // ***skips*** the first icon because it's a spell icon not the arrows
+        for (int j = 1; j < spellChildCount; j++)
+        {
+            // gets each arrow icon and adds to list
+            spellCooldownUI.transform.GetChild(j).gameObject.GetComponent<Image>().color = Color.white;
         }
     }
 
