@@ -15,7 +15,7 @@ MonoBehaviour:
   dialogue:
   - Ah, you're awake!
   - 'Come over, I have something you may be looking for '
-  - 'Left Mouse Button or
+  - 'Left Click or
 
     Left Joystick to move'
   tags:

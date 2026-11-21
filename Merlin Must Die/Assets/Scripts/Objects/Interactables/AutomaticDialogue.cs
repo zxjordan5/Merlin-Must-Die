@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class AutomaticDialogue : MonoBehaviour
+public class AutomaticDialogue : Interaction
 {
     private ShowDialogue _dialogue;
     [SerializeField] private float _displayTime;
+    //[SerializeField] private bool _skippable;
+
 
     public void Awake()
     {
@@ -21,6 +23,12 @@ public class AutomaticDialogue : MonoBehaviour
             _dialogue.Behaviour();
             StartCoroutine("NextDialogue", _displayTime);
         }
-            
+    }
+
+    public override void Behaviour()
+    {
+        StopAllCoroutines();
+        _dialogue.Behaviour();
+        StartCoroutine("NextDialogue", _displayTime);
     }
 }

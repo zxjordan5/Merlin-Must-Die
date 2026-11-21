@@ -306,17 +306,6 @@
                 },
                 {
                     "name": "",
-                    "id": "0b161583-96c1-485e-b586-8ab70c99c165",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CastSpell",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "03ea970d-3880-460c-9e79-f32ca06476b2",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
@@ -396,6 +385,17 @@
                     "name": "",
                     "id": "e58a860b-7d00-46b4-8375-2527da7dc549",
                     "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a7fdcc0-f99f-45d9-8b5e-29ab33619890",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
