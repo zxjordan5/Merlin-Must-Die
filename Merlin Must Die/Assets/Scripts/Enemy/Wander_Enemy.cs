@@ -20,6 +20,7 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected float _timer;
     protected Player _player;
     protected Collider2D _enemyCollider;
+    protected CircleCollider2D _detectionCollider;
     
     /// <summary>
     /// How much time the player is invincible for after being hit.
@@ -53,6 +54,11 @@ public abstract class Wander_Enemy : MonoBehaviour
     private States CurrentState = States.Wandering;
 
     [SerializeField] protected float detectionRadius;
+    /// <summary>
+    /// Determines the radius of the detection collider once the enemy is Awake. If the player
+    /// leaves this radius, the enemy loses aggro towards the player
+    /// </summary>
+    protected float _aggroRadius;
     
     #endregion
 
@@ -70,6 +76,10 @@ public abstract class Wander_Enemy : MonoBehaviour
 
         // Will be changed in child class, this just makes Detection() work
         _health = _initialHealth = 1;
+        
+        _aggroRadius = 2 * detectionRadius;
+        
+        SetUpDetection();
     }
 
     protected virtual void FixedUpdate()
@@ -134,6 +144,12 @@ public abstract class Wander_Enemy : MonoBehaviour
             {
                 transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
             }
+
+            if (!Detection())
+            {
+                // PLayer is out of detection range
+                PlayerOutOfRange();
+            }
         }
 
         // To make sure the sprite flips
@@ -148,8 +164,6 @@ public abstract class Wander_Enemy : MonoBehaviour
         }
 
         #endregion
-
-        // If the player is out of aggro range, go back to wandering
     }
 
     protected virtual void Wander()
@@ -194,13 +208,6 @@ public abstract class Wander_Enemy : MonoBehaviour
             gameObject.SetActive(false);
 
             // TODO: Make a shader for enemy death or make it a destructible object
-            // DEPRECATED FADE OUT CODE
-            // _renderer = GetComponent<Renderer>();
-            // GetComponent<Rigidbody2D>().simulated = false;
-            // foreach (Collider2D collider in GetComponents<Collider2D>())
-            // {
-            //     collider.enabled = false;
-            // }
         }
     }
 
@@ -279,25 +286,18 @@ public abstract class Wander_Enemy : MonoBehaviour
     
     protected void OnTriggerStay2D(Collider2D collision)
     {
-        //if (collision.name == "Collision")
-        //{
-            // Damage over time effect
-            if (!collision.gameObject.GetComponent<DamageObject>())
-            {
-                return;
-            }
+        if (!collision.gameObject.GetComponent<DamageObject>())
+        {
+            return;
+        }
             
-            if (_timeSinceDamageOverTimeTick >= damageOverTimeWindow)
-            {
-               //Debug.Log("Damage Over Time");
-               ResetDamageOverTimeTick();
-               TakeDamage(collision);
-               if (_flash != null)
-               {
-                  _flash.SingleFlash();
-               }
-            }
-        //}
+        if (_timeSinceDamageOverTimeTick >= damageOverTimeWindow) 
+        { 
+            //Debug.Log("Damage Over Time");
+            ResetDamageOverTimeTick();
+            TakeDamage(collision); 
+            if (_flash != null) { _flash.SingleFlash(); }
+        }
     }
     
     protected void OnTriggerExit2D(Collider2D other)
@@ -316,5 +316,26 @@ public abstract class Wander_Enemy : MonoBehaviour
         _timeSinceDamageOverTimeTick = 0.0f;
     }
 
+    /// <summary>
+    /// Initializes enemy detection collider
+    /// </summary>
+    protected void SetUpDetection()
+    {
+        // Make the enemy's detection circle
+        _detectionCircle = new GameObject($"{this.name}Detection");
+        _detectionCircle.transform.position = _rb.transform.position;
+        _detectionCollider = _detectionCircle.AddComponent<CircleCollider2D>();
+        _detectionCollider.radius = detectionRadius;
+        _detectionCollider.isTrigger = true;
+    }
+
+    /// <summary>
+    /// Method that handles the attacking logic of the enemy
+    /// </summary>
     protected abstract void Attack();
+
+    /// <summary>
+    /// Method that handles enemy behavior when the player exits detection range
+    /// </summary>
+    protected abstract void PlayerOutOfRange();
 }

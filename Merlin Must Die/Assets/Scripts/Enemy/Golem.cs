@@ -32,7 +32,6 @@ public class Golem : Wander_Enemy
     private float[] _splineParameters;
     private float[] _splineDistances;
 
-
     private List<GameObject> _rocks;
     private List<Rigidbody2D> _rockRigidBodies;
     private List<SplineObject> _rockSplineObjects;
@@ -43,6 +42,12 @@ public class Golem : Wander_Enemy
     /// Simple state check to see if the initial set of rocks have been spawned
     /// </summary>
     private bool _initialRocksSpawned = false;
+
+    /// <summary>
+    /// Tracks whether the rock GOs are enabled. Prevents repeated SetActive() calls when
+    /// the golem switches states
+    /// </summary>
+    private bool _rocksActive = false;
 
     public enum State{ Sleeping = 0, Attacking = 1, Aiming = 2, Shooting = 3, Slamming = 4, Dead = 5 }
     public State CurrentState { get; private set; } = State.Sleeping;
@@ -71,13 +76,6 @@ public class Golem : Wander_Enemy
         _animator = GetComponent<Animator>();
         _target = new Vector2(1,1);
 
-        // Make the enemy's detection circle
-        _detectionCircle = new GameObject("RockDetection");
-        _detectionCircle.transform.position = _rb.transform.position;
-        CircleCollider2D _collider = _detectionCircle.AddComponent<CircleCollider2D>();
-        _collider.radius = detectionRadius;
-        _collider.isTrigger = true;
-
         _initialHealth = 4;
         _health = _initialHealth;
 
@@ -93,6 +91,7 @@ public class Golem : Wander_Enemy
         _slamCollider.isTrigger = true;
         _slamCollider.enabled = false;
     }
+    
 
     protected void Start()
     {
@@ -106,7 +105,7 @@ public class Golem : Wander_Enemy
 
     protected void Update()
     {
-        if (Detection() && CurrentState == State.Sleeping)
+        if (CurrentState == State.Sleeping && Detection())
         {
             CurrentState = State.Attacking;
         }
@@ -126,6 +125,7 @@ public class Golem : Wander_Enemy
                 _rb.transform.position,
                 _player.transform.position,
                 0.5f * Time.deltaTime);
+            _detectionCollider.radius = _aggroRadius;
         }
 
         // The parent sprite flipping, also flips the rocks completely 
@@ -135,13 +135,17 @@ public class Golem : Wander_Enemy
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         }
 
-
         if (CurrentState != State.Sleeping)
         {
             UpdateRockPositions();
         }
     }
 
+    /// <summary>
+    /// Caches initial spline path values for rocks to move along later.
+    /// Essentially creates points along the spline for the objects to move between
+    /// based on the SplineSampleCount
+    /// </summary>
     private void CacheSplineArcLength()
     {
         if (rockSplinePath == null)
@@ -168,6 +172,9 @@ public class Golem : Wander_Enemy
         _splineLength = _splineDistances[SplineSampleCount];
     }
 
+    /// <summary>
+    /// Calculates the next position for each rock rigidBody to be moved along the spline
+    /// </summary>
     private void UpdateRockPositions()
     {
         if (!rockSplinePath || _splineLength <= 0f) return;
@@ -185,6 +192,12 @@ public class Golem : Wander_Enemy
         }
     }
 
+    /// <summary>
+    /// Calculates where the rigidbody should be along the spline based
+    /// on its relative position between the sample points. 
+    /// </summary>
+    /// <param name="distance">The distance the rigidbody is along the spline</param>
+    /// <returns>Vector3 representing the adjusted positional value of the object along the spline</returns>
     private Vector2 EvaluateSplinePosition(float distance)
     {
         float targetDistance = Mathf.Repeat(distance, _splineLength);
@@ -242,7 +255,20 @@ public class Golem : Wander_Enemy
                 StartCoroutine("Slam");
             }
         }
+    }
+
+    protected override void PlayerOutOfRange()
+    {
+        // Reset detection range to sleeping range
+        _detectionCollider.radius = detectionRadius;
+        CurrentState = State.Sleeping;
         
+        // Reset rocks
+        foreach(GameObject rock in _rocks)
+        {
+            rock.SetActive(false);
+        }
+        _rocksActive = false;
     }
 
     protected override bool Detection()
@@ -259,11 +285,23 @@ public class Golem : Wander_Enemy
                 CreateRocks();
                 _initialRocksSpawned = true;
             }
+
+            if (!_rocksActive)
+            {
+                foreach (GameObject rock in _rocks)
+                {
+                    rock.SetActive(true);
+                }
+                _rocksActive = true;
+            }
             return true;
         }
         return false;
     }
 
+    /// <summary>
+    /// Creates the initial rocks for the golem
+    /// </summary>
     private void CreateRocks()
     {
         for (int i = 0; i < initialRockAmount; i++)
@@ -286,6 +324,8 @@ public class Golem : Wander_Enemy
             splineObject.DistanceAlongSpline = distance;
             rb.position = position;
         }
+
+        _rocksActive = true;
     }
 
     protected override void TakeDamage(Collider2D collision)
@@ -326,6 +366,11 @@ public class Golem : Wander_Enemy
     }
 
     #region RockLaunchingMethods
+    
+    /// <summary>
+    /// Waits for aimTime, and then launches a rock. State adjustments for shooting are done here
+    /// </summary>
+    /// <returns></returns>
     IEnumerator AimAndLaunchRock()
     {
         CurrentState = State.Aiming;
@@ -340,6 +385,10 @@ public class Golem : Wander_Enemy
         //_attackCooldownTimer = 0;
     }
 
+    /// <summary>
+    /// Retrieves the projectile components of the rock
+    /// to be launched, and launchese it towards the player.
+    /// </summary>
     private void LaunchRock()
     {
         // No rocks left to launch
@@ -351,20 +400,25 @@ public class Golem : Wander_Enemy
         GameObject rockToLaunch = _rocks[_rocks.Count-1];
         _target = _player.transform.position - rockToLaunch.transform.position;
         Projectile rockProj = rockToLaunch.GetComponent<Projectile>();
-        EarthBarrierObject rockEBO = rockToLaunch.GetComponent<EarthBarrierObject>();
+        EarthBarrierObject rockEbo = rockToLaunch.GetComponent<EarthBarrierObject>();
 
         // Remove game object from rock list
         ClearRockAtIndex(_rocks.Count - 1);
 
         // Enable scripts on the rock projectile
         rockProj.enabled = true;
-        rockEBO.enabled = true;
+        rockEbo.enabled = true;
 
         // Launch rock projectile
         rockProj.LaunchProjectile(_target);
         CurrentState = State.Attacking;
     }
 
+    /// <summary>
+    /// Cleans up rock values at a given index from each
+    /// internal list storing rock information
+    /// </summary>
+    /// <param name="index"></param>
     private void ClearRockAtIndex(int index)
     {
         _rocks.RemoveAt(index);
@@ -373,6 +427,10 @@ public class Golem : Wander_Enemy
     }
     #endregion
 
+    /// <summary>
+    /// Performs a slam attack
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Slam()
     {
         CurrentState = State.Slamming;
@@ -382,7 +440,7 @@ public class Golem : Wander_Enemy
         // TODO: We will want to have functionality to play the slam
         // animation. When the startup is done and the golem slams,
         // enable the collider and play the particle effects and all that stuff.
-        // For now, we are going to spawn the particle effects and enable the collider
+        // For now, we are just going to spawn the particle effects and enable the collider
         _rb.linearVelocity = Vector2.zero;
         _slamCollider.enabled = true;
         ParticleSystem p = Instantiate(slamParticles, transform.position, transform.rotation);
@@ -390,13 +448,14 @@ public class Golem : Wander_Enemy
         p.transform.localScale *= slamColliderRadius;
 
         // Wait until particle effect is finished
-        while (p != null && p.IsAlive())
+        while (p&& p.IsAlive())
         {
             yield return null;
         }
 
         _slamCollider.enabled = false;
 
+        // Wait for cooldown to be done, and then reset state values
         yield return new WaitForSeconds(slamCooldown);
         CurrentState = State.Attacking;
         _target = new Vector2(1, 1);

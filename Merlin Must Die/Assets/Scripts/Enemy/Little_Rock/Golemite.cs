@@ -34,19 +34,12 @@ public class Golemite : Wander_Enemy
     {
         base.Awake();
 
+        _aggroRadius = 3 *  detectionRadius;
         _animator = GetComponent<Animator>();
 
         _wanderTime = (float)Random.Range(25, 50) / 50; // Wanders for 1-2 seconds
         _pauseTime = (float)Random.Range(1, 2) / 50; // Pauses for 0.5-1 seconds
         _target = new Vector2(1,1);
-
-        // Make the enemy's decection circle
-        _detectionCircle = new GameObject("RockDetection");
-        //_detectionCircle.transform.SetParent(transform);
-        _detectionCircle.transform.position = _rb.transform.position;
-        CircleCollider2D _collider = _detectionCircle.AddComponent<CircleCollider2D>();
-        _collider.radius = detectionRadius;
-        _collider.isTrigger = true;
 
         _initialHealth = 2;
         _health = _initialHealth;
@@ -90,6 +83,7 @@ public class Golemite : Wander_Enemy
                 _rb.transform.position,
                 _player.transform.position,
                 1.5f * MovementSpeedMultiplier * Time.deltaTime);
+            _detectionCollider.radius = _aggroRadius;
         }
 
         if (CurrentState == State.Rolling)
@@ -111,6 +105,12 @@ public class Golemite : Wander_Enemy
             _target = _player.transform.position;
             StartCoroutine("RollTimer");
         }
+    }
+    
+    protected override void PlayerOutOfRange()
+    {
+        CurrentState = State.Wandering;
+        _detectionCollider.radius = detectionRadius;
     }
 
     protected override void Wander()
