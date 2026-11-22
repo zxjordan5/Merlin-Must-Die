@@ -33,6 +33,7 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        DisconnectInputMap();
         ConnectInputMap();
     }
 

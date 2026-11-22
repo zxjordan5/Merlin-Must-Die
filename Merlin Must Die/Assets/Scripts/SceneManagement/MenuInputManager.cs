@@ -11,11 +11,15 @@ public class MenuInputManager : MonoBehaviour
 
 
     //Assigned Menu Action Fields
-    [SerializeField]
+    [SerializeField] 
     public List<MenuOption> menuOptions;
     private List<MenuAction> _menuActions = new List<MenuAction>();
 
     private MenuAction _preparedAction;
+
+
+    [SerializeField]
+    private PreparedSpellIndicator _castActionIndicator;
 
     private void Awake()
     {
@@ -23,6 +27,7 @@ public class MenuInputManager : MonoBehaviour
         {
             _menuActions.Add(option.Action);
         }
+        _castActionIndicator.Active = false;
     }
 
     /// <summary>
@@ -90,6 +95,7 @@ public class MenuInputManager : MonoBehaviour
             if (dirMatches == option.InputSequence.Count)
             {
                 _preparedAction = action;
+                _castActionIndicator.Active = true;
             }
         }
         //No input matches, reset
@@ -103,9 +109,11 @@ public class MenuInputManager : MonoBehaviour
     {
         if (_preparedAction)
         {
-            _preparedAction.Action();
+            _preparedAction.Action(); 
+            _preparedAction = null;
+            _castActionIndicator.Active = false;
         }
-        _preparedAction = null;
+       
         ResetInputSequence();
     }
 
