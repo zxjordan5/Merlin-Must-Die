@@ -1,14 +1,9 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.Serialization;
 
-public class Level_Manager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
     [SerializeField] public GameObject enemyParent;
     //[SerializeField] public GameObject LevelEndBox;

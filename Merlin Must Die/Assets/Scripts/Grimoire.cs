@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 /// <summary>
 /// Grimoire Class
@@ -13,14 +14,6 @@ using Unity.VisualScripting;
 /// </summary>
 public class Grimoire : MonoBehaviour
 {
-    public enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
-
 
     // TODO: MOVE THESE TO A SCRIPTABLE OBJECT
     private List<Spell> _allSpells;
@@ -48,7 +41,7 @@ public class Grimoire : MonoBehaviour
     /// <summary>
     /// Current sequence of inputs the player has entered
     /// </summary>
-    private List<Direction> _playerInputSequence = new List<Direction>();
+    private List<Globals.Direction> _playerInputSequence = new List<Globals.Direction>();
 
     /// <summary>
     /// The current player in the scene
@@ -162,21 +155,21 @@ public class Grimoire : MonoBehaviour
             spellSprites.Add(activeSpells[i].gameObject);
 
             // Spell Code icons
-            List<Direction> activeSpellCode = activeSpells[i].spellCode;
+            List<Globals.Direction> activeSpellCode = activeSpells[i].spellCode;
             for (int j = 0; j < activeSpellCode.Count; j++)
             {
                 switch (activeSpellCode[j])
                 {
-                    case Direction.Up:
+                    case Globals.Direction.Up:
                         spellSprites.Add(_arrowIcons[0]);
                         break;
-                    case Direction.Down:
+                    case Globals.Direction.Down:
                         spellSprites.Add(_arrowIcons[1]);
                         break;
-                    case Direction.Left:
+                    case Globals.Direction.Left:
                         spellSprites.Add(_arrowIcons[2]);
                         break;
-                    case Direction.Right:
+                    case Globals.Direction.Right:
                         spellSprites.Add(_arrowIcons[3]);
                         break;
                 }
@@ -271,7 +264,7 @@ public class Grimoire : MonoBehaviour
     /// Updates the player input sequence with the new input and checks for matches with active spell codes
     /// </summary>
     /// <param name="input">The direction of the new input</param>
-    public void ProcessInput(Direction input)
+    public void ProcessInput(Globals.Direction input)
     {
         if (_playerInputSequence.Count == _maxSpellLength + 1)
         {
@@ -279,7 +272,7 @@ public class Grimoire : MonoBehaviour
         }
 
         //Will only read input if a spell is not prepared
-        if (!_preparedSpell)
+        if (!_preparedSpell && _player.HasGear)
         {
             // Makes the input icons appear above the player's head when a spell is not prepared
             _playerInputSequence.Add(input);
@@ -379,7 +372,7 @@ public class Grimoire : MonoBehaviour
     private void DebugInputString()
     {
         string output = "Input: ";
-        foreach (Direction input in _playerInputSequence)
+        foreach (Globals.Direction input in _playerInputSequence)
         {
             output += input + ", ";
         }
@@ -464,7 +457,7 @@ public class Grimoire : MonoBehaviour
     /// Determines the direction of the spell icon arrow based on the current input
     /// </summary>
     /// <param name="input"></param>
-    public void HandleSpellInputIcon(Direction input)
+    public void HandleSpellInputIcon(Globals.Direction input)
     {
         if (_spellInputIcon.transform.parent.childCount <= _maxSpellLength)
         {
@@ -481,16 +474,16 @@ public class Grimoire : MonoBehaviour
             // assuming these are in order -- check later
             switch (input)
             {
-                case Direction.Up:
+                case Globals.Direction.Up:
                     _arrowIcons[0].SetActive(true);
                     break;
-                case Direction.Down:
+                case Globals.Direction.Down:
                     _arrowIcons[1].SetActive(true);
                     break;
-                case Direction.Left:
+                case Globals.Direction.Left:
                     _arrowIcons[2].SetActive(true);
                     break;
-                case Direction.Right:
+                case Globals.Direction.Right:
                     _arrowIcons[3].SetActive(true);
                     break;
             }
@@ -552,33 +545,33 @@ public class Grimoire : MonoBehaviour
     #region Input Methods
     public void OnPrepareSpellUp(InputAction.CallbackContext context)
     {
-        if (context.performed && _player.HasGear)
+        if (context.performed)
         {
-            ProcessInput(Direction.Up);
+            ProcessInput(Globals.Direction.Up);
         }
     }
 
     public void OnPrepareSpellDown(InputAction.CallbackContext context)
     {
-        if (context.performed && _player.HasGear)
+        if (context.performed)
         {
-            ProcessInput(Direction.Down);
+            ProcessInput(Globals.Direction.Down);
         }
     }
 
     public void OnPrepareSpellLeft(InputAction.CallbackContext context)
     {
-        if (context.performed && _player.HasGear)
+        if (context.performed)
         {
-            ProcessInput(Direction.Left);
+            ProcessInput(Globals.Direction.Left);
         }
     }
 
     public void OnPrepareSpellRight(InputAction.CallbackContext context)
     {
-        if (context.performed && _player.HasGear)
+        if (context.performed)
         {
-            ProcessInput(Direction.Right);
+            ProcessInput(Globals.Direction.Right);
         }
     }
     #endregion

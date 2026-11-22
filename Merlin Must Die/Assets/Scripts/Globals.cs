@@ -3,6 +3,14 @@ using System;
 using UnityEngine.InputSystem;
 public static class Globals
 {
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
+
 
     /// <summary>
     /// Returns the angle in degrees a vector would be pointing in.
