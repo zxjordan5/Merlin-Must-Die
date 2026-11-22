@@ -33,13 +33,11 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        DisconnectInputMap();
         ConnectInputMap();
     }
 
     /// <summary>
-    /// Apparently Unity doesn't unassign the input connections so without disconnecting the inputs
-    /// there will be memory leaks. Without this it causes multiple input assignments after closing the In-Editor player
+    /// Disconnect events when disabled
     /// </summary>
     private void OnDisable()
     {
