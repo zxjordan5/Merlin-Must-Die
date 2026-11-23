@@ -37,8 +37,7 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Apparently Unity doesn't unassign the input connections so without disconnecting the inputs
-    /// there will be memory leaks. Without this it causes multiple input assignments after closing the In-Editor player
+    /// Disconnect events when disabled
     /// </summary>
     private void OnDisable()
     {
@@ -50,34 +49,52 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public void ConnectInputMap()
     {
-        ConnectIndividualAction("KBM_AutoMove", _player.OnKBM_AutoMove);
-        ConnectIndividualAction("KBM_Aim", _player.OnKBM_Aim);
-        ConnectIndividualAction("GP_Move", _player.OnGP_Move);
-        ConnectIndividualAction("GP_Aim", _player.OnGP_Aim);
-        ConnectIndividualAction("PrepareSpellUp", _grimoire.OnPrepareSpellUp);
-        ConnectIndividualAction("PrepareSpellDown", _grimoire.OnPrepareSpellDown);
-        ConnectIndividualAction("PrepareSpellLeft", _grimoire.OnPrepareSpellLeft);
-        ConnectIndividualAction("PrepareSpellRight", _grimoire.OnPrepareSpellRight);
-        ConnectIndividualAction("CastSpell", _grimoire.OnCast);
-        ConnectIndividualAction("ExcaliburA", _excalibur.ExcaliburAbilityOneActivate);
-        ConnectIndividualAction("ExcaliburB", _excalibur.ExcaliburAbilityTwoActivate);
-        ConnectIndividualAction("Interact", _player.Interact);
+        if (_player)
+        {
+            ConnectIndividualAction("KBM_AutoMove", _player.OnKBM_AutoMove);
+            ConnectIndividualAction("KBM_Aim", _player.OnKBM_Aim);
+            ConnectIndividualAction("GP_Move", _player.OnGP_Move);
+            ConnectIndividualAction("GP_Aim", _player.OnGP_Aim);
+            ConnectIndividualAction("Interact", _player.Interact);
+        }
+        if (_grimoire)
+        {
+            ConnectIndividualAction("PrepareSpellUp", _grimoire.OnPrepareSpellUp);
+            ConnectIndividualAction("PrepareSpellDown", _grimoire.OnPrepareSpellDown);
+            ConnectIndividualAction("PrepareSpellLeft", _grimoire.OnPrepareSpellLeft);
+            ConnectIndividualAction("PrepareSpellRight", _grimoire.OnPrepareSpellRight);
+            ConnectIndividualAction("CastSpell", _grimoire.OnCast);
+        }
+        if (_excalibur) 
+        { 
+            ConnectIndividualAction("ExcaliburA", _excalibur.ExcaliburAbilityOneActivate);
+            ConnectIndividualAction("ExcaliburB", _excalibur.ExcaliburAbilityTwoActivate);
+        }
     }
 
     public void DisconnectInputMap()
     {
-        DisconnectIndividualAction("KBM_AutoMove", _player.OnKBM_AutoMove);
-        DisconnectIndividualAction("KBM_Aim", _player.OnKBM_Aim);
-        DisconnectIndividualAction("GP_Move", _player.OnGP_Move);
-        DisconnectIndividualAction("GP_Aim", _player.OnGP_Aim);
-        DisconnectIndividualAction("PrepareSpellUp", _grimoire.OnPrepareSpellUp);
-        DisconnectIndividualAction("PrepareSpellDown", _grimoire.OnPrepareSpellDown);
-        DisconnectIndividualAction("PrepareSpellLeft", _grimoire.OnPrepareSpellLeft);
-        DisconnectIndividualAction("PrepareSpellRight", _grimoire.OnPrepareSpellRight);
-        DisconnectIndividualAction("CastSpell", _grimoire.OnCast);
-        DisconnectIndividualAction("ExcaliburA", _excalibur.ExcaliburAbilityOneActivate);
-        DisconnectIndividualAction("ExcaliburB", _excalibur.ExcaliburAbilityTwoActivate);
-        DisconnectIndividualAction("Interact", _player.Interact);
+        if (_player) 
+        { 
+            DisconnectIndividualAction("KBM_AutoMove", _player.OnKBM_AutoMove);
+            DisconnectIndividualAction("KBM_Aim", _player.OnKBM_Aim);
+            DisconnectIndividualAction("GP_Move", _player.OnGP_Move);
+            DisconnectIndividualAction("GP_Aim", _player.OnGP_Aim);
+            DisconnectIndividualAction("Interact", _player.Interact);
+        }
+        if (_grimoire)
+        {
+            DisconnectIndividualAction("PrepareSpellUp", _grimoire.OnPrepareSpellUp);
+            DisconnectIndividualAction("PrepareSpellDown", _grimoire.OnPrepareSpellDown);
+            DisconnectIndividualAction("PrepareSpellLeft", _grimoire.OnPrepareSpellLeft);
+            DisconnectIndividualAction("PrepareSpellRight", _grimoire.OnPrepareSpellRight);
+            DisconnectIndividualAction("CastSpell", _grimoire.OnCast);
+        }
+        if(_excalibur)
+        { 
+            DisconnectIndividualAction("ExcaliburA", _excalibur.ExcaliburAbilityOneActivate);
+            DisconnectIndividualAction("ExcaliburB", _excalibur.ExcaliburAbilityTwoActivate);
+        }
     }
 
     public void ConnectIndividualAction(string actionName, System.Action<InputAction.CallbackContext> action)
