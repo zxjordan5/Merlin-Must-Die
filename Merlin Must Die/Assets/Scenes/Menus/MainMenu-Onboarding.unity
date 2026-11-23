@@ -202,7 +202,7 @@ PrefabInstance:
     - target: {fileID: 1334193401546138491, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2660856110480374591, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+      objectReference: {fileID: -6565306968712683340, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
     - target: {fileID: 1334193401546138491, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -362,7 +362,7 @@ PrefabInstance:
     - target: {fileID: 6102170161210960461, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2660856110480374591, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+      objectReference: {fileID: -6565306968712683340, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
     - target: {fileID: 6102170161210960461, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -1338,7 +1338,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color=#F45>Merlin</color> Must Die
+  m_text: Merlin Must <color=#F45>Die</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f77f0c286fa7cea4aa722137753ff719, type: 2}
   m_sharedMaterial: {fileID: -1885104102040121907, guid: f77f0c286fa7cea4aa722137753ff719, type: 2}
@@ -1558,7 +1558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.76037735, b: 0.9912439, a: 0.1254902}
+  m_Color: {r: 1, g: 0.98679245, b: 0.999567, a: 0.1254902}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1634,7 +1634,7 @@ PrefabInstance:
     - target: {fileID: 1334193401546138491, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2660856110480374591, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+      objectReference: {fileID: -6565306968712683340, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
     - target: {fileID: 1334193401546138491, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -1792,7 +1792,7 @@ PrefabInstance:
     - target: {fileID: 6102170161210960461, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2660856110480374591, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+      objectReference: {fileID: -6565306968712683340, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
     - target: {fileID: 6102170161210960461, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -2169,7 +2169,7 @@ PrefabInstance:
     - target: {fileID: 1294765692632439187, guid: 7de2eece5e5cc6b46a9e2a06aad5251d, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2660856110480374591, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+      objectReference: {fileID: -6565306968712683340, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
     - target: {fileID: 1294765692632439187, guid: 7de2eece5e5cc6b46a9e2a06aad5251d, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -2282,7 +2282,7 @@ PrefabInstance:
     - target: {fileID: 1334193401546138491, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2660856110480374591, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+      objectReference: {fileID: -6565306968712683340, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
     - target: {fileID: 1334193401546138491, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -2430,7 +2430,7 @@ PrefabInstance:
     - target: {fileID: 6102170161210960461, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2660856110480374591, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
+      objectReference: {fileID: -6565306968712683340, guid: ea6e507b1ec88c946ab425f304293367, type: 2}
     - target: {fileID: 6102170161210960461, guid: f48df1a75ec0e1a44b015788f4a093e4, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
