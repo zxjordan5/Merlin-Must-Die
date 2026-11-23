@@ -80,7 +80,7 @@ public class DestructibleObject : MonoBehaviour
     /// <summary>
     /// Deletes this object from the scene and instantiates it's destroyed pieces
     /// </summary>
-    void DestroyObject()
+    public void DestroyObject()
     {
         GameObject destroyedObject = (GameObject)Instantiate(destructiblePrefabRef, transform.position, transform.rotation);
         GameObject particles = (GameObject)Instantiate(particleExplosionRef, transform.position, transform.rotation);
