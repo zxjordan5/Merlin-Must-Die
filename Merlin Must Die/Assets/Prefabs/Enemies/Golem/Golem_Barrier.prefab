@@ -101,6 +101,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8583702793992404299, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
+      propertyPath: _holeObject
+      value: 
+      objectReference: {fileID: 7416419192005894515, guid: a468162900399c840a843f6922f9496d, type: 3}
+    - target: {fileID: 8583702793992404299, guid: f2786fe60e36c6c4a8e47495c0938ed7, type: 3}
       propertyPath: excaliburChargePerHit
       value: 0
       objectReference: {fileID: 0}

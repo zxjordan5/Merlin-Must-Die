@@ -82,7 +82,7 @@ public class Golemite : Wander_Enemy
             _rb.transform.position = Vector2.MoveTowards(
                 _rb.transform.position,
                 _player.transform.position,
-                1.5f * MovementSpeedMultiplier * Time.deltaTime);
+                1.5f * MoveSpeedMult * Time.deltaTime);
             _detectionCollider.radius = _aggroRadius;
         }
 
@@ -91,7 +91,7 @@ public class Golemite : Wander_Enemy
             _rb.transform.position = Vector2.MoveTowards(
                 _rb.transform.position,
                 _target,
-                5 * MovementSpeedMultiplier * Time.deltaTime);
+                5 * MoveSpeedMult * Time.deltaTime);
         }
         
     }
@@ -101,7 +101,7 @@ public class Golemite : Wander_Enemy
         // If the player gets close enough, the rock stops, rolls for a sec, then dashes towards the players POS
         if (Vector2.Distance(_player.transform.position, _rb.transform.position) < 2)
         {
-            _rb.linearVelocity = new Vector2(1, 1) * MovementSpeedMultiplier;
+            _rb.linearVelocity = new Vector2(1, 1) * MoveSpeedMult;
             _target = _player.transform.position;
             StartCoroutine("RollTimer");
         }

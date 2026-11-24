@@ -47,7 +47,8 @@ public abstract class Wander_Enemy : MonoBehaviour
     /// <summary>
     /// Movement speed multiplier. Needed for status effects
     /// </summary>
-    public float MovementSpeedMultiplier { get; private set; } = 1f;
+    [SerializeField] private float _moveSpeedMult = 1f;
+    public float MoveSpeedMult { get { return _moveSpeedMult; } private set { _moveSpeedMult = value; } }
     [SerializeField] protected int _health;
     protected int _initialHealth;
     private enum States { Wandering = 0, Attacking = 1, Paused = 2, Dead = 3 }
@@ -168,14 +169,14 @@ public abstract class Wander_Enemy : MonoBehaviour
 
     protected virtual void Wander()
     {
-        _rb.linearVelocityX = (float)Random.Range(-100, 100) / 25 * MovementSpeedMultiplier;
-        _rb.linearVelocityY = (float)Random.Range(-100, 100) / 25 * MovementSpeedMultiplier;
+        _rb.linearVelocityX = (float)Random.Range(-100, 100) / 25 * MoveSpeedMult;
+        _rb.linearVelocityY = (float)Random.Range(-100, 100) / 25 * MoveSpeedMult;
         CurrentState = States.Wandering;
     }
 
     public void SetMovementSpeedMultiplier(float multiplier)
     {
-        MovementSpeedMultiplier = Mathf.Max(0f, multiplier);
+        MoveSpeedMult = Mathf.Max(0f, multiplier);
     }
 
     protected virtual bool Detection()

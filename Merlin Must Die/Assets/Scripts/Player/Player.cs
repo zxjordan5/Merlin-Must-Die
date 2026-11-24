@@ -63,7 +63,6 @@ public class Player : MonoBehaviour
     private HitStop _hitStop;
     #endregion
 
-    public enum Direction { Up = 0, Right = 1, Down = 2, Left = 3 }
     //***** STATE PROPERTIES *****
     #region StateProperties
     /// <summary>
@@ -98,55 +97,17 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Returns the direction the player is aiming as an enumerator
     /// </summary>
-    public Direction AimDirection
+    public Globals.Direction AimDirection
     {
-        get
-        {
-            float aimAngle = AimAngle;
-            if (aimAngle < 45 || aimAngle > 315)
-            {
-                return Direction.Right;
-            }
-            else if (45 < aimAngle && aimAngle < 135)
-            {
-                return Direction.Up;
-            }
-            else if (135 < aimAngle && aimAngle < 225)
-            {
-                return Direction.Left;
-            }
-            else
-            {
-                return Direction.Down;
-            }
-        }
+        get{ return Globals.DirFromAngle(AimAngle); }
     }
 
     /// <summary>
     /// Returns the direction the player is moving as an enumerator
     /// </summary>
-    public Direction MoveDirection
+    public Globals.Direction MoveDirection
     {
-        get
-        {
-            float moveAngle = MoveAngle;
-            if (moveAngle < 45 || moveAngle > 315)
-            {
-                return Direction.Right;
-            }
-            else if (45 < moveAngle && moveAngle < 135)
-            {
-                return Direction.Up;
-            }
-            else if (135 < moveAngle && moveAngle < 225)
-            {
-                return Direction.Left;
-            }
-            else
-            {
-                return Direction.Down;
-            }
-        }
+        get{return Globals.DirFromAngle(MoveAngle);}
     }
     #endregion
 

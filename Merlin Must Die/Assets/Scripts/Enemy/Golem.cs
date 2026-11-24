@@ -51,7 +51,16 @@ public class Golem : Wander_Enemy
 
     public enum State{ Sleeping = 0, Attacking = 1, Aiming = 2, Shooting = 3, Slamming = 4, Dead = 5 }
     public State CurrentState { get; private set; } = State.Sleeping;
+    public bool Moving { get { return Vector2.SqrMagnitude(_rb.linearVelocity) + 0.05f > Vector2.SqrMagnitude(Vector2.zero); } }
+    public bool Damaged { get { return _health < _initialHealth / 2; } }
+    public float MoveAngle { get { return Globals.GetAngleInDegFromVec(_target - (Vector2)_rb.transform.position); } }
     [SerializeField] private int _state = 0;
+
+    // Animation fields 
+    private int _animMoveDirID = Animator.StringToHash("MoveDirection");
+    private int _animDamageedID = Animator.StringToHash("Damaged");
+    private int _animMovingID = Animator.StringToHash("Moving");
+
     public State MoveState
     {
         get
@@ -108,23 +117,32 @@ public class Golem : Wander_Enemy
         if (CurrentState == State.Sleeping && Detection())
         {
             CurrentState = State.Attacking;
+            _target = _player.transform.position;
         }
 
         _state = (int)CurrentState;
+        _animator.SetBool(_animMovingID, Moving);
+        _animator.SetBool(_animDamageedID, Damaged);
+        _animator.SetFloat("MoveDirection", (int)Globals.DirFromAngle(MoveAngle));
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
 
+        Debug.Log(_target);
+
         // Once the player is detected, the enemy always goes towards their location to attack
-        if (CurrentState == State.Attacking && _target == new Vector2(1,1))
+        if (CurrentState == State.Attacking && _target != new Vector2(1,1))
         {
             Attack();
-            _rb.transform.position = Vector2.MoveTowards(
-                _rb.transform.position,
-                _player.transform.position,
-                0.5f * Time.deltaTime);
+            //Vector2 moveVector = Vector2.Normalize(_target - (Vector2)_rb.transform.position);
+
+            //_rb.AddForce(moveVector * MoveSpeedMult);
+            //_rb.transform.position = Vector2.MoveTowards(
+            //    _rb.transform.position,
+            //    _player.transform.position,
+            //    0.5f * Time.deltaTime);
             _detectionCollider.radius = _aggroRadius;
         }
 
@@ -227,6 +245,7 @@ public class Golem : Wander_Enemy
 
     protected override void Attack()
     {
+        Debug.Log("attacking - " + _rocks.Count);
         // Golem default behavior (has rocks)
         if(_rocks.Count > 0)
         {
@@ -381,7 +400,7 @@ public class Golem : Wander_Enemy
 
         yield return new WaitForSeconds(reloadTime);
         CurrentState = State.Attacking;
-        _target = new Vector2(1,1);
+        //_target = new Vector2(1,1);
         //_attackCooldownTimer = 0;
     }
 
@@ -458,6 +477,6 @@ public class Golem : Wander_Enemy
         // Wait for cooldown to be done, and then reset state values
         yield return new WaitForSeconds(slamCooldown);
         CurrentState = State.Attacking;
-        _target = new Vector2(1, 1);
+        //_target = new Vector2(1, 1);
     }
 }

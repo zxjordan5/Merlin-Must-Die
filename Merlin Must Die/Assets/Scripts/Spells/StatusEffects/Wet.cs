@@ -23,7 +23,7 @@ public class Wet : StatusEffect
         // Set enemy movement speed multiplication
         if (_enemy)
         {
-            _previousMovementSpeedMultiplier = _enemy.MovementSpeedMultiplier;
+            _previousMovementSpeedMultiplier = _enemy.MoveSpeedMult;
             _enemy.SetMovementSpeedMultiplier(_previousMovementSpeedMultiplier * MovementSpeedModifier);
         }
 

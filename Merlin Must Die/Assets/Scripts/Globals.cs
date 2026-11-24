@@ -5,10 +5,10 @@ public static class Globals
 {
     public enum Direction
     {
-        Up,
-        Down,
-        Left,
-        Right
+        Up = 0,
+        Right = 1,
+        Down = 2,
+        Left = 3,
     }
 
 
@@ -24,5 +24,24 @@ public static class Globals
             angle = 180 + (180 + angle);
         }
         return angle;
+    }
+
+    public static Direction DirFromAngle(float angle) {
+        if (angle < 45 || angle > 315)
+        {
+            return Direction.Right;
+        }
+        else if (45 < angle && angle < 135)
+        {
+            return Direction.Up;
+        }
+        else if (135 < angle && angle < 225)
+        {
+            return Direction.Left;
+        }
+        else
+        {
+            return Direction.Down;
+        }
     }
 }

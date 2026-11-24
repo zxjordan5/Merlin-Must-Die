@@ -503,7 +503,7 @@ public class Grimoire : MonoBehaviour
         List<Spell> spellsOnCooldown = new List<Spell>();
         for (int i = 0; i < _instantiatedActiveSpells.Count; i++)
         {
-            Debug.Log(_instantiatedActiveSpells[i].OnCooldown);
+            //Debug.Log(_instantiatedActiveSpells[i].OnCooldown);
 
             // Darken the arrows for spells on cooldown, and reset arrow icons
             // for those that aren't on cooldown
