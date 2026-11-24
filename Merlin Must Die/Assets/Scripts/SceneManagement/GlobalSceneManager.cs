@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,6 +6,7 @@ public class GlobalSceneManager : MonoBehaviour
 {
     public static GlobalSceneManager Instance { get; private set; }
     public string CurrentScene { get; private set; }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,5 +51,40 @@ public class GlobalSceneManager : MonoBehaviour
     {
         CurrentScene = scenePath;
         SceneManager.LoadScene(scenePath);
+    }
+
+    /// <summary>
+    /// Start game by loading the first level
+    /// 
+    /// TODO (FUTURE)
+    /// Save the players furthest level and map progress for continuing
+    /// </summary>
+    public void StartGame()
+    {
+        CurrentScene = LevelScenePaths.LevelOne;
+        SceneManager.LoadScene(LevelScenePaths.LevelOne);
+    }
+
+    /// <summary>
+    /// Closes the game 
+    /// 
+    /// TODO (FUTURE)
+    /// Write current level and stats to a file
+    /// Also export game metrics
+    /// </summary>
+    public void QuitGame()
+    {
+        if (EditorApplication.isPlaying)
+        {
+            EditorApplication.isPlaying = false;
+            EditorApplication.Beep();
+        }
+        Application.Quit();
+    }
+
+    public void OpenSettings()
+    {
+        CurrentScene = LevelScenePaths.SettingsScene;
+        SceneManager.LoadScene(LevelScenePaths.SettingsScene);
     }
 }
