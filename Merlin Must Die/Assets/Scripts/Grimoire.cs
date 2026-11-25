@@ -394,6 +394,10 @@ public class Grimoire : MonoBehaviour
 
         _preparedSpell = spell;
 
+        // Activate custom spell preperation logic based on crosshair
+        _player.ChangeCrosshair(spell);
+
+
         //Loop through the list of spell icons and check if they match the spell being prepared
         //If they do, instantiate the prepared spell particles at that position
         foreach (GameObject spellIcon in _createdSpellIcons)
@@ -503,7 +507,7 @@ public class Grimoire : MonoBehaviour
         List<Spell> spellsOnCooldown = new List<Spell>();
         for (int i = 0; i < _instantiatedActiveSpells.Count; i++)
         {
-            Debug.Log(_instantiatedActiveSpells[i].OnCooldown);
+            //Debug.Log(_instantiatedActiveSpells[i].OnCooldown);
 
             // Darken the arrows for spells on cooldown, and reset arrow icons
             // for those that aren't on cooldown
