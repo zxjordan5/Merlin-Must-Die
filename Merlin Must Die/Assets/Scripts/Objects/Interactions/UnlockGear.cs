@@ -4,7 +4,13 @@ using UnityEngine;
 [System.Serializable]
 public class UnlockGear : Interaction
 {
-    [SerializeField] private Canvas _gearCanvas;
+    private Canvas _gearCanvas;
+
+    private void Awake()
+    {
+        _gearCanvas = GameObject.Find("GrimoireUI").GetComponent<Canvas>();
+        _gearCanvas.sortingOrder = -1;
+    }
 
     public override void Behaviour()
     {

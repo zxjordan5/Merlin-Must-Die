@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Grimoire Class
@@ -51,10 +52,14 @@ public class Grimoire : MonoBehaviour
     //***** UI FIELDS *****
     #region UI
     // The Spell Input GO with 4 cardinal direction arrow sprites as children
+    [Header("UI")]
     [SerializeField]
     private HorizontalLayoutGroup _spellIconArea;
     [SerializeField]
     private GameObject _spellInputIcon;
+
+    [SerializeField] private GameObject grimoireContents;
+
 
     // 4 icons that refer to the 4 cardinal direction arrows.
     // Used to instantiate arrow icons in the grimoire according to spell codes.
@@ -79,14 +84,21 @@ public class Grimoire : MonoBehaviour
     #endregion //UI END
 
     //***** COMBO FIELDS *****
+    #region Combo
     private int _comboCounter;
     private float _comboTimer;
-    private float _comboGapTime = 1.5f;
+    /// <summary>
+    /// How long should the combo last before resetting
+    /// </summary>
+    [Header("Combos")]
+    [SerializeField] private float _comboGapTime = 1.5f;
+    [SerializeField] private float _cooldownDecreasePercentPerCombo = 1;
+    #endregion
 
     //Excalibur
+    [Header("Excalibur")]
     [SerializeField] private Excalibur _excalibur;
 
-    [SerializeField] private GameObject grimoireContents;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -142,6 +154,7 @@ public class Grimoire : MonoBehaviour
         else
             _spellBlockedIcon.enabled = false;
     }
+
 
     /// <summary>
     /// Gets all grimoire contents and displays it in the UI
@@ -270,6 +283,12 @@ public class Grimoire : MonoBehaviour
     /// <param name="input">The direction of the new input</param>
     public void ProcessInput(Globals.Direction input)
     {
+        //Do not process input when in a menu
+        if (GlobalSceneManager.Instance.InMenu)
+        {
+            return;
+        }
+
         if (_playerInputSequence.Count == _maxSpellLength + 1)
         {
             ResetInputSequence();
@@ -422,6 +441,7 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
+            Debug.Log("spell casting");
            
             //Extra check for a prepared spell
             if (!_preparedSpell)
@@ -606,7 +626,7 @@ public class Grimoire : MonoBehaviour
         _comboTimer = 0;
         foreach(Spell spell in _instantiatedActiveSpells)
         {
-            spell.ReduceCooldownPercent(_comboCounter);
+            spell.ReduceCooldownPercent(_comboCounter * _cooldownDecreasePercentPerCombo);
         }
     }
 

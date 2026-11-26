@@ -72,7 +72,6 @@ public abstract class Wander_Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         _flash = GetComponent<Flash>();
-        _player = FindAnyObjectByType<Player>();
         _enemyCollider = GetComponent<Collider2D>();
 
         // Will be changed in child class, this just makes Detection() work
@@ -81,6 +80,12 @@ public abstract class Wander_Enemy : MonoBehaviour
         _aggroRadius = 2 * detectionRadius;
         
         SetUpDetection();
+    }
+
+    //Check for player after awake to allow for the player to load in across scenes
+    private void Start()
+    {
+        _player = FindAnyObjectByType<Player>();
     }
 
     protected virtual void FixedUpdate()

@@ -7,6 +7,8 @@ public class GlobalSceneManager : MonoBehaviour
     public static GlobalSceneManager Instance { get; private set; }
     public string CurrentScene { get; private set; }
 
+    public bool InMenu { get { return CurrentScene.Contains("Menu"); } }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,14 +16,12 @@ public class GlobalSceneManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject); // Persist across scene changes
+            CurrentScene = SceneManager.GetActiveScene().path;
             return;
         }
 
         CurrentScene = SceneManager.GetActiveScene().path;
-        Debug.Log(CurrentScene);
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject); // Persist across scene changes
     }
 
 

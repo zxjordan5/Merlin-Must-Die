@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -191,7 +192,6 @@ public class Player : MonoBehaviour
     private bool _chUsePlayerVelocity = false;
     #endregion
 
-
     #endregion 
     //*** END VARIABLES ***
 
@@ -206,8 +206,10 @@ public class Player : MonoBehaviour
         _chSpriteRenderer = _crosshair.GetComponent<SpriteRenderer>();
         _crosshair.SetActive(true);
         _crosshair.transform.position = _rb.transform.position + new Vector3(0, 2, 0);
+        
         _cam = Camera.main;
     }
+
 
     //Contains animation logic
     void Update()
@@ -258,6 +260,31 @@ public class Player : MonoBehaviour
         _cam.transform.position = new Vector3(_rb.transform.position.x, _rb.transform.position.y, _rb.transform.position.z - 10);
     }
 
+    //Setup scene loaded event
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+
+    /// <summary>
+    /// Moves Morgana to the LevelStart game object when loading into a scene
+    /// </summary>
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        _cam = Camera.main;
+
+        GameObject levelStart = GameObject.Find("LevelStart");
+        if (levelStart)
+        {
+            transform.position = levelStart.transform.position;
+        }
+    }
+
     /// <summary>
     /// Called every frame in fixed update, moves rigidbody.
     /// </summary>
@@ -304,6 +331,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    //******** CROSSHAIR METHODS ********
+    #region Crosshair
     /// <summary>
     /// Updates crosshair position based on the current crosshair state
     /// </summary>
@@ -361,6 +390,7 @@ public class Player : MonoBehaviour
         _crosshairState = CrosshairState.Default;
         _chSpriteRenderer.sprite = _defaultCrosshairSprite;
     }
+    #endregion
 
     /// <summary>
     /// Player logic for spell casting

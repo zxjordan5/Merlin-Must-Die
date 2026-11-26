@@ -19,7 +19,7 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
-
+        //
         if(!_player)
             _player = FindAnyObjectByType<Player>();
         if(!_grimoire)

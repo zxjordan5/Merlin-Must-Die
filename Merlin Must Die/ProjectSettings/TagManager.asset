@@ -48,6 +48,9 @@ TagManager:
   - name: EnvironmentEffects
     uniqueID: 2720405145
     locked: 0
+  - name: Fog
+    uniqueID: 3512885405
+    locked: 0
   m_RenderingLayers:
   - Default
   m_MigratedRenderPipelines: []
