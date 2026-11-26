@@ -394,6 +394,10 @@ public class Grimoire : MonoBehaviour
 
         _preparedSpell = spell;
 
+        // Activate custom spell preperation logic based on crosshair
+        _player.ChangeCrosshair(spell);
+
+
         //Loop through the list of spell icons and check if they match the spell being prepared
         //If they do, instantiate the prepared spell particles at that position
         foreach (GameObject spellIcon in _createdSpellIcons)
