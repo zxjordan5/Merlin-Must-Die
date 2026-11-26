@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
+
 public class Player : MonoBehaviour
 {
 
@@ -172,12 +173,10 @@ public class Player : MonoBehaviour
     } = false;
     #endregion
 
-    private GameObject _crosshair;
     private Camera _cam;
-    // We can remove "serialize" once we've settled on a speed
     [SerializeField] private float maxSpeed = 5.0f;
-    [SerializeField] private Vector2 _targetDirection;
-    [SerializeField] private Vector2 _targetVelocity;
+    private Vector2 _targetDirection;
+    private Vector2 _targetVelocity;
 
     public float Velocity
     {
@@ -201,8 +200,36 @@ public class Player : MonoBehaviour
     private bool _dashing; //Tracks if the player is dashing
     private Vector2 _dashTarget; //Target to dash towards
 
-
     private Animator _animator;
+
+    //********** CROSSHAIR PROPERTIES **********//
+    #region Crosshair
+    /// <summary>
+    /// Tracks which logic the crosshair should use to calculate it's position
+    /// </summary>
+    public enum CrosshairState { Default, MarkTrajectory }
+    private CrosshairState _crosshairState = CrosshairState.Default;
+    private GameObject _crosshair;
+    private SpriteRenderer _chSpriteRenderer;
+
+    [Header("Crosshair Setup")]
+    [SerializeField] private Sprite _defaultCrosshairSprite;
+    [SerializeField] private Sprite _landingCrosshairSprite;
+
+    /// <summary>
+    /// Used when marking trajectory for projecitle spells to hold information on where they will land
+    /// </summary>
+    private float _chBaseDistance = 0;
+    /// <summary>
+    /// The upper bound of the prepared spell travel distance
+    /// </summary>
+    private float _chMaxDistance = 0;
+    /// <summary>
+    /// Should the crosshair be affected by the players velocity
+    /// </summary>
+    private bool _chUsePlayerVelocity = false;
+    #endregion
+
 
     #endregion 
     //*** END VARIABLES ***
@@ -214,7 +241,8 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _interactionCollider = transform.Find("InteractionCollider").GetComponent<CircleCollider2D>();
-        _crosshair = transform.Find("crosshair").gameObject;
+        _crosshair = transform.Find("Crosshair").gameObject;
+        _chSpriteRenderer = _crosshair.GetComponent<SpriteRenderer>();
         _crosshair.SetActive(true);
         _crosshair.transform.position = _rb.transform.position + new Vector3(0, 2, 0);
         _cam = Camera.main;
@@ -256,6 +284,8 @@ public class Player : MonoBehaviour
 
         // GP aiming
         CalculateAim();
+        // Calculate Crosshair Position
+        CalculateCrosshair();
 
         // Slows player movement when not actively moving
         if (!_kbMoving && !_gpMoving && !_dashing)
@@ -272,17 +302,18 @@ public class Player : MonoBehaviour
     /// </summary>
     private void CalculateMovement()
     {
+
         if (_gpMoving)
         {
             _targetDirection = Gamepad.current.leftStick.value;
             _targetVelocity = _targetDirection * maxSpeed;
             _rb.AddForce((_targetVelocity - _rb.linearVelocity) * 2);
 
+            //Autoaim when not moving on controller
             if (!_gpAiming)
             {
                 _gpPos = new Vector3(Gamepad.current.leftStick.value.x, Gamepad.current.leftStick.value.y, 0).normalized * 2;
-                _crosshair.transform.position = _rb.transform.position + _gpPos;
-                _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
+                _aimDirRaw = _gpPos;
             }
         }
         // Kb/M movement
@@ -302,20 +333,82 @@ public class Player : MonoBehaviour
         if (_gpAiming)
         {
             _gpPos = new Vector3(Gamepad.current.rightStick.value.x, Gamepad.current.rightStick.value.y, 0).normalized * 2;
-            _crosshair.transform.position = _rb.transform.position + _gpPos;
-            _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
+            _aimDirRaw = _gpPos;
         }
         // Kb/M aiming
         else if (_kbAiming && InputManager.CurrentDevice == InputManager.ControlScheme.Keyboard)
         {
             _mousePos = (Mouse.current.position.ReadValue() - new Vector2(Screen.width / 2, Screen.height / 2)).normalized * 2;
-            _crosshair.transform.position = _rb.transform.position + _mousePos;
-            _aimDirRaw = _crosshair.transform.position - _rb.transform.position;
+            _aimDirRaw = _mousePos;
         }
     }
 
+    /// <summary>
+    /// Updates crosshair position based on the current crosshair state
+    /// </summary>
+    private void CalculateCrosshair()
+    {
+        switch (_crosshairState)
+        {
+            case CrosshairState.Default:
+                _crosshair.transform.position = _aimDirRaw + (Vector2)_rb.transform.position;
+                break;
+            case CrosshairState.MarkTrajectory:
+                float chDistance = _chBaseDistance;
+
+                //Add players velocity to the trajectory
+                //Does not allow player velocity smaller than 1 because no spell in the game does either
+                if (_chUsePlayerVelocity && Velocity > 1)
+                    chDistance *= Velocity;
+
+                //Limit crosshair distance if there is a max velocity and it's being exceeded
+                if (_chMaxDistance > 0 && chDistance > _chMaxDistance)
+                    chDistance = _chMaxDistance;
+
+                //Hard limit on crosshair distance
+                if (chDistance > 4) chDistance = 4;
+
+                //Set the crosshair to be at the end of the aim vector with the magnitude of the distance traveled
+                _crosshair.transform.position = (Vector2)transform.position + (AimDirNorm * chDistance);
+
+                break;
+        }
+        
+    }
+
+    /// <summary>
+    /// Changes the current crosshair state to match the spell
+    /// 
+    /// TODO: make some sort of categorization of crosshair type that can be held in spell information
+    /// TODO: think of other indicators that may be helpful
+    /// </summary>
+    public void ChangeCrosshair(Spell spell)
+    {
+        if(spell.SpellName.Contains("Earth Barrier"))
+        {
+            _crosshairState = CrosshairState.MarkTrajectory;
+            _chSpriteRenderer.sprite = _landingCrosshairSprite;
+            float airTime = spell.spellObj.GetComponent<EarthBarrierObject>().AirTime;
+            float velocity = spell.spellObj.GetComponent<Projectile>().InitialVelocity;
+            _chUsePlayerVelocity = true;
+            _chBaseDistance = airTime * velocity;
+            _chMaxDistance = spell.spellObj.GetComponent<Projectile>().MaxVelocity;
+        }
+    }
+    public void ResetCrosshair()
+    {
+        _crosshairState = CrosshairState.Default;
+        _chSpriteRenderer.sprite = _defaultCrosshairSprite;
+    }
+
+    /// <summary>
+    /// Player logic for spell casting
+    /// Reset the crosshair and play proper animations
+    /// </summary>
     public void SpellCast()
     {
+        ResetCrosshair();
+
         _animator.SetBool("AbilityActive", true);
         StartCoroutine("ResumeAnimation", 0.7f);
 

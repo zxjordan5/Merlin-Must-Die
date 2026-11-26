@@ -9,12 +9,22 @@ using System.Collections.Generic;
 public class EarthBarrierObject : SpellObject
 {
     
-    [SerializeField] protected AudioClip landSound;
-    [SerializeField] protected ParticleSystem landingParticles;
-    [SerializeField] protected AudioClip splashSound;
-    [SerializeField] protected ParticleSystem splashParticles;
+    /// <summary>
+    /// How long the object should stay in the air before it lands
+    /// </summary>
+    [SerializeField] private float _airTime = 2.0f; 
+    public float AirTime { get { return _airTime; } }
+    private float _airTimeCounter = 0;
 
 
+    
+    //Sprites
+    SpriteRenderer _spriteRenderer;
+
+    [Header("Object Setup")]
+    [SerializeField] private SpriteRenderer _inAirSprite;
+    [SerializeField] private GameObject _holeObject;
+    
     /// <summary>
     /// Reference to the collider to be disabled while the object is in the air
     /// </summary>
@@ -22,17 +32,6 @@ public class EarthBarrierObject : SpellObject
     [SerializeField] private Collider2D _damageCollider;
     private Projectile _projectile;
 
-
-    //Sprites
-    SpriteRenderer _spriteRenderer;
-    [SerializeField] private SpriteRenderer _inAirSprite;
-    [SerializeField] private GameObject _holeObject;
-
-    /// <summary>
-    /// How long the object should stay in the air before it lands
-    /// </summary>
-    [SerializeField] private float _airTime = 2.0f;
-    private float _airTimeCounter = 0;
     private bool _landed = false;
 
     //Used to determine if the barrier should be sinking
@@ -48,6 +47,17 @@ public class EarthBarrierObject : SpellObject
     /// The starting scale of the object is saved so its scale can be modified non-destructively
     /// </summary>
     private Vector3 _baseScale;
+
+  
+
+    [Header("Sounds & Effects")]
+    [SerializeField] protected AudioClip landSound;
+    [SerializeField] protected ParticleSystem landingParticles;
+    [SerializeField] protected AudioClip splashSound;
+    [SerializeField] protected ParticleSystem splashParticles;
+
+
+  
 
     public override void Awake()
     {
@@ -111,24 +121,6 @@ public class EarthBarrierObject : SpellObject
             {
                 Destroy(this);
             }
-        }
-    }
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        base.OnTriggerEnter2D(collision);
-
-        if (LayerMask.LayerToName(collision.gameObject.layer) == "Water"){
-            Debug.Log("yeah");
-            _overWater = true;
-        }
-    }
-
-    protected override void OnTriggerExit2D(Collider2D collision)
-    {
-        if (LayerMask.LayerToName(collision.gameObject.layer) == "Water")
-        {
-            _overWater = false;
         }
     }
 

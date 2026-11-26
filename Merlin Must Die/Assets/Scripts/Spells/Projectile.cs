@@ -7,12 +7,14 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float _initialVelocity = 1;
+    public float InitialVelocity { get { return _initialVelocity; } }
    
     /// <summary>
     /// Limit on the objects velocity
     /// Will not work if set to 0
     /// </summary>
     [SerializeField] private float _maxVelocity = 0;
+    public float MaxVelocity { get { return _maxVelocity; }  }
 
     private Rigidbody2D _rb;
 
