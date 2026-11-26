@@ -10,12 +10,14 @@ using Unity.VisualScripting;
 
 public class Golem : Wander_Enemy
 {
+    [Header("Stats")]
     [SerializeField] private float aimTime = 1.0f;
     [SerializeField] private float reloadTime = 2.0f;
     [SerializeField] private float slamColliderRadius = 1.0f;
     [SerializeField] private float slamTriggerRadius = 2.0f;
     [SerializeField] private float slamCooldown = 2.0f;
 
+    [Header("Setup")]
     [SerializeField] private GameObject rockPrefab;
     [SerializeField] private ParticleSystem slamParticles;
 
@@ -37,6 +39,7 @@ public class Golem : Wander_Enemy
     private List<SplineObject> _rockSplineObjects;
     private CircleCollider2D _slamCollider;
     private Animator _animator;
+    private Vector2 _rockTarget = new Vector2(1,1);
 
     /// <summary>
     /// Simple state check to see if the initial set of rocks have been spawned
@@ -51,7 +54,7 @@ public class Golem : Wander_Enemy
 
     public enum State{ Sleeping = 0, Attacking = 1, Aiming = 2, Shooting = 3, Slamming = 4, Dead = 5 }
     public State CurrentState { get; private set; } = State.Sleeping;
-    public bool Moving { get { return Vector2.SqrMagnitude(_rb.linearVelocity) + 0.05f > Vector2.SqrMagnitude(Vector2.zero); } }
+    public bool Moving { get { return (CurrentState == State.Attacking); } }
     public bool Damaged { get { return _health < _initialHealth / 2; } }
     public float MoveAngle { get { return Globals.GetAngleInDegFromVec(_target - (Vector2)_rb.transform.position); } }
     [SerializeField] private int _state = 0;
@@ -83,7 +86,7 @@ public class Golem : Wander_Enemy
         base.Awake();
 
         _animator = GetComponent<Animator>();
-        _target = new Vector2(1,1);
+        _rockTarget = new Vector2(1,1);
 
         _initialHealth = 4;
         _health = _initialHealth;
@@ -117,33 +120,36 @@ public class Golem : Wander_Enemy
         if (CurrentState == State.Sleeping && Detection())
         {
             CurrentState = State.Attacking;
-            _target = _player.transform.position;
         }
 
         _state = (int)CurrentState;
         _animator.SetBool(_animMovingID, Moving);
         _animator.SetBool(_animDamageedID, Damaged);
-        _animator.SetFloat("MoveDirection", (int)Globals.DirFromAngle(MoveAngle));
+        _animator.SetFloat(_animMoveDirID, (int)Globals.DirFromAngle(MoveAngle));
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
 
-        Debug.Log(_target);
-
-        // Once the player is detected, the enemy always goes towards their location to attack
-        if (CurrentState == State.Attacking && _target != new Vector2(1,1))
+        
+        if (CurrentState == State.Attacking && _rockTarget == new Vector2(1,1))
         {
             Attack();
-            //Vector2 moveVector = Vector2.Normalize(_target - (Vector2)_rb.transform.position);
 
-            //_rb.AddForce(moveVector * MoveSpeedMult);
             //_rb.transform.position = Vector2.MoveTowards(
             //    _rb.transform.position,
             //    _player.transform.position,
             //    0.5f * Time.deltaTime);
             _detectionCollider.radius = _aggroRadius;
+        }
+        else if(CurrentState == State.Attacking)
+        {
+            
+            _target = _player.transform.position;
+
+            Vector2 moveVector = Vector2.Normalize(_target - (Vector2)_rb.transform.position);
+            _rb.AddForce(moveVector * MoveSpeedMult);
         }
 
         // The parent sprite flipping, also flips the rocks completely 
@@ -245,14 +251,13 @@ public class Golem : Wander_Enemy
 
     protected override void Attack()
     {
-        Debug.Log("attacking - " + _rocks.Count);
+        //Debug.Log("attacking - " + _rocks.Count);
         // Golem default behavior (has rocks)
         if(_rocks.Count > 0)
         {
             // If the player gets too close, the golem stomps
             if (Vector2.Distance(_player.transform.position, _rb.transform.position) < slamTriggerRadius)
             {
-                _target = _player.transform.position;
                 StartCoroutine("Slam");
             }
 
@@ -270,7 +275,6 @@ public class Golem : Wander_Enemy
             // If the player gets too close, the golem stomps
             if (Vector2.Distance(_player.transform.position, _rb.transform.position) < slamTriggerRadius)
             {
-                _target = _player.transform.position;
                 StartCoroutine("Slam");
             }
         }
@@ -400,7 +404,7 @@ public class Golem : Wander_Enemy
 
         yield return new WaitForSeconds(reloadTime);
         CurrentState = State.Attacking;
-        //_target = new Vector2(1,1);
+        _rockTarget = new Vector2(1,1);
         //_attackCooldownTimer = 0;
     }
 
@@ -417,7 +421,7 @@ public class Golem : Wander_Enemy
         }
 
         GameObject rockToLaunch = _rocks[_rocks.Count-1];
-        _target = _player.transform.position - rockToLaunch.transform.position;
+        _rockTarget = _player.transform.position - rockToLaunch.transform.position;
         Projectile rockProj = rockToLaunch.GetComponent<Projectile>();
         EarthBarrierObject rockEbo = rockToLaunch.GetComponent<EarthBarrierObject>();
 
@@ -429,7 +433,7 @@ public class Golem : Wander_Enemy
         rockEbo.enabled = true;
 
         // Launch rock projectile
-        rockProj.LaunchProjectile(_target);
+        rockProj.LaunchProjectile(_rockTarget);
         CurrentState = State.Attacking;
     }
 
@@ -477,6 +481,6 @@ public class Golem : Wander_Enemy
         // Wait for cooldown to be done, and then reset state values
         yield return new WaitForSeconds(slamCooldown);
         CurrentState = State.Attacking;
-        //_target = new Vector2(1, 1);
+        _rockTarget = new Vector2(1, 1);
     }
 }

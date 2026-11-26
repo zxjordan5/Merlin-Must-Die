@@ -56,7 +56,7 @@ public class Golemite : Wander_Enemy
         
         if (Detection() && CurrentState == State.Wandering)
         {
-            Debug.Log("Player Detected");
+            //Debug.Log("Player Detected");
             CurrentState = State.Attacking;
             _rb.linearVelocity = new Vector2(0, 0);
         }
