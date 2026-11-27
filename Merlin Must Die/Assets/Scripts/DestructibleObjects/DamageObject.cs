@@ -11,5 +11,5 @@ public class DamageObject : MonoBehaviour
     /// </summary>
     [SerializeField] private int damage;
 
-    public int Damage { get => damage; private set => damage = value; }
+    public int Damage { get => damage; set => damage = value; }
 }

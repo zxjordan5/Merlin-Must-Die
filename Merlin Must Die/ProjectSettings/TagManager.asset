@@ -8,6 +8,7 @@ TagManager:
   - Destructible
   - EnvironmentObject
   - DamageSpell
+  - Hazard
   layers:
   - Default
   - TransparentFX

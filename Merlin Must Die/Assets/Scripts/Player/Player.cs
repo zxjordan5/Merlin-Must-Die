@@ -539,9 +539,9 @@ public class Player : MonoBehaviour
     /// <param name="collision"></param>
     private void HandleDamageAfterCollision(Collider2D collision)
     {
-        if (_isInvincible || !collision.CompareTag("Enemy"))
+        if (_isInvincible || !(collision.CompareTag("Enemy") || collision.CompareTag("Hazard")))
         {
-            // Not an enemy? Return
+            // Not an enemy or hazard? Return
             // Also return if the player is currently invincible
             // May need to change this functionality later for damaging environmental effects
             return;

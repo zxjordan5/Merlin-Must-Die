@@ -90,6 +90,9 @@ public class Golem : Wander_Enemy
         _slamCollider.radius = slamColliderRadius;
         _slamCollider.isTrigger = true;
         _slamCollider.enabled = false;
+        // Adding damage object fields so that the slam damages other objects/enemies
+        DamageObject slamColliderDamageObj = _slamCollider.AddComponent<DamageObject>();
+        slamColliderDamageObj.Damage = 2;
     }
     
 

@@ -26,11 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7782549254964497721, guid: 22293b9a0c46a0ee7b5fe43cb2e768ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26.58
+      value: -22.95
       objectReference: {fileID: 0}
     - target: {fileID: 7782549254964497721, guid: 22293b9a0c46a0ee7b5fe43cb2e768ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 19.63
+      value: 12.63
       objectReference: {fileID: 0}
     - target: {fileID: 7782549254964497721, guid: 22293b9a0c46a0ee7b5fe43cb2e768ae, type: 3}
       propertyPath: m_LocalPosition.z
@@ -95,6 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpriteFlash
   tagsToCheck:
   - DamageSpell
+  - Hazard
   flashDecaySpeed: 15
   timesToFlash: 1
 --- !u!114 &6806528386491977848

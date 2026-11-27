@@ -13,7 +13,6 @@ public class DestructibleObject : MonoBehaviour
     /// </summary>
     [SerializeField] protected int health;
     
-
     /// <summary>
     /// Reference to the prefab of the destroyed object
     /// </summary>
