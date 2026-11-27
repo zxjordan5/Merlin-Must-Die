@@ -107,7 +107,7 @@ public class Grimoire : MonoBehaviour
         // get all spells from spell class; sort into .learned and .active
         _allSpells = new List<Spell>();
         _preparedSpell = null;
-        _player = FindAnyObjectByType<Player>();
+        _player = GameManager.Player;
 
         GetGrimoireContents();
 
@@ -229,14 +229,15 @@ public class Grimoire : MonoBehaviour
 
             spellList.transform.SetParent(spellUI.transform, false);
 
+
             // Puts all icons in the spell list component
             for (int j = 0; j < index; j++)
             {
              
                 // Defining icons as part of the layout + sizing to fit in grimoire
-                GameObject iconSprite = Instantiate(new GameObject("SpellSprites" + i + "_" + j), grimoireContents.transform);
-                iconSprite.transform.SetParent(spellList.transform);
+                GameObject iconSprite = new GameObject("SpellSprites" + i + "_" + j);
                 Image grimoireSprite = iconSprite.AddComponent<Image>();
+                iconSprite.transform.SetParent(spellList.transform.transform, false);
                 UnityEngine.UI.LayoutElement layout = iconSprite.AddComponent<UnityEngine.UI.LayoutElement>();
                 //layout.preferredWidth = 45;
                 layout.preferredHeight = 45;
@@ -264,7 +265,7 @@ public class Grimoire : MonoBehaviour
         foreach (Spell spell in activeSpells)
         {
             // Need to instantiate spells in order to track their timers
-            _instantiatedActiveSpells.Add(Instantiate(spell, transform.position, Quaternion.identity));
+            _instantiatedActiveSpells.Add(Instantiate(spell, transform));
 
             //Get the longest spell code
             if (spell.spellCode.Count > _maxSpellLength)
@@ -414,6 +415,7 @@ public class Grimoire : MonoBehaviour
         _preparedSpell = spell;
 
         // Activate custom spell preperation logic based on crosshair
+        _player.ResetCrosshair();
         _player.ChangeCrosshair(spell);
 
 
@@ -441,7 +443,6 @@ public class Grimoire : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("spell casting");
            
             //Extra check for a prepared spell
             if (!_preparedSpell)

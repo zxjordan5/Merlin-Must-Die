@@ -11,7 +11,7 @@ public class SanguineCommunionAbility : ExcaliburAbility
     
     private void Awake()
     {
-        _player = FindAnyObjectByType<Player>();
+        _player = GameManager.Player;
         StartCoroutine(LoadDamageObjects());
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created

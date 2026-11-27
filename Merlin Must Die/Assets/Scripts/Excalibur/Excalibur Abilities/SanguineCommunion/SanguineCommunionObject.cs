@@ -12,7 +12,7 @@ public class SanguineCommunionObject : DamageObject
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _player = FindAnyObjectByType<Player>();
+        _player = GameManager.Player;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

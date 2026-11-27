@@ -13,14 +13,18 @@ public class IndicatorManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_player == null)
-            _player = FindAnyObjectByType<Player>();
-        if (_interactionIndicator == null)
-            _interactionIndicator = GameObject.Find("InteractionIndicator");
-
         _interactionText = _interactionIndicator.GetComponentInChildren<TMP_Text>();
         _nextDialogueText = _nextDialogueIndicator.GetComponentInChildren<TMP_Text>();
 
+    }
+
+    //Get references to objects in scene after initial loading (not in awake)
+    private void Start()
+    {
+        if (_player == null)
+            _player = GameManager.Player;
+        if (_interactionIndicator == null)
+            _interactionIndicator = GameObject.Find("InteractionIndicator");
     }
 
     /// <summary>

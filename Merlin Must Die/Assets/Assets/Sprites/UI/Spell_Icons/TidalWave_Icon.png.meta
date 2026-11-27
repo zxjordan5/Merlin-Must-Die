@@ -102,7 +102,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TidalWave_Icon_0
+      name: TidalWave_Icon
       rect:
         serializedVersion: 2
         x: 0
@@ -110,7 +110,7 @@ TextureImporter:
         width: 320
         height: 320
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -127,7 +127,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 57c42c9e7d993584989e7958528a4dde
     internalID: 0
     vertices: []
     indices: 
@@ -137,7 +137,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TidalWave_Icon_0: 4146691472790977888
+      TidalWave_Icon: 4146691472790977888
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

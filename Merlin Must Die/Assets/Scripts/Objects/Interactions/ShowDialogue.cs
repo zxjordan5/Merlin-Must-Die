@@ -25,7 +25,7 @@ public class ShowDialogue : Interaction
 
     public void Awake()
     {
-        _player = FindAnyObjectByType<Player>();
+        _player = GameManager.Player;
         _npcTextArea = GameObject.Find("NPCTextArea");
         _moreTextIndicator = _npcTextArea.transform.Find("Indicator").GetComponent<Image>();
         _npcText = _npcTextArea.GetComponentInChildren<TMP_Text>();

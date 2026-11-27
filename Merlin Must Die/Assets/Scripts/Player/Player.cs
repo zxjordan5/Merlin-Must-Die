@@ -290,7 +290,6 @@ public class Player : MonoBehaviour
     /// </summary>
     private void CalculateMovement()
     {
-
         if (_gpMoving)
         {
             _targetDirection = Gamepad.current.leftStick.value;
@@ -321,7 +320,7 @@ public class Player : MonoBehaviour
         if (_gpAiming)
         {
             _gpPos = new Vector3(Gamepad.current.rightStick.value.x, Gamepad.current.rightStick.value.y, 0).normalized * 2;
-            _aimDirRaw = _gpPos;
+            _aimDirRaw = _gpPos;   
         }
         // Kb/M aiming
         else if (_kbAiming && InputManager.CurrentDevice == InputManager.ControlScheme.Keyboard)
@@ -461,7 +460,7 @@ public class Player : MonoBehaviour
     public void Dash(float dashSpeed, float dashTime)
     {
         _speedMult = dashSpeed;
-        _dashTarget = _crosshair.transform.localPosition;
+        _dashTarget = AimDirNorm * 3;
         _targetVelocity = _dashTarget * maxSpeed * _speedMult;
         _rb.AddForce((_targetVelocity - _rb.linearVelocity) * 15);
         if (!_dashing)

@@ -13,7 +13,7 @@ public class LightningBoltObject : SpellObject
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _player = FindAnyObjectByType<Player>();
+        _player = GameManager.Player;
         _originalPlayerMaxSpeed = _player.MaxSpeed;
     }
 

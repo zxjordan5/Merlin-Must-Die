@@ -9,23 +9,17 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class InputManager : MonoBehaviour
 {
-    private static PlayerInput _playerInput;
+    public static PlayerInput Instance { get; private set; }
     public enum ControlScheme { Unknown = 0, Keyboard = 1, Controller = 2 }
 
-    [SerializeField] private Player _player;
-    [SerializeField] private Grimoire _grimoire;
-    [SerializeField] private Excalibur _excalibur;
+    private Player _player;
+    private Grimoire _grimoire;
+    private Excalibur _excalibur;
 
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
-        //
-        if(!_player)
-            _player = FindAnyObjectByType<Player>();
-        if(!_grimoire)
-            _grimoire = FindAnyObjectByType<Grimoire>();
-        if (!_excalibur)
-            _excalibur = FindAnyObjectByType<Excalibur>();
+        if(Instance == null)
+            Instance = GetComponent<PlayerInput>();
     }
 
     /// <summary>
@@ -33,6 +27,10 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        _player = GameManager.Player;
+        _grimoire = GameManager.Grimoire;
+        _excalibur = GameManager.Excalibur;
+
         ConnectInputMap();
     }
 
@@ -99,15 +97,15 @@ public class InputManager : MonoBehaviour
 
     public void ConnectIndividualAction(string actionName, System.Action<InputAction.CallbackContext> action)
     {
-        _playerInput.actions[actionName].started += action;
-        _playerInput.actions[actionName].performed += action;
-        _playerInput.actions[actionName].canceled += action;
+        Instance.actions[actionName].started += action;
+        Instance.actions[actionName].performed += action;
+        Instance.actions[actionName].canceled += action;
     }
     public void DisconnectIndividualAction(string actionName, System.Action<InputAction.CallbackContext> action)
     {
-        _playerInput.actions[actionName].started -= action;
-        _playerInput.actions[actionName].performed -= action;
-        _playerInput.actions[actionName].canceled -= action;
+        Instance.actions[actionName].started -= action;
+        Instance.actions[actionName].performed -= action;
+        Instance.actions[actionName].canceled -= action;
     }
 
 
@@ -121,7 +119,7 @@ public class InputManager : MonoBehaviour
         {
             bool controllerFound = false;
             bool keyboardFound = false;
-            foreach (InputDevice device in _playerInput.devices)
+            foreach (InputDevice device in InputSystem.devices)
             {
                 if (device is Gamepad)
                 {

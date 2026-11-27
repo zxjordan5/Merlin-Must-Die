@@ -53,7 +53,7 @@ public class Excalibur : MonoBehaviour
     public void Awake()
     {
         _excaliburBar = transform.Find("ExcaliburBar").GetComponent<Image>();
-        _player = FindAnyObjectByType<Player>();
+        _player = GameManager.Player;
 
         if(_abilityOne != null )
             _abilityOneInstance = Instantiate(_abilityOne, new Vector2(0, 0), Quaternion.identity);

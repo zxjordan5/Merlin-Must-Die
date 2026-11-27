@@ -33,7 +33,7 @@ public class BackInTheStone : ExcaliburAbility
 
     private void Start()
     {
-        _player = FindAnyObjectByType<Player>();
+        _player = GameManager.Player;
         StartCoroutine(LoadDamageObjects());
     }
 

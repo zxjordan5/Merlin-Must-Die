@@ -16,7 +16,7 @@ TagManager:
   - Water
   - UI
   - GroundOnly
-  - 
+  - Hidden
   - Spell
   - 
   - Interaction
@@ -50,6 +50,12 @@ TagManager:
     locked: 0
   - name: Fog
     uniqueID: 3512885405
+    locked: 0
+  - name: WorldCanvas
+    uniqueID: 213599685
+    locked: 0
+  - name: GrimoireCanvas
+    uniqueID: 312350555
     locked: 0
   m_RenderingLayers:
   - Default

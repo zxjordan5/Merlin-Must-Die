@@ -121,7 +121,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 5503
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -504,6 +504,22 @@ PrefabInstance:
       propertyPath: 'activeSpells.Array.data[4]'
       value: 
       objectReference: {fileID: 6337247837495552665, guid: 02bc604757024f573a8223d2ac0c6710, type: 3}
+    - target: {fileID: 2355151895835167610, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 6596206481314338039}
+    - target: {fileID: 2355151895835167610, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355151895835167610, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 312350555
+      objectReference: {fileID: 0}
+    - target: {fileID: 3951486284794797122, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -174.99998
+      objectReference: {fileID: 0}
     - target: {fileID: 4107392942981532779, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

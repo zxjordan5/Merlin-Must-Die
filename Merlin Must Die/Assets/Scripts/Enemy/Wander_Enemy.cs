@@ -85,7 +85,7 @@ public abstract class Wander_Enemy : MonoBehaviour
     //Check for player after awake to allow for the player to load in across scenes
     private void Start()
     {
-        _player = FindAnyObjectByType<Player>();
+        _player = GameManager.Player;
     }
 
     protected virtual void FixedUpdate()
