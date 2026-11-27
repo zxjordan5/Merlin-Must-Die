@@ -153,7 +153,7 @@ TextureImporter:
       name: morgana-anim_1
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 112
         width: 16
         height: 16
@@ -175,7 +175,7 @@ TextureImporter:
       name: morgana-anim_2
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 112
         width: 16
         height: 16
@@ -197,7 +197,7 @@ TextureImporter:
       name: morgana-anim_3
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 112
         width: 16
         height: 16
@@ -219,7 +219,7 @@ TextureImporter:
       name: morgana-anim_4
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 112
         width: 16
         height: 16
@@ -241,7 +241,7 @@ TextureImporter:
       name: morgana-anim_5
       rect:
         serializedVersion: 2
-        x: 80
+        x: 112
         y: 112
         width: 16
         height: 16
@@ -285,7 +285,7 @@ TextureImporter:
       name: morgana-anim_7
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 96
         width: 16
         height: 16
@@ -307,7 +307,7 @@ TextureImporter:
       name: morgana-anim_8
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 96
         width: 16
         height: 16
@@ -329,7 +329,7 @@ TextureImporter:
       name: morgana-anim_9
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 96
         width: 16
         height: 16
@@ -351,7 +351,7 @@ TextureImporter:
       name: morgana-anim_10
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 96
         width: 16
         height: 16
@@ -373,7 +373,7 @@ TextureImporter:
       name: morgana-anim_11
       rect:
         serializedVersion: 2
-        x: 80
+        x: 112
         y: 96
         width: 16
         height: 16
@@ -417,7 +417,7 @@ TextureImporter:
       name: morgana-anim_13
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 80
         width: 16
         height: 16
@@ -439,7 +439,7 @@ TextureImporter:
       name: morgana-anim_14
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 80
         width: 16
         height: 16
@@ -461,7 +461,7 @@ TextureImporter:
       name: morgana-anim_15
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 80
         width: 16
         height: 16
@@ -483,7 +483,7 @@ TextureImporter:
       name: morgana-anim_16
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 80
         width: 16
         height: 16
@@ -505,7 +505,7 @@ TextureImporter:
       name: morgana-anim_17
       rect:
         serializedVersion: 2
-        x: 80
+        x: 112
         y: 80
         width: 16
         height: 16
@@ -549,7 +549,7 @@ TextureImporter:
       name: morgana-anim_19
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 64
         width: 16
         height: 16
@@ -571,7 +571,7 @@ TextureImporter:
       name: morgana-anim_20
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 64
         width: 16
         height: 16
@@ -593,7 +593,7 @@ TextureImporter:
       name: morgana-anim_21
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 64
         width: 16
         height: 16
@@ -615,7 +615,7 @@ TextureImporter:
       name: morgana-anim_22
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 64
         width: 16
         height: 16
@@ -637,7 +637,7 @@ TextureImporter:
       name: morgana-anim_23
       rect:
         serializedVersion: 2
-        x: 80
+        x: 112
         y: 64
         width: 16
         height: 16
@@ -681,7 +681,7 @@ TextureImporter:
       name: morgana-anim_25
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 48
         width: 16
         height: 16
@@ -703,7 +703,7 @@ TextureImporter:
       name: morgana-anim_26
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 48
         width: 16
         height: 16
@@ -725,7 +725,7 @@ TextureImporter:
       name: morgana-anim_27
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 48
         width: 16
         height: 16
@@ -747,7 +747,7 @@ TextureImporter:
       name: morgana-anim_28
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 48
         width: 16
         height: 16
@@ -769,7 +769,7 @@ TextureImporter:
       name: morgana-anim_29
       rect:
         serializedVersion: 2
-        x: 80
+        x: 112
         y: 48
         width: 16
         height: 16
@@ -813,7 +813,7 @@ TextureImporter:
       name: morgana-anim_31
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 32
         width: 16
         height: 16
@@ -835,7 +835,7 @@ TextureImporter:
       name: morgana-anim_32
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 32
         width: 16
         height: 16
@@ -857,7 +857,7 @@ TextureImporter:
       name: morgana-anim_33
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 32
         width: 16
         height: 16
@@ -879,7 +879,7 @@ TextureImporter:
       name: morgana-anim_34
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 32
         width: 16
         height: 16
@@ -901,7 +901,7 @@ TextureImporter:
       name: morgana-anim_35
       rect:
         serializedVersion: 2
-        x: 80
+        x: 112
         y: 32
         width: 16
         height: 16
@@ -945,7 +945,7 @@ TextureImporter:
       name: morgana-anim_37
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 16
         width: 16
         height: 16
@@ -967,7 +967,7 @@ TextureImporter:
       name: morgana-anim_38
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 16
         width: 16
         height: 16
@@ -989,7 +989,7 @@ TextureImporter:
       name: morgana-anim_39
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 16
         width: 16
         height: 16
@@ -1011,7 +1011,7 @@ TextureImporter:
       name: morgana-anim_40
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 16
         width: 16
         height: 16
@@ -1033,7 +1033,7 @@ TextureImporter:
       name: morgana-anim_41
       rect:
         serializedVersion: 2
-        x: 80
+        x: 112
         y: 16
         width: 16
         height: 16
@@ -1077,7 +1077,7 @@ TextureImporter:
       name: morgana-anim_43
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 0
         width: 16
         height: 16
@@ -1099,7 +1099,7 @@ TextureImporter:
       name: morgana-anim_44
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 0
         width: 16
         height: 16
@@ -1121,7 +1121,7 @@ TextureImporter:
       name: morgana-anim_45
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 0
         width: 16
         height: 16
@@ -1143,7 +1143,7 @@ TextureImporter:
       name: morgana-anim_46
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 0
         width: 16
         height: 16
@@ -1165,7 +1165,7 @@ TextureImporter:
       name: morgana-anim_47
       rect:
         serializedVersion: 2
-        x: 80
+        x: 112
         y: 0
         width: 16
         height: 16
@@ -1179,6 +1179,358 @@ TextureImporter:
       bones: []
       spriteID: cf2daaa4b46d0f84d8565d31327b0329
       internalID: 984361725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_48
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6550675d7a4201f41a8ead35624e7027
+      internalID: 1307096210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_49
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d1363c5ac3936645b9dd3cc5ea6c212
+      internalID: -1057766237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_50
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70a7d4622d159c241aea1015e181b0fa
+      internalID: 965591642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_51
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da28c464c20e32742a1a8744028f5c8f
+      internalID: -244290681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_52
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64ca7eacf9fddb848b0b9defedda54e0
+      internalID: 1206311423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_53
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0cc3a6701164d84584544327d4504d7
+      internalID: -32377783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_54
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19e8f2c9a6ef9a24d978bb5f2a9a1bd3
+      internalID: -539479812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_55
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f94bf91a2d53a2d4aad4eb2c19818afc
+      internalID: -177194710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_56
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1aeb6d92abc3d1a439a5ad015396c7a6
+      internalID: 1918578669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_57
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05c53c4f4827c664ab962e03b11ca22a
+      internalID: -393205955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_58
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f3b60ce7e4387846817ff47f42bc182
+      internalID: -1066721594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_59
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3e4b65422a7b3b4ebb781a0e5417a29
+      internalID: -834449147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_60
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a10c2d46fcbd4042be7d6250bc6aef0
+      internalID: -251804072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_61
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b175dc52ea2f31449feed564c68d2ad
+      internalID: -1231117281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_62
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee47602cd590e73448d258575e39b920
+      internalID: -1794772950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: morgana-anim_63
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bb9edc94e71a974b96aa1af480d09cb
+      internalID: 327950296
       vertices: []
       indices: 
       edges: []
@@ -1242,8 +1594,24 @@ TextureImporter:
       morgana-anim_45: -1689305772
       morgana-anim_46: 1471471795
       morgana-anim_47: 984361725
+      morgana-anim_48: 1307096210
+      morgana-anim_49: -1057766237
       morgana-anim_5: -921374229
+      morgana-anim_50: 965591642
+      morgana-anim_51: -244290681
+      morgana-anim_52: 1206311423
+      morgana-anim_53: -32377783
+      morgana-anim_54: -539479812
+      morgana-anim_55: -177194710
+      morgana-anim_56: 1918578669
+      morgana-anim_57: -393205955
+      morgana-anim_58: -1066721594
+      morgana-anim_59: -834449147
       morgana-anim_6: -1081458301
+      morgana-anim_60: -251804072
+      morgana-anim_61: -1231117281
+      morgana-anim_62: -1794772950
+      morgana-anim_63: 327950296
       morgana-anim_7: 29695803
       morgana-anim_8: 2098808768
       morgana-anim_9: -758472762
