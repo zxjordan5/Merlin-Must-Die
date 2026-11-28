@@ -21,6 +21,14 @@ public class ShowDialogue : Interaction
     public int DialogueSeen { get { return _dialogueCounter; } }
     private bool _allDialogueSeen = false;
     public bool AllDialogueSeen { get { return _allDialogueSeen; } }
+    [Header("Dialogue Indicator")]
+    
+    /// <summary>
+    /// Exclamation mark that appears over an NPC's head to show they have dialogue
+    /// Goes away after the player first talks to the NPC
+    /// </summary>
+    [SerializeField] private SpriteRenderer _dialogueIndicator;
+    [SerializeField] private bool _showDialogueIndicator = true;
     private static float _dialogueDisplayTime = 8f;
 
     public void Awake()
@@ -31,6 +39,11 @@ public class ShowDialogue : Interaction
         _npcText = _npcTextArea.GetComponentInChildren<TMP_Text>();
 
         _grimoireTextBG = Resources.Load<Sprite>("Sprites/UI/Grimoire-Background");
+
+        if (_showDialogueIndicator && _dialogueIndicator)
+        {
+            _dialogueIndicator.enabled = true;
+        }
     }
 
     /// <summary>
@@ -43,6 +56,10 @@ public class ShowDialogue : Interaction
 
         _npcTextArea.transform.position = new Vector2(transform.position.x, transform.position.y - 1.2f);
         _player.ReadingDialogue = true;
+
+        //Hide the indicator that the NPC can be interacted with after the first interaction
+        if (_dialogueIndicator)
+            _dialogueIndicator.enabled = false;
 
         //Check if all dialogue has been seen. Reset counter to play it again
         if (_dialogueCounter >= mainText.DialogueCount)

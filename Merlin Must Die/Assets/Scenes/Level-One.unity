@@ -3912,12 +3912,16 @@ PrefabInstance:
       value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -85.38
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.49
+      value: 10.489998
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -21191,6 +21195,10 @@ PrefabInstance:
       value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -75.68
       objectReference: {fileID: 0}
@@ -21785,6 +21793,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShowDialogue
   mainText: {fileID: 11400000, guid: e043aa16f6901a94cbe3660bcebd86bf, type: 2}
   finishedText: {fileID: 11400000, guid: 8b0fc8d56986b5c458810dd6c64b13e0, type: 2}
+  _dialogueIndicator: {fileID: 1848836511}
+  _showDialogueIndicator: 1
 --- !u!114 &410564039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45808,12 +45818,16 @@ PrefabInstance:
       value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -74.78
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 22.69
+      value: 22.689997
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -47668,11 +47682,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 407775295631826883, guid: 7bffbcadff39027429d396ea1feb5456, type: 3}
       propertyPath: _canMove
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 407775295631826883, guid: 7bffbcadff39027429d396ea1feb5456, type: 3}
       propertyPath: _hasGear
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1088336332705652415, guid: 7bffbcadff39027429d396ea1feb5456, type: 3}
       propertyPath: m_AnchorMax.y
@@ -112825,6 +112839,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShowDialogue
   mainText: {fileID: 11400000, guid: d2d882828e5d74f45939d38f7ee6d6f3, type: 2}
   finishedText: {fileID: 0}
+  _dialogueIndicator: {fileID: 0}
+  _showDialogueIndicator: 0
 --- !u!114 &1125490387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121891,8 +121907,12 @@ PrefabInstance:
       value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -66.9
+      value: -66.90001
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -136619,12 +136639,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 898217896}
     m_Modifications:
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -88.31
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.92
+      value: 11.919998
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -172858,6 +172886,11 @@ PrefabInstance:
       addedObject: {fileID: 1988655380}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e810c1deff25ad14c9cc7093e5e0ecd7, type: 3}
+--- !u!212 &1848836511 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3112846427539217103, guid: e810c1deff25ad14c9cc7093e5e0ecd7, type: 3}
+  m_PrefabInstance: {fileID: 1848836510}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1848836518 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8298018894129228344, guid: e810c1deff25ad14c9cc7093e5e0ecd7, type: 3}
@@ -181837,12 +181870,16 @@ PrefabInstance:
       value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -78.11
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 21.33
+      value: 21.329996
       objectReference: {fileID: 0}
     - target: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
       propertyPath: m_LocalPosition.z

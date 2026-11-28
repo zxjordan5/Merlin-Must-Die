@@ -56,9 +56,9 @@ public class Excalibur : MonoBehaviour
         _player = GameManager.Player;
 
         if(_abilityOne != null )
-            _abilityOneInstance = Instantiate(_abilityOne, new Vector2(0, 0), Quaternion.identity);
+            _abilityOneInstance = Instantiate(_abilityOne, transform);
         if(_abilityTwo != null )
-            _abilityTwoInstance = Instantiate(_abilityTwo, new Vector2(0, 0), Quaternion.identity);
+            _abilityTwoInstance = Instantiate(_abilityTwo, transform);
     }
 
     public void Update()

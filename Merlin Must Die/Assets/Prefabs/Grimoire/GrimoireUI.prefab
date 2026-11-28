@@ -740,7 +740,7 @@ SpriteRenderer:
   m_Size: {x: 3.2, y: 3.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &5315220550959909210
@@ -2005,6 +2005,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Excalibur
       objectReference: {fileID: 0}
+    - target: {fileID: 4839270688459177873, guid: fc16fd4395a86fa40bbb868ab3fb5bd6, type: 3}
+      propertyPath: _abilityOne
+      value: 
+      objectReference: {fileID: 3094581277839689738, guid: ab437f5ca7a50acb9bb7a61f22caea7c, type: 3}
+    - target: {fileID: 4839270688459177873, guid: fc16fd4395a86fa40bbb868ab3fb5bd6, type: 3}
+      propertyPath: _abilityTwo
+      value: 
+      objectReference: {fileID: 7424621119415971575, guid: 331f8396966fce094bc0c8b9a25d4a8a, type: 3}
     - target: {fileID: 7021259661674752297, guid: fc16fd4395a86fa40bbb868ab3fb5bd6, type: 3}
       propertyPath: m_Sprite
       value: 

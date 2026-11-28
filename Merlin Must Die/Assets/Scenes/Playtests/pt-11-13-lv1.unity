@@ -5841,6 +5841,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShowDialogue
   mainText: {fileID: 11400000, guid: e043aa16f6901a94cbe3660bcebd86bf, type: 2}
   finishedText: {fileID: 11400000, guid: 8b0fc8d56986b5c458810dd6c64b13e0, type: 2}
+  _dialogueIndicator: {fileID: 829180738}
+  _showDialogueIndicator: 1
 --- !u!114 &410564039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7668,6 +7670,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afc13692cabcaf043880a7879793dd3f, type: 3}
+--- !u!212 &829180738 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3112846427539217103, guid: e810c1deff25ad14c9cc7093e5e0ecd7, type: 3}
+  m_PrefabInstance: {fileID: 1848836510}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &884154112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8641686741415825110, guid: c6b5e71ee24f44d43986f82d92e779b3, type: 3}
@@ -72111,6 +72118,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShowDialogue
   mainText: {fileID: 11400000, guid: d2d882828e5d74f45939d38f7ee6d6f3, type: 2}
   finishedText: {fileID: 0}
+  _dialogueIndicator: {fileID: 0}
+  _showDialogueIndicator: 0
 --- !u!114 &1125490387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108940,11 +108949,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9094833506537677130, guid: d53f941de4614bc4cb6c0ff0c4b5d00a, type: 3}
   m_PrefabInstance: {fileID: 436894898}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &1926048163 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 2355151895835167610, guid: d859d454495e4344092ac9e96a7cbd82, type: 3}
-  m_PrefabInstance: {fileID: 1518480854}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1946088892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109036,7 +109040,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a35a3cf5b3f3e429cf695fd7da1448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnlockGear
-  _gearCanvas: {fileID: 1926048163}
 --- !u!4 &1988655380
 Transform:
   m_ObjectHideFlags: 0

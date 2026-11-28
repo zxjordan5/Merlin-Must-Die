@@ -277,6 +277,7 @@ public class Player : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _cam = Camera.main;
+        _health = maxHealth;
 
         GameObject levelStart = GameObject.Find("LevelStart");
         if (levelStart)
